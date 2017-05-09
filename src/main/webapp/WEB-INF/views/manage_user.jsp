@@ -242,6 +242,7 @@
 		   $("#sample_editable_1 a.update").live("click", function(){
 			   //先对要提交给服务器的数据进行校验
                if(!validate_updateData()){
+            	   alert("数据格式不正确，请重新检查!")
             	   return false;
                }
                //判断之前的ajax昵称重复是否有效
@@ -305,6 +306,7 @@
                e.preventDefault();
                //先对要提交给服务器的数据进行校验
                if(!validate_data()){
+            	   alert("数据格式不正确，请重新检查!")
             	   return false;
                }
                //判断之前的ajax昵称重复是否有效
