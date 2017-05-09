@@ -47,9 +47,6 @@ var Login = function () {
 	                },
 	                password: {
 	                    required: true
-	                },
-	                remember: {
-	                    required: false
 	                }
 	            },
 
@@ -102,15 +99,26 @@ var Login = function () {
 	            focusInvalid: false, // do not focus the last invalid input
 	            ignore: "",
 	            rules: {
-	                email: {
-	                    required: true,
-	                    email: true
+	            	studentid: {
+	                    required: true
+	                },
+	                safequestion: {
+	                    required: true
+	                },
+	                safeanswer: {
+	                    required: true
 	                }
 	            },
 
 	            messages: {
-	                email: {
-	                    required: "Email is required."
+	            	studentid: {
+	                    required: "studentid is required."
+	                },
+	                safequestion: {
+	                    required: "safequestion is required."
+	                },
+	                safeanswer: {
+	                    required: "safeanswer is required."
 	                }
 	            },
 
@@ -190,20 +198,22 @@ var Login = function () {
 	            ignore: "",
 	            rules: {
 	                
-	                fullname: {
+	            	nickname: {
 	                    required: true
 	                },
-	                email: {
-	                    required: true,
-	                    email: true
-	                },
-	                address: {
+	                studentid: {
 	                    required: true
 	                },
-	                city: {
+	                contact: {
 	                    required: true
 	                },
-	                country: {
+	                safequestion: {
+	                    required: true
+	                },
+	                safeanswer: {
+	                    required: true
+	                },
+	                sex: {
 	                    required: true
 	                },
 
@@ -215,17 +225,11 @@ var Login = function () {
 	                },
 	                rpassword: {
 	                    equalTo: "#register_password"
-	                },
-
-	                tnc: {
-	                    required: true
 	                }
 	            },
 
 	            messages: { // custom messages for radio buttons and checkboxes
-	                tnc: {
-	                    required: "Please accept TNC first."
-	                }
+	                
 	            },
 
 	            invalidHandler: function (event, validator) { //display error alert on form submit   
@@ -292,7 +296,7 @@ var Login = function () {
 		        "assets/img/bg/4.jpg"
 		        ], {
 		          fade: 1000,
-		          duration: 8000
+		          duration: 2000
 		    });
         }
 

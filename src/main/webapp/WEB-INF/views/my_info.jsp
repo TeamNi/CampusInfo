@@ -9,6 +9,9 @@
 <head>
 	<meta charset="utf-8" />
 	<title>My Info</title>
+	<%
+		pageContext.setAttribute("BASE_PATH",request.getContextPath());
+	%>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 	<meta content="" name="description" />
@@ -157,32 +160,36 @@
 											<div id="tab_1-1" class="tab-pane active">
 												<form role="form" action="#">
 													<div class="form-group">
-														<label class="control-label">First Name</label>
-														<input type="text" placeholder="John" class="form-control" />
+														<label class="control-label">Student Id</label>
+														<input class="form-control" type="text" placeholder="Student Id" name="studentid" value="${user.studentid }" readonly="readonly"/>
 													</div>
 													<div class="form-group">
-														<label class="control-label">Last Name</label>
-														<input type="text" placeholder="Doe" class="form-control" />
+														<label class="control-label">Registration Time</label>
+														<input class="form-control" type="text" placeholder="Registration Time" name="createtime" value="${user.createtime }" readonly="readonly"/>
 													</div>
 													<div class="form-group">
-														<label class="control-label">Mobile Number</label>
-														<input type="text" placeholder="+1 646 580 DEMO (6284)" class="form-control" />
+														<label class="control-label">Username</label>
+														<input id="reset_username" type="text" placeholder="Username" class="form-control" name="username" value="${user.username }" onblur="validate_username()" />
 													</div>
 													<div class="form-group">
-														<label class="control-label">Interests</label>
-														<input type="text" placeholder="Design, Web etc." class="form-control" />
+														<label class="control-label">Nickname</label>
+														<input type="text" placeholder="Nickname" class="form-control" name="nickname" value="${user.nickname }" onblur="checkNickname(this)"/>
 													</div>
 													<div class="form-group">
-														<label class="control-label">Occupation</label>
-														<input type="text" placeholder="Web Developer" class="form-control" />
+														<label class="control-label">Contact</label>
+														<input type="text" placeholder="Contact" class="form-control" name="contact" value="${user.contact }" />
 													</div>
 													<div class="form-group">
-														<label class="control-label">About</label>
-														<textarea class="form-control" rows="3" placeholder="We are KeenThemes!!!"></textarea>
+														<label class="control-label">Safe Question</label>
+														<input type="text" placeholder="Safe Question" class="form-control" name="safequestion" value="${user.safequestion }"/>
 													</div>
 													<div class="form-group">
-														<label class="control-label">Website Url</label>
-														<input type="text" placeholder="http://www.mywebsite.com" class="form-control" />
+														<label class="control-label">Safe Answer</label>
+														<input type="text" placeholder="Safe Answer" class="form-control" name="safeanswer" value="${user.safeanswer }"/>
+													</div>
+													<div class="form-group">
+														<label class="control-label">Gender</label>
+														<input id="reset_gender" type="text" placeholder="Gender" class="form-control" name="sex" value="${user.sex }" onblur="validate_sex()"/>
 													</div>
 													<div class="margiv-top-10">
 														<a href="#" class="btn green">Save Changes</a>
@@ -191,7 +198,7 @@
 												</form>
 											</div>
 											<div id="tab_2-2" class="tab-pane">
-												<p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.</p>
+												<p>change you head portrait</p>
 												<form action="#" role="form">
 													<div class="form-group">
 														<div class="thumbnail" style="width: 310px;">
@@ -229,12 +236,8 @@
 											<div id="tab_3-3" class="tab-pane">
 												<form action="#">
 													<div class="form-group">
-														<label class="control-label">Current Password</label>
-														<input type="password" class="form-control" />
-													</div>
-													<div class="form-group">
 														<label class="control-label">New Password</label>
-														<input type="password" class="form-control" />
+														<input id="reset_password" type="password" class="form-control" onblur="validate_password()" />
 													</div>
 													<div class="form-group">
 														<label class="control-label">Re-type New Password</label>
@@ -251,7 +254,7 @@
 													<table class="table table-bordered table-striped">
 														<tr>
 															<td>
-																Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus..
+																Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus..${user.userid }
 															</td>
 															<td>
 																<button type="submit" class="btn blue pull-left">
@@ -347,6 +350,57 @@
 		   // initiate layout and plugins
 		   App.init();
 		});
+		
+		//发送ajax请求校验昵称是否重复
+		   function checkNickname(str){
+			   //发送ajax请求校验昵称是否重复
+			   var nickname = str.value;
+			   //alert(nickname);
+			   $.ajax({
+				   url : "${BASE_PATH}/checknick",
+				   data : "nickname="+nickname,
+				   type : "POST",
+				   success : function(result){
+					   if(result.code == 2){
+						   $("#register-submit-btn").attr("ajax_validata","error");
+						   alert("无效的昵称，昵称已经存在，请重新输入！");
+						   $("#register_nickname").focus();
+					   }else if(result.code == 1){
+						   $("#register-submit-btn").attr("ajax_validata","success");
+					   }
+				   }
+			   });
+		   };
+		
+		   //校验性别
+		   function validate_sex(){
+			   var sex = $("#reset_gender").val();
+			   var regsex = /^(男|女)$/;
+			   if(!regsex.test(sex)){
+				   alert("性别只能是男或女！");
+		    	   return false;
+			   }
+		   }
+		   
+		   //校验用户名
+		   function validate_username(){
+			   var username = $("#reset_username").val();
+			   var regName = /(^[a-zA-Z_-]{4,16}$)|(^[\u2E80-\u9FFF]{2,4})/;
+			   if(!regName.test(username)){
+				   alert("用户名只能是2-4位中文 或者 4-16位英文！");
+		    	   return false;
+			   }
+		   }
+		   
+		   //校验密码
+		   function validate_password(){
+			   var password = $("#reset_password").val();
+			   var regPassword = /^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)(?![\W_]+$)\S{6,16}$/;
+			   if (!regPassword.test(password)){
+		    	   alert("密码必须6-16位且含有小写字母、大写字母、数字、特殊符号的两种及以上！");
+		    	   return false;
+		       }
+		   }
 	</script>
 	<!-- END JAVASCRIPTS -->
 </body>
