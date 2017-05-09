@@ -74,17 +74,12 @@
 					<input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password"/>
 				</div>
 			</div>
-			<div class="">
-				<label>
-					<input type="radio" value="user" name="role" checked="checked"/>user
-				</label>
-				<label>
-					<input type="radio" value="admin" name="role"/>admin
-				</label>
-			</div>
 			<div class="form-actions">
 				<label class="checkbox">
-				<input type="checkbox" name="remember" value="1"/> Remember me
+					<input type="radio" value="user" name="role" checked="checked"/>user
+				</label>
+				<label class="checkbox">
+					<input type="radio" value="admin" name="role"/>admin
 				</label>
 				<button type="submit" id="loginbtn" class="btn blue pull-right">
 				Login <i class="m-icon-swapright m-icon-white"></i>
