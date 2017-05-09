@@ -101,13 +101,35 @@
 		</form>
 		<!-- END LOGIN FORM -->        
 		<!-- BEGIN FORGOT PASSWORD FORM -->
-		<form class="forget-form" action="index.html" method="post">
+		<form class="forget-form" action="reset" method="post">
 			<h3 >Forget Password ?</h3>
-			<p>Enter your e-mail address below to reset your password.</p>
+			<p>Enter your Safe Question and Safe Answer below to reset your password.</p>
+			<div class="bg-danger">
+				<h4><span>${failInfo }</span></h4>
+				<%session.removeAttribute("failInfo"); %>
+				${SPRING_SECURITY_LAST_EXCEPTION.message}
+                <%session.removeAttribute("SPRING_SECURITY_LAST_EXCEPTION");%>
+			</div>
 			<div class="form-group">
+				<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+				<label class="control-label visible-ie8 visible-ie9">Student Id</label>
 				<div class="input-icon">
-					<i class="fa fa-envelope"></i>
-					<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Email" name="email" />
+					<i class="glyphicon glyphicon-tint"></i>
+					<input class="form-control placeholder-no-fix" type="text" placeholder="Student Id" name="studentid"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label visible-ie8 visible-ie9">Safe Question</label>
+				<div class="input-icon">
+					<i class="glyphicon glyphicon-question-sign"></i>
+					<input class="form-control placeholder-no-fix" type="text" placeholder="Safe Question" name="safequestion"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label visible-ie8 visible-ie9">Safe Answer</label>
+				<div class="input-icon">
+					<i class="glyphicon glyphicon-info-sign"></i>
+					<input class="form-control placeholder-no-fix" type="text" placeholder="Safe Answer" name="safeanswer"/>
 				</div>
 			</div>
 			<div class="form-actions">
@@ -121,75 +143,76 @@
 		</form>
 		<!-- END FORGOT PASSWORD FORM -->
 		<!-- BEGIN REGISTRATION FORM -->
-		<form class="register-form" action="index.html" method="post">
+		<form class="register-form" action="register" method="post">
 			<h3 >Sign Up</h3>
 			<p>Enter your personal details below:</p>
 			<div class="form-group">
-				<label class="control-label visible-ie8 visible-ie9">Full Name</label>
+				<label class="control-label visible-ie8 visible-ie9">Nickname</label>
 				<div class="input-icon">
 					<i class="fa fa-font"></i>
-					<input class="form-control placeholder-no-fix" type="text" placeholder="Full Name" name="fullname"/>
+					<input id="register_nickname" class="form-control placeholder-no-fix" type="text" placeholder="Nickname" name="nickname" onblur="checkNickname(this)"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label visible-ie8 visible-ie9">Contact</label>
+				<div class="input-icon">
+					<i class="glyphicon glyphicon-earphone"></i>
+					<input class="form-control placeholder-no-fix" type="text" placeholder="Contact" name="contact"/>
 				</div>
 			</div>
 			<div class="form-group">
 				<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-				<label class="control-label visible-ie8 visible-ie9">Email</label>
+				<label class="control-label visible-ie8 visible-ie9">Student Id</label>
 				<div class="input-icon">
-					<i class="fa fa-envelope"></i>
-					<input class="form-control placeholder-no-fix" type="text" placeholder="Email" name="email"/>
+					<i class="glyphicon glyphicon-tint"></i>
+					<input id="register_studentid" class="form-control placeholder-no-fix" type="text" placeholder="Student Id" name="studentid" onblur="checkStudentid(this)"/>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label visible-ie8 visible-ie9">Address</label>
+				<label class="control-label visible-ie8 visible-ie9">Safe Question</label>
 				<div class="input-icon">
-					<i class="fa fa-check"></i>
-					<input class="form-control placeholder-no-fix" type="text" placeholder="Address" name="address"/>
+					<i class="glyphicon glyphicon-question-sign"></i>
+					<input class="form-control placeholder-no-fix" type="text" placeholder="Safe Question" name="safequestion"/>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label visible-ie8 visible-ie9">City/Town</label>
+				<label class="control-label visible-ie8 visible-ie9">Safe Answer</label>
 				<div class="input-icon">
-					<i class="fa fa-location-arrow"></i>
-					<input class="form-control placeholder-no-fix" type="text" placeholder="City/Town" name="city"/>
+					<i class="glyphicon glyphicon-info-sign"></i>
+					<input class="form-control placeholder-no-fix" type="text" placeholder="Safe Answer" name="safeanswer"/>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label visible-ie8 visible-ie9">Country</label>
-				<select name="country" id="select2_sample4" class="select2 form-control">
-					<option value=""></option>
-					<option value="BA">Bosnia and Herzegowina</option>
-					<option value="BW">Botswana</option>
-					<option value="BV">Bouvet Island</option>
-					<option value="BR">Brazil</option>
-					<option value="IO">British Indian Ocean Territory</option>
-					<option value="BN">Brunei Darussalam</option>
-					<option value="BG">Bulgaria</option>
-					<option value="BF">Burkina Faso</option>
-					<option value="BI">Burundi</option>
-					<option value="KH">Cambodia</option>
-					<option value="CM">Cameroon</option>
-					<option value="CA">Canada</option>
-					<option value="CV">Cape Verde</option>
-					<option value="KY">Cayman Islands</option>
-					<option value="CF">Central African Republic</option>
-					<option value="TD">Chad</option>
-					<option value="CL">Chile</option>
-					<option value="CN">China</option>
-				</select>
+				<label class="control-label visible-ie8 visible-ie9">Gender</label>
+				<div class="input-icon">
+					<i class="glyphicon glyphicon-heart"></i>
+					<input id="register_gender" class="form-control placeholder-no-fix" type="text" placeholder="Gender" name="sex" onblur="validate_sex()"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label visible-ie8 visible-ie9">Head Portrait</label>
+				<div class="input-icon">
+					<i class="glyphicon glyphicon-user"></i>
+					<input id="lefile" type="file" style="display:none" />
+					<div class="input-append"> 
+						<input id="photoCover" class="form-control" type="text" placeholder="Head Portrait" name="headurl"/>
+						<span class="input-group-addon" onclick="$('input[id=lefile]').click();">Click Here Browse Picture</span>
+					</div> 
+				</div>
 			</div>
 			<p>Enter your account details below:</p>
 			<div class="form-group">
 				<label class="control-label visible-ie8 visible-ie9">Username</label>
 				<div class="input-icon">
 					<i class="fa fa-user"></i>
-					<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" name="username"/>
+					<input id="register_username" class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" name="username" onblur="validate_username()"/>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="control-label visible-ie8 visible-ie9">Password</label>
 				<div class="input-icon">
 					<i class="fa fa-lock"></i>
-					<input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password" placeholder="Password" name="password"/>
+					<input id="register_password" class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password" placeholder="Password" name="password" onblur="validate_password()"/>
 				</div>
 			</div>
 			<div class="form-group">
@@ -200,12 +223,6 @@
 						<input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Re-type Your Password" name="rpassword"/>
 					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				<label>
-				<input type="checkbox" name="tnc"/> I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
-				</label>  
-				<div id="register_tnc_error"></div>
 			</div>
 			<div class="form-actions">
 				<button id="register-back-btn" type="button" class="btn">
@@ -253,6 +270,85 @@
 		  App.init();
 		  Login.init();
 		});
+		
+		$('input[id=lefile]').change(function() { 
+			$('#photoCover').val($(this).val()); 
+		});
+	   
+	   //校验性别
+	   function validate_sex(){
+		   var sex = $("#register_gender").val();
+		   var regsex = /^(男|女)$/;
+		   if(!regsex.test(sex)){
+			   alert("性别只能是男或女！");
+	    	   return false;
+		   }
+	   }
+	   
+	   //校验用户名
+	   function validate_username(){
+		   var username = $("#register_username").val();
+		   var regName = /(^[a-zA-Z_-]{4,16}$)|(^[\u2E80-\u9FFF]{2,4})/;
+		   if(!regName.test(username)){
+			   alert("用户名只能是2-4位中文 或者 4-16位英文！");
+	    	   return false;
+		   }
+	   }
+	   
+	   //校验密码
+	   function validate_password(){
+		   var password = $("#register_password").val();
+		   var regPassword = /^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)(?![\W_]+$)\S{6,16}$/;
+		   if (!regPassword.test(password)){
+	    	   alert("密码必须6-16位且含有小写字母、大写字母、数字、特殊符号的两种及以上！");
+	    	   return false;
+	       }
+	   }
+ 	
+ 	   //发送ajax请求校验昵称是否重复
+	   function checkNickname(str){
+		   //发送ajax请求校验昵称是否重复
+		   var nickname = str.value;
+		   //alert(nickname);
+		   $.ajax({
+			   url : "${BASE_PATH}/checknick",
+			   data : "nickname="+nickname,
+			   type : "POST",
+			   success : function(result){
+				   if(result.code == 2){
+					   $("#register-submit-btn").attr("ajax_validata","error");
+					   alert("无效的昵称，昵称已经存在，请重新输入！");
+					   $("#register_nickname").focus();
+				   }else if(result.code == 1){
+					   $("#register-submit-btn").attr("ajax_validata","success");
+				   }
+			   }
+		   });
+	   };
+	   
+	   //校验学号格式并发送ajax请求校验学号是否重复
+	   function checkStudentid(str){
+		   var studentid = str.value;
+		   var regstudentid = /^[0-9]{6,15}$/;
+		   if (!regstudentid.test(studentid)){
+			   alert("学号只能是6-15位数字！");
+	    	   return false;
+		   }
+		   $.ajax({
+			  url : "${BASE_PATH}/checkstudentid",
+			  data : "studentid="+studentid,
+			  type : "POST",
+			  success : function(result){
+				  if(result.code == 2){
+					  $("#register-submit-btn").attr("ajax_validata","error");
+					  alert("无效的学号，学号已经存在，请重新输入！");
+					  $("#register_studentid").focus();
+				  }else if(result.code == 1){
+					  $("#register-submit-btn").attr("ajax_validata","success");
+				  }
+			  }
+		   });
+	   }
 	</script>
 	<!-- END JAVASCRIPTS -->
 </body>

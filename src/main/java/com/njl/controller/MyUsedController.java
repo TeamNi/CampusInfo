@@ -4,19 +4,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * my info
+ * my used
  * @author njl
  *
  */
 @Controller
-public class MyInfo {
+public class MyUsedController {
 
 	/**
-	 * my info
+	 * my used
 	 * @return
 	 */
-	@RequestMapping("/my_info")
-	public String getMyInfo(){
-		return "my_info";
+	@RequestMapping("/my_used")
+	public String getMyUsed(){
+		return "my_used";
 	}
 }
