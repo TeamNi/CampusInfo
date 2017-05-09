@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.njl.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.njl.bean.User">
+    <id column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="studentid" jdbcType="INTEGER" property="studentid" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="safequestion" jdbcType="VARCHAR" property="safequestion" />
+    <result column="safeanswer" jdbcType="VARCHAR" property="safeanswer" />
+    <result column="headurl" jdbcType="VARCHAR" property="headurl" />
+    <result column="contact" jdbcType="VARCHAR" property="contact" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    userid, username, nickname, studentid, password, createtime, safequestion, safeanswer, 
+    headurl, contact, sex
+  </sql>
+  <select id="selectByExample" parameterType="com.njl.bean.UserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_user
+    where userid = #{userid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_user
+    where userid = #{userid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.njl.bean.UserExample">
+    delete from t_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.njl.bean.User">
+    insert into t_user (userid, username, nickname, 
+      studentid, password, createtime, 
+      safequestion, safeanswer, headurl, 
+      contact, sex)
+    values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
+      #{studentid,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{safequestion,jdbcType=VARCHAR}, #{safeanswer,jdbcType=VARCHAR}, #{headurl,jdbcType=VARCHAR}, 
+      #{contact,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.njl.bean.User">
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
+      <if test="studentid != null">
+        studentid,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="safequestion != null">
+        safequestion,
+      </if>
+      <if test="safeanswer != null">
+        safeanswer,
+      </if>
+      <if test="headurl != null">
+        headurl,
+      </if>
+      <if test="contact != null">
+        contact,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="studentid != null">
+        #{studentid,jdbcType=INTEGER},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="safequestion != null">
+        #{safequestion,jdbcType=VARCHAR},
+      </if>
+      <if test="safeanswer != null">
+        #{safeanswer,jdbcType=VARCHAR},
+      </if>
+      <if test="headurl != null">
+        #{headurl,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null">
+        #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.njl.bean.UserExample" resultType="java.lang.Long">
+    select count(*) from t_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_user
+    <set>
+      <if test="record.userid != null">
+        userid = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.username != null">
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickname != null">
+        nickname = #{record.nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentid != null">
+        studentid = #{record.studentid,jdbcType=INTEGER},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.safequestion != null">
+        safequestion = #{record.safequestion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.safeanswer != null">
+        safeanswer = #{record.safeanswer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headurl != null">
+        headurl = #{record.headurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contact != null">
+        contact = #{record.contact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_user
+    set userid = #{record.userid,jdbcType=INTEGER},
+      username = #{record.username,jdbcType=VARCHAR},
+      nickname = #{record.nickname,jdbcType=VARCHAR},
+      studentid = #{record.studentid,jdbcType=INTEGER},
+      password = #{record.password,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      safequestion = #{record.safequestion,jdbcType=VARCHAR},
+      safeanswer = #{record.safeanswer,jdbcType=VARCHAR},
+      headurl = #{record.headurl,jdbcType=VARCHAR},
+      contact = #{record.contact,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.njl.bean.User">
+    update t_user
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="studentid != null">
+        studentid = #{studentid,jdbcType=INTEGER},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="safequestion != null">
+        safequestion = #{safequestion,jdbcType=VARCHAR},
+      </if>
+      <if test="safeanswer != null">
+        safeanswer = #{safeanswer,jdbcType=VARCHAR},
+      </if>
+      <if test="headurl != null">
+        headurl = #{headurl,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null">
+        contact = #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where userid = #{userid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.njl.bean.User">
+    update t_user
+    set username = #{username,jdbcType=VARCHAR},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      studentid = #{studentid,jdbcType=INTEGER},
+      password = #{password,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      safequestion = #{safequestion,jdbcType=VARCHAR},
+      safeanswer = #{safeanswer,jdbcType=VARCHAR},
+      headurl = #{headurl,jdbcType=VARCHAR},
+      contact = #{contact,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR}
+    where userid = #{userid,jdbcType=INTEGER}
+  </update>
+</mapper>
