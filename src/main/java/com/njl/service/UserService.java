@@ -69,4 +69,42 @@ public class UserService {
 		return userlist;
 	}
 
+	/**
+	 * check nickname
+	 * @param nickname
+	 * @return
+	 */
+	public List<User> checkNick(String nickname) {
+		// TODO Auto-generated method stub
+		UserExample example = new UserExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andNicknameEqualTo(nickname);
+		List<User> userlist = userMapper.selectByExample(example);
+		return userlist;
+	}
+
+	/**
+	 * update user info
+	 * @param user
+	 */
+	public void updateUserInfo(User user) {
+		// TODO Auto-generated method stub
+		UserExample example = new UserExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andStudentidEqualTo(user.getStudentid());
+		userMapper.updateByExampleSelective(user, example);
+	}
+
+	/**
+	 * update user password
+	 * @param studentid
+	 */
+	public void updateUserPwd(User user,int studentid) {
+		// TODO Auto-generated method stub
+		UserExample example = new UserExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andStudentidEqualTo(studentid);
+		userMapper.updateByExampleSelective(user, example);
+	}
+
 }

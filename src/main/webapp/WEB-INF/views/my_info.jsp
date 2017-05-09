@@ -158,7 +158,7 @@
 									<div class="col-md-9">
 										<div class="tab-content">
 											<div id="tab_1-1" class="tab-pane active">
-												<form role="form" action="#">
+												<form id="forminfo" role="form" action="#">
 													<div class="form-group">
 														<label class="control-label">Student Id</label>
 														<input class="form-control" type="text" placeholder="Student Id" name="studentid" value="${user.studentid }" readonly="readonly"/>
@@ -173,7 +173,7 @@
 													</div>
 													<div class="form-group">
 														<label class="control-label">Nickname</label>
-														<input type="text" placeholder="Nickname" class="form-control" name="nickname" value="${user.nickname }" onblur="checkNickname(this)"/>
+														<input id="reset_nickname" type="text" placeholder="Nickname" class="form-control" name="nickname" value="${user.nickname }" onblur="checkNickname()"/>
 													</div>
 													<div class="form-group">
 														<label class="control-label">Contact</label>
@@ -192,7 +192,7 @@
 														<input id="reset_gender" type="text" placeholder="Gender" class="form-control" name="sex" value="${user.sex }" onblur="validate_sex()"/>
 													</div>
 													<div class="margiv-top-10">
-														<a href="#" class="btn green">Save Changes</a>
+														<a href="#" id="save_changes" ajax_validata="success" class="btn green">Save Changes</a>
 														<a href="#" class="btn default">Cancel</a>
 													</div>
 												</form>
@@ -228,23 +228,23 @@
 														</span>
 													</div>
 													<div class="margin-top-10">
-														<a href="#" class="btn green">Submit</a>
+														<a href="#" ajax_validata="success" class="btn green">Submit</a>
 														<a href="#" class="btn default">Cancel</a>
 													</div>
 												</form>
 											</div>
 											<div id="tab_3-3" class="tab-pane">
-												<form action="#">
+												<form action="#" id="formpwd">
 													<div class="form-group">
 														<label class="control-label">New Password</label>
-														<input id="reset_password" type="password" class="form-control" onblur="validate_password()" />
+														<input id="reset_password" type="password" class="form-control" name="password" value="" onblur="validate_password()" />
 													</div>
 													<div class="form-group">
 														<label class="control-label">Re-type New Password</label>
-														<input type="password" class="form-control" />
+														<input id="re_reset_password" type="password" class="form-control" value="" onblur="re_password()"/>
 													</div>
 													<div class="margin-top-10">
-														<a href="#" class="btn green">Change Password</a>
+														<a href="#" id="change_pwd" ajax_validata="success" class="btn green">Change Password</a>
 														<a href="#" class="btn default">Cancel</a>
 													</div>
 												</form>
@@ -352,21 +352,26 @@
 		});
 		
 		//发送ajax请求校验昵称是否重复
-		   function checkNickname(str){
+		   function checkNickname(){
 			   //发送ajax请求校验昵称是否重复
-			   var nickname = str.value;
+			   var nickname = $("#reset_nickname").val();
+			   if(nickname == ""){
+				   $("#save_changes").attr("ajax_validata","error");
+				   alert("昵称不能为空！")
+				   return false;
+			   }
 			   //alert(nickname);
 			   $.ajax({
-				   url : "${BASE_PATH}/checknick",
+				   url : "${BASE_PATH}/checknickname",
 				   data : "nickname="+nickname,
 				   type : "POST",
 				   success : function(result){
 					   if(result.code == 2){
-						   $("#register-submit-btn").attr("ajax_validata","error");
+						   $("#save_changes").attr("ajax_validata","error");
 						   alert("无效的昵称，昵称已经存在，请重新输入！");
-						   $("#register_nickname").focus();
+						   $("#reset_nickname").focus();
 					   }else if(result.code == 1){
-						   $("#register-submit-btn").attr("ajax_validata","success");
+						   $("#save_changes").attr("ajax_validata","success");
 					   }
 				   }
 			   });
@@ -380,6 +385,7 @@
 				   alert("性别只能是男或女！");
 		    	   return false;
 			   }
+			   return true;
 		   }
 		   
 		   //校验用户名
@@ -390,6 +396,7 @@
 				   alert("用户名只能是2-4位中文 或者 4-16位英文！");
 		    	   return false;
 			   }
+			   return true;
 		   }
 		   
 		   //校验密码
@@ -400,7 +407,96 @@
 		    	   alert("密码必须6-16位且含有小写字母、大写字母、数字、特殊符号的两种及以上！");
 		    	   return false;
 		       }
+			   return true;
 		   }
+		   
+		   //重复密码
+		   function re_password(){
+			   var pwd = document.getElementById("reset_password").value;
+			   var re_pwd = document.getElementById("re_reset_password").value;
+			   if(pwd != re_pwd){
+				   alert("密码必须一致 ！")
+				   return false;
+			   }
+			   return true;
+		   }
+		   
+		   //change user info
+		   $("#save_changes").live("click",function(){
+			   //对提交给服务器的数据进行格式校验
+			   if(!validate_sex()){
+				   alert("性别只能是男或女！");
+				   return false;
+			   }
+			   if(!validate_username()){
+				   alert("用户名只能是2-4位中文 或者 4-16位英文！");
+				   return false;
+			   }
+			   //校验昵称是否重复
+			   if($(this).attr("ajax_validata") == "error"){
+				   alert("请再次检查昵称！");
+				   return false;
+			   }
+			   //发送ajax修改信息
+			   $.ajax({
+				  url : "${BASE_PATH}/updateuserinfo",
+				  async : false,
+				  type : "PUT",
+				  data : $("#forminfo").serialize(),
+				  success : function(result){
+					  alert(result.msg);
+				  },
+				  error : function(XMLHttpRequest, textStatus, errorThrown){
+	           		   console.log("readyState===========" + XMLHttpRequest.readyState);
+	           		   console.log("status===========" + XMLHttpRequest.status);
+	           		   console.log("statusText===========" + XMLHttpRequest.statusText);
+	           		   console.log("responseText===========" + XMLHttpRequest.responseText);
+	           		   if(XMLHttpRequest.status == 500) {
+	           			   alert("失败！服务器内部错误：500，请检查你输入的数据");
+	           		   }else if(XMLHttpRequest.status == 404){
+	           			   alert("失败！未找到页面：404");
+	           		   }else if(XMLHttpRequest.status == 200){
+	           			   alert("成功！请刷新页面");
+	           		   }
+           	       }
+			   });
+		   });
+		   
+		 //change password info
+		   $("#change_pwd").live("click",function(){
+			   //对提交给服务器的数据进行格式校验
+			   if(!validate_password()){
+				   alert("密码必须6-16位且含有小写字母、大写字母、数字、特殊符号的两种及以上！");
+				   return false;
+			   }
+			   if(!re_password()){
+				   alert("密码必须一致 ！");
+				   return false;
+			   }
+			   //发送ajax修改信息
+			   $.ajax({
+				  url : "${BASE_PATH}/updateuserpwd",
+				  async : false,
+				  type : "PUT",
+				  data : $("#formpwd").serialize(),
+				  success : function(result){
+					  alert(result.msg);
+				  },
+				  error : function(XMLHttpRequest, textStatus, errorThrown){
+	           		   console.log("readyState===========" + XMLHttpRequest.readyState);
+	           		   console.log("status===========" + XMLHttpRequest.status);
+	           		   console.log("statusText===========" + XMLHttpRequest.statusText);
+	           		   console.log("responseText===========" + XMLHttpRequest.responseText);
+	           		   if(XMLHttpRequest.status == 500) {
+	           			   alert("失败！服务器内部错误：500，请检查你输入的数据");
+	           		   }else if(XMLHttpRequest.status == 404){
+	           			   alert("失败！未找到页面：404");
+	           		   }else if(XMLHttpRequest.status == 200){
+	           			   alert("成功！请刷新页面");
+	           		   }
+           	       }
+			   });
+		   });
 	</script>
 	<!-- END JAVASCRIPTS -->
 </body>

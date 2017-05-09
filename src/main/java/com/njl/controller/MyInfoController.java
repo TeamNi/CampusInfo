@@ -7,8 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.njl.bean.Msg;
 import com.njl.bean.User;
 import com.njl.service.UserService;
 
@@ -51,5 +55,59 @@ public class MyInfoController {
 		}
 		model.addAttribute("user", user);
 		return "my_info";
+	}
+	
+	/**
+	 * update user info
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value="/updateuserinfo",method=RequestMethod.PUT)
+	@ResponseBody
+	public Msg updateUserInfo(User user){
+		userService.updateUserInfo(user);
+		return Msg.success();
+	}
+	
+	/**
+	 * update user info
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value="/updateuserpwd",method=RequestMethod.PUT)
+	@ResponseBody
+	public Msg updateUserPwd(User user, @ModelAttribute("studentid")Integer studentid){
+		userService.updateUserPwd(user,studentid);
+		return Msg.success();
+	}
+	
+	/**
+	 * 检查昵称是否可用
+	 * @param nickname
+	 * @return
+	 */
+	@RequestMapping(value="/checknickname")
+	@ResponseBody
+	public Msg checkNick(@RequestParam("nickname") String nickname, @ModelAttribute("studentid")Integer studentid){
+		List<User> list = userService.checkNick(nickname);
+		
+		int cnn = 0;
+		for (User us : list) {
+			cnn = us.getStudentid();
+		}
+		
+		int key = list.size(); 
+		switch (key) {
+		case 0:
+			return Msg.success();
+		case 1:
+			if(cnn == studentid){
+				return Msg.success();
+			}else {
+				return Msg.fail();
+			}
+		default:
+			return Msg.fail();
+		}
 	}
 }
