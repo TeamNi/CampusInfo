@@ -12,6 +12,9 @@ public class BlogReply {
     private String content;
 
     private Date createtime;
+    
+    //联合查询，查询出用户nickname
+    private User user;
 
     public BlogReply() {
 		super();
@@ -71,4 +74,12 @@ public class BlogReply {
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
     }
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 }

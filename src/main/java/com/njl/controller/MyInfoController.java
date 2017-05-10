@@ -33,6 +33,7 @@ public class MyInfoController {
 	UserService userService;
 	@Autowired
 	UserAttentionService userAttentionService;
+	
 	/**
 	 * get my info
 	 * 
@@ -77,6 +78,7 @@ public class MyInfoController {
 	
 	/**
 	 * update user info
+	 * 
 	 * @param user
 	 * @return
 	 */
@@ -88,7 +90,8 @@ public class MyInfoController {
 	}
 	
 	/**
-	 * update user info
+	 * update user password
+	 * 
 	 * @param user
 	 * @return
 	 */
@@ -101,6 +104,7 @@ public class MyInfoController {
 	
 	/**
 	 * 检查昵称是否可用
+	 * 
 	 * @param nickname
 	 * @return
 	 */

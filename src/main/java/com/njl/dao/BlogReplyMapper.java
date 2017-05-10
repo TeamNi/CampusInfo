@@ -19,6 +19,10 @@ public interface BlogReplyMapper {
     List<BlogReply> selectByExample(BlogReplyExample example);
 
     BlogReply selectByPrimaryKey(Integer replyid);
+    
+    List<BlogReply> selectByExampleWithUser(BlogReplyExample example);
+
+    BlogReply selectByPrimaryKeyWithUser(Integer replyid);
 
     int updateByExampleSelective(@Param("record") BlogReply record, @Param("example") BlogReplyExample example);
 

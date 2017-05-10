@@ -143,24 +143,16 @@
 							<c:forEach items="${pageInfo.list }" var="blog">
 							<div class="row">
 								<div class="col-md-4 blog-img blog-tag-data">
-									<img src="assets/img/gallery/image4.jpg" alt="" class="img-responsive">
+									<img src="assets/img/gallery/image2.jpg" alt="" class="img-responsive">
 									<ul class="list-inline">
-										<li><i class="fa fa-calendar"></i> <a href="#">${blog.createtime }</a></li>
+										<li><i class="glyphicon glyphicon-dashboard"></i> <a href="#">${blog.createtime }</a></li>
 										<li><i class="fa fa-comments"></i> <a href="#">${blog.replytimes } Comments</a></li>
-									</ul>
-									<ul class="list-inline blog-tags">
-										<li>
-											<i class="fa fa-tags"></i> 
-											<a href="#">Technology</a> 
-											<a href="#">Education</a>
-											<a href="#">Internet</a>
-										</li>
 									</ul>
 								</div>
 								<div class="col-md-8 blog-article">
-									<h3><a href="blog_details">${blog.title }</a></h3>
+									<h3><a href="blog_details?blogid=${blog.blogid }" >${blog.title }</a></h3>
 									<p>${blog.content }</p>
-									<a class="btn blue" href="blog_details">
+									<a class="btn blue" href="blog_details?blogid=${blog.blogid }">
 									Read more 
 									<i class="m-icon-swapright m-icon-white"></i>
 									</a>
@@ -174,14 +166,6 @@
 									<ul class="list-inline">
 										<li><i class="fa fa-calendar"></i> <a href="#">April 16, 2013</a></li>
 										<li><i class="fa fa-comments"></i> <a href="#">38 Comments</a></li>
-									</ul>
-									<ul class="list-inline blog-tags">
-										<li>
-											<i class="fa fa-tags"></i> 
-											<a href="#">Technology</a> 
-											<a href="#">Education</a>
-											<a href="#">Internet</a>
-										</li>
 									</ul>
 								</div>
 								<div class="col-md-8 blog-article">
@@ -201,14 +185,6 @@
 										<li><i class="fa fa-calendar"></i> <a href="#">April 16, 2013</a></li>
 										<li><i class="fa fa-comments"></i> <a href="#">38 Comments</a></li>
 									</ul>
-									<ul class="list-inline blog-tags">
-										<li>
-											<i class="fa fa-tags"></i> 
-											<a href="#">Technology</a> 
-											<a href="#">Education</a>
-											<a href="#">Internet</a>
-										</li>
-									</ul>
 								</div>
 								<div class="col-md-8 blog-article">
 									<h3><a href="blog_details">Hello here will be some recent news..</a></h3>
@@ -226,14 +202,6 @@
 									<ul class="list-inline">
 										<li><i class="fa fa-calendar"></i> <a href="#">April 16, 2013</a></li>
 										<li><i class="fa fa-comments"></i> <a href="#">38 Comments</a></li>
-									</ul>
-									<ul class="list-inline blog-tags">
-										<li>
-											<i class="fa fa-tags"></i> 
-											<a href="#">Technology</a> 
-											<a href="#">Education</a>
-											<a href="#">Internet</a>
-										</li>
 									</ul>
 								</div>
 								<div class="col-md-8 blog-article">
