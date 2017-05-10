@@ -132,6 +132,7 @@ public class LoginController {
 	
 	/**
 	 * 忘记密码
+	 * 
 	 * @return
 	 */
 	@RequestMapping(value="/reset")
