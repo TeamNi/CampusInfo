@@ -8,6 +8,20 @@
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
   </resultMap>
+  <resultMap id="WithUserResultMap" type="com.njl.bean.BlogReply">
+  	<id column="replyid" jdbcType="INTEGER" property="replyid" />
+    <result column="blogid" jdbcType="INTEGER" property="blogid" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <!-- 使用association 指定联合查询出的字段的封装 -->
+    <association property="user" javaType="com.njl.bean.User">
+    	<id column="userid" property="userid"/>
+    	<result column="nickname" property="nickname"/>
+    	<result column="studentid" property="studentid"/>
+    	<result column="sex" property="sex"/>
+    </association>
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -69,6 +83,35 @@
   <sql id="Base_Column_List">
     replyid, blogid, userid, content, createtime
   </sql>
+  
+  <sql id="WithUser_Column_List">
+    br.replyid, br.blogid, br.userid, br.content, br.createtime, u.userid, u.nickname, u.studentid, u.sex
+  </sql>
+  <!--  List<BlogReply> selectByExampleWithUser(BlogReplyExample example)
+    	BlogReply selectByPrimaryKeyWithUser(Integer replyid); -->
+  <select id="selectByExampleWithUser" resultMap="WithUserResultMap">
+  		select
+	    <if test="distinct">
+	      distinct
+	    </if>
+	    <include refid="WithUser_Column_List" />
+	    FROM t_blog_reply br
+		LEFT JOIN t_user u ON br.`userid` = u.`userid`
+	    <if test="_parameter != null">
+	      <include refid="Example_Where_Clause" />
+	    </if>
+	    <if test="orderByClause != null">
+	      order by ${orderByClause}
+	    </if>
+  </select>
+  <select id="selectByPrimaryKeyWithUser" resultMap="WithUserResultMap">
+    select 
+    <include refid="WithUser_Column_List" />
+    FROM t_blog_reply br
+	LEFT JOIN t_user u ON br.`userid` = u.`userid`
+    where replyid = #{replyid,jdbcType=INTEGER}
+  </select>
+  <!-- 原生的 -->
   <select id="selectByExample" parameterType="com.njl.bean.BlogReplyExample" resultMap="BaseResultMap">
     select
     <if test="distinct">

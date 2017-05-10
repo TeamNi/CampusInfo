@@ -5,7 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.njl.bean.Blog;
 import com.njl.bean.BlogReply;
+import com.njl.bean.BlogReplyExample;
+import com.njl.bean.BlogReplyExample.Criteria;
 import com.njl.dao.BlogReplyMapper;
 
 @Service
@@ -48,5 +51,44 @@ public class BlogReplyService {
 	public void updateBlogReply(BlogReply blogReply) {
 		// TODO Auto-generated method stub
 		blogReplyMapper.updateByPrimaryKeySelective(blogReply);
+	}
+
+	/**
+	 * get blog reply for blog details page
+	 * @param blogid
+	 * @return
+	 */
+	public List<BlogReply> getBlogReply(Integer blogid) {
+		// TODO Auto-generated method stub
+		BlogReplyExample example = new BlogReplyExample();
+		example.setOrderByClause("createtime");
+		Criteria criteria = example.createCriteria();
+		criteria.andBlogidEqualTo(blogid);
+		List<BlogReply> replylist = blogReplyMapper.selectByExampleWithUser(example);
+		return replylist;
+	}
+
+	/**
+	 * 统计评论数
+	 * @param blogid
+	 */
+	public long countReply(Integer blogid) {
+		// TODO Auto-generated method stub
+		BlogReplyExample example = new BlogReplyExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andBlogidEqualTo(blogid);
+		long count = blogReplyMapper.countByExample(example);
+		return count;
+	}
+
+	/**
+	 * get blogid from blogreply witn relpyid
+	 * @param replyid
+	 * @return
+	 */
+	public BlogReply queryBlogid(Integer replyid) {
+		// TODO Auto-generated method stub
+		BlogReply blog = blogReplyMapper.selectByPrimaryKey(replyid);
+		return blog;
 	}
 }

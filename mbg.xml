@@ -42,7 +42,7 @@
 		<!-- table指定每张表的生成策略 -->
 		<table tableName="t_admin" domainObjectName="Admin"></table>
 		<table tableName="t_blog" domainObjectName="Blog"></table>
-		<table tableName="t_blog_reply" domainObjectName="blogReply"></table>
+		<table tableName="t_blog_reply" domainObjectName="BlogReply"></table>
 		<table tableName="t_link" domainObjectName="Link"></table>
 		<table tableName="t_used" domainObjectName="Used"></table>
 		<table tableName="t_used_attention" domainObjectName="UsedAttention"></table>

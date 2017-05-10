@@ -5,12 +5,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.njl.bean.Blog;
+import com.njl.bean.BlogReply;
+import com.njl.bean.Msg;
+import com.njl.service.BlogReplyService;
 import com.njl.service.BlogService;
 
 /**
@@ -23,6 +29,8 @@ public class BlogController {
 	
 	@Autowired
 	private BlogService blogService;
+	@Autowired
+	private BlogReplyService blogReplyService;
 	
 	/**
 	 * blog 首页
@@ -47,8 +55,37 @@ public class BlogController {
 	 * @return
 	 */
 	@RequestMapping("/blog_details")
-	 public String getBlogDetails() {
+	 public String getBlogDetails(@RequestParam("blogid")Integer blogid, Model model) {
+		//blog details
+		Blog blogdetails = blogService.getBlogDetails(blogid);
+		model.addAttribute("blogdetails", blogdetails);
+		//blog reply
+		List<BlogReply> replylist = blogReplyService.getBlogReply(blogid);
+		model.addAttribute("replylist", replylist);
 		return "blog_details";
+	}
+	
+	/**
+	 * remove my reply
+	 * @param replyid
+	 * @param blogid
+	 * @return
+	 */
+	@RequestMapping(value="/removeblogreply/{replyid}",method=RequestMethod.DELETE)
+	@ResponseBody
+	public Msg removeMyReply(@PathVariable("replyid") Integer replyid){
+		//delete my reply
+		BlogReply blog = blogReplyService.queryBlogid(replyid);
+		int blogid = blog.getBlogid();
+		blogReplyService.deleteReply(replyid);
+		//统计评论数
+		System.out.println(replyid+"====="+blogid);
+		int count = (int)blogReplyService.countReply(blogid);
+		System.out.println(count);
+		Blog blogreplytimes = new Blog();
+		blogreplytimes.setReplytimes(count);
+		blogService.updateReplytimes(blogreplytimes,blogid);
+		return Msg.success();
 	}
 	
 	/**

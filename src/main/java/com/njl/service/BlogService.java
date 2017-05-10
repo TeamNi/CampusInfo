@@ -18,15 +18,38 @@ public class BlogService {
 
 	/**
 	 * get blog
+	 * 
 	 * @return
 	 */
 	public List<Blog> getBlog() {
 		// TODO Auto-generated method stub
 		BlogExample example = new BlogExample();
-		Criteria criteria = example.createCriteria();
-		criteria.andCreatetimeIsNotNull();
+		example.setOrderByClause("createtime");
 		List<Blog> bloglist = blogMapper.selectByExample(example);
 		return bloglist;
 	}
 
+	/**
+	 * get blog details
+	 * 
+	 * @param blogid
+	 * @return
+	 */
+	public Blog getBlogDetails(Integer blogid) {
+		// TODO Auto-generated method stub
+		Blog blogdetails = blogMapper.selectByPrimaryKey(blogid);
+		return blogdetails;
+	}
+
+	/**
+	 * update replytimes
+	 * @param count
+	 */
+	public void updateReplytimes(Blog blogreplytimes, Integer blogid) {
+		// TODO Auto-generated method stub
+		BlogExample example = new BlogExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andBlogidEqualTo(blogid);
+		blogMapper.updateByExampleSelective(blogreplytimes, example);
+	}
 }

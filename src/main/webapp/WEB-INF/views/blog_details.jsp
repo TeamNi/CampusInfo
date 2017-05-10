@@ -9,6 +9,9 @@
 <head>
 	<meta charset="utf-8" />
 	<title>Blog Details</title>
+	<%
+		pageContext.setAttribute("BASE_PATH",request.getContextPath());
+	%>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 	<meta content="" name="description" />
@@ -124,7 +127,7 @@
 							<a href="blog">Blog</a>
 							<i class="fa fa-angle-right"></i>
 						</li>
-						<li><a href="blog_details">Blog Details</a></li>
+						<li><a href="blog_details?blogid=${blogdetails.blogid }">Blog Details</a></li>
 					</ul>
 					<!-- END PAGE TITLE & BREADCRUMB-->
 				</div>
@@ -135,83 +138,46 @@
 				<div class="col-md-12 blog-page">
 					<div class="row">
 						<div class="col-md-9 article-block">
-							<h3>Hello here will be some recent news..</h3>
+							<h3>${blogdetails.title }</h3>
 							<div class="blog-tag-data">
 								<img src="assets/img/gallery/item_img.jpg" class="img-responsive" alt="">
 								<div class="row">
 									<div class="col-md-6">
-										<ul class="list-inline blog-tags">
-											<li>
-												<i class="fa fa-tags"></i> 
-												<a href="#">Technology</a> 
-												<a href="#">Education</a>
-												<a href="#">Internet</a>
-											</li>
-										</ul>
-									</div>
-									<div class="col-md-6 blog-tag-data-inner">
 										<ul class="list-inline">
-											<li><i class="fa fa-calendar"></i> <a href="#">April 16, 2013</a></li>
-											<li><i class="fa fa-comments"></i> <a href="#">38 Comments</a></li>
+											<li><i class="fa fa-calendar"></i> <a href="#">${blogdetails.createtime }</a></li>
+											<li><i class="fa fa-comments"></i> <a href="#">${blogdetails.replytimes } Comments</a></li>
 										</ul>
 									</div>
 								</div>
 							</div>
 							<!--end news-tag-data-->
 							<div>
-								<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero consectetur adipiscing elit magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat. Pellentesque viverra vehicula sem ut volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat.</p>
+								<p>${blogdetails.content }</p>
 								<blockquote class="hero">
 									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit posuere erat a ante.</p>
 									<small>Someone famous <cite title="Source Title">Source Title</cite></small>
 								</blockquote>
-								<p>Ut non libero magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat. Eserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio lorem ipsum dolor sit amet, consectetur adipiscing elit. At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero consectetur adipiscing elit magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat. Pellentesque viverra vehicula sem ut volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat. Ut non libero consectetur adipiscing elit magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat. Pellentesque viverra vehicula sem ut volutpa</p>
 							</div>
 							<hr>
 							<h3>Comments</h3>
-							<div class="media">
-								<a href="#" class="pull-left">
-								<img alt="" src="assets/img/blog/9.jpg" class="media-object">
-								</a>
-								<div class="media-body">
-									<h4 class="media-heading">Media heading <span>5 hours ago / <a href="#">Reply</a></span></h4>
-									<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-								</div>
-							</div>
-							<hr>
 							<!-- Nested media object -->
-							<div class="media">
-								<a href="#" class="pull-left">
-								<img alt="" src="assets/img/blog/5.jpg" class="media-object">
-								</a>
-								<div class="media-body">
-									<h4 class="media-heading">Media heading <span>17 hours ago / <a href="#">Reply</a></span></h4>
-									<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+							<c:forEach items="${replylist }" var="replylist">
+								<div class="media">
+									<a href="#" class="pull-left">
+									<img alt="" src="assets/img/blog/5.jpg" class="media-object">
+									</a>
+									<div class="media-body">
+									<c:if test="${studentid == replylist.user.studentid }">
+										<h4 class="media-heading">${replylist.user.nickname } <span>${replylist.createtime } / <a href="#" id="remove_rid" remove_rid="${replylist.replyid }" blogid="${blogdetails.blogid }">Remove</a></span></h4>
+									</c:if>
+									<c:if test="${studentid != replylist.user.studentid }">
+										<h4 class="media-heading">${replylist.user.nickname } <span> ${replylist.createtime } </span></h4>
+									</c:if>
+										<p>${replylist.content }</p>
+									</div>
 								</div>
-							</div>
-							<hr>
-							<!--end media-->
-							<div class="media">
-								<a href="#" class="pull-left">
-								<img alt="" src="assets/img/blog/7.jpg" class="media-object">
-								</a>
-								<div class="media-body">
-									<h4 class="media-heading">Media heading <span>2 days ago / <a href="#">Reply</a></span></h4>
-									<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-								</div>
-							</div>
-							<hr>
-							<!--end media-->
-							<div class="media">
-								<a href="#" class="pull-left">
-								<img alt="" src="assets/img/blog/6.jpg" class="media-object">
-								</a>
-								<div class="media-body">
-									<h4 class="media-heading">Media heading <span>July 5,2013 / <a href="#">Reply</a></span></h4>
-									<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-								</div>
-							</div>
-							<!--end media-->
-							<hr>
+								<hr>
+							</c:forEach>
 							<div class="post-comment">
 								<h3>Leave a Comment</h3>
 								<form role="form" action="#">
@@ -399,6 +365,36 @@
 	<script>
 		jQuery(document).ready(function() {    
 		   App.init();
+		});
+		
+		//remove myself reply 
+		$("#remove_rid").live("click",function(){
+			var replyid = $(this).attr("remove_rid");
+			var blogid = $(this).attr("blogid");
+			alert(blogid+"==="+replyid)
+			$.ajax({
+				url : "${BASE_PATH}/removeblogreply/" + replyid,
+				async : false,
+				type : "DELETE",
+				success : function(result){
+					alert(result.msg);
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown){
+         		   console.log("readyState===========" + XMLHttpRequest.readyState);
+         		   console.log("status===========" + XMLHttpRequest.status);
+         		   console.log("statusText===========" + XMLHttpRequest.statusText);
+         		   console.log("responseText===========" + XMLHttpRequest.responseText);
+         		   if(XMLHttpRequest.status == 500) {
+         			   alert("失败！服务器内部错误：500，请检查你输入的数据");
+         		   }else if(XMLHttpRequest.status == 404){
+         			   alert("失败！未找到页面：404");
+         		   }else if(XMLHttpRequest.status == 200){
+         			   alert("成功！请刷新页面");
+         		   }
+         	   }
+			});
+			//刷新页面
+			location.reload();
 		});
 	</script>
 	<!-- END JAVASCRIPTS -->
