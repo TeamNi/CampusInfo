@@ -250,48 +250,20 @@
 												</form>
 											</div>
 											<div id="tab_4-4" class="tab-pane">
-												<form action="" class="">
+												<form action="my_info" class="">
 													<table class="table table-bordered table-striped">
+													<c:forEach items="${nicknames }" var="nicknames">
 														<tr>
 															<td>
-																Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus..${user.userid }
+																${nicknames.nickname }
 															</td>
 															<td>
-																<button type="submit" class="btn blue pull-left">
+																<button id="delete_friend" friendid="${nicknames.userid }" type="button" class="btn blue pull-left">
 																Remove 
 																</button>  
 															</td>
 														</tr>
-														<tr>
-															<td>
-																Enim eiusmod high life accusamus terry richardson ad squid wolf moon
-															</td>
-															<td>
-																<button type="submit" class="btn blue pull-left">
-																Remove 
-																</button>  
-															</td>
-														</tr>
-														<tr>
-															<td>
-																Enim eiusmod high life accusamus terry richardson ad squid wolf moon
-															</td>
-															<td>
-																<button type="submit" class="btn blue pull-left">
-																Remove 
-																</button>  
-															</td>
-														</tr>
-														<tr>
-															<td>
-																Enim eiusmod high life accusamus terry richardson ad squid wolf moon
-															</td>
-															<td>
-																<button type="submit" class="btn blue pull-left">
-																Remove 
-																</button>  
-															</td>
-														</tr>
+													</c:forEach>
 													</table>
 													<!--end profile-settings-->
 												</form>
@@ -462,7 +434,7 @@
 			   });
 		   });
 		   
-		 //change password info
+		   //change password info
 		   $("#change_pwd").live("click",function(){
 			   //对提交给服务器的数据进行格式校验
 			   if(!validate_password()){
@@ -494,8 +466,35 @@
 	           		   }else if(XMLHttpRequest.status == 200){
 	           			   alert("成功！请刷新页面");
 	           		   }
-           	       }
+	          	       }
 			   });
+		   });
+		   
+		   //delete friend
+		   $("#delete_friend").live("click",function(){
+			   $.ajax({
+				  url : "${BASE_PATH}/deletemyattention/" + $(this).attr("friendid"),
+				  async : false,
+				  type : "DELETE",
+				  success : function(result){
+					  alert(result.msg);
+				  },
+				  error : function(XMLHttpRequest, textStatus, errorThrown){
+	           		   console.log("readyState===========" + XMLHttpRequest.readyState);
+	           		   console.log("status===========" + XMLHttpRequest.status);
+	           		   console.log("statusText===========" + XMLHttpRequest.statusText);
+	           		   console.log("responseText===========" + XMLHttpRequest.responseText);
+	           		   if(XMLHttpRequest.status == 500) {
+	           			   alert("失败！服务器内部错误：500，请检查你输入的数据");
+	           		   }else if(XMLHttpRequest.status == 404){
+	           			   alert("失败！未找到页面：404");
+	           		   }else if(XMLHttpRequest.status == 200){
+	           			   alert("成功！请刷新页面");
+	           		   }
+	          	    }
+			   });
+			   //刷新页面
+			   location.reload();
 		   });
 	</script>
 	<!-- END JAVASCRIPTS -->

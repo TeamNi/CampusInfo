@@ -1,5 +1,6 @@
 package com.njl.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.njl.bean.Msg;
 import com.njl.bean.User;
+import com.njl.bean.UserAttention;
+import com.njl.service.UserAttentionService;
 import com.njl.service.UserService;
 
 /**
@@ -28,9 +31,10 @@ public class MyInfoController {
 
 	@Autowired
 	UserService userService;
-
+	@Autowired
+	UserAttentionService userAttentionService;
 	/**
-	 * my info
+	 * get my info
 	 * 
 	 * @return
 	 */
@@ -38,6 +42,7 @@ public class MyInfoController {
 	public String getMyInfo(@ModelAttribute("username") String username,
 			@ModelAttribute("studentid") Integer studentid, Model model) {
 
+		//my info
 		User user = new User();
 		List<User> userlist = userService.queryUserWithStu(studentid);
 		for (User us : userlist) {
@@ -54,6 +59,19 @@ public class MyInfoController {
 			user.setUsername(us.getUsername());
 		}
 		model.addAttribute("user", user);
+		//get my attention
+		List<User> nicknames = new ArrayList<>();
+		List<User> userids = userService.getMyAttention(studentid);//get userid with studentid
+		int userid = 0;
+		for (User user2 : userids) {
+			userid = user2.getUserid();			
+		}
+		List<UserAttention> friendids = userAttentionService.getMyAttention(userid);//get friendid with userid
+		for (UserAttention userAttention : friendids) {
+			User user2 = userService.getAttentionNickname(userAttention.getFriendid());//get nickname with friendid
+			nicknames.add(user2);
+		}
+		model.addAttribute("nicknames", nicknames);
 		return "my_info";
 	}
 	

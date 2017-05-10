@@ -107,4 +107,29 @@ public class UserService {
 		userMapper.updateByExampleSelective(user, example);
 	}
 
+	/**
+	 * get my attention
+	 * @param studentid
+	 * @return
+	 */
+	public List<User> getMyAttention(Integer studentid) {
+		// TODO Auto-generated method stub
+		UserExample example = new UserExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andStudentidEqualTo(studentid);
+		List<User> userlist = userMapper.selectByExample(example);
+		return userlist;
+	}
+
+	/**
+	 * get my attention nickname
+	 * @param friendid
+	 * @return
+	 */
+	public User getAttentionNickname(Integer friendid) {
+		// TODO Auto-generated method stub
+		User user2 = userMapper.selectByPrimaryKey(friendid);
+		return user2;
+	}
+
 }
