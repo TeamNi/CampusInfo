@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class Msg {
 
-	// 状态吗1-成功 2-失败
+	// 状态码：1-成功 2-失败
 	private int code;
 	// 提示信息
 	private String msg;

@@ -10,6 +10,23 @@
     <result column="pictureurl" jdbcType="VARCHAR" property="pictureurl" />
     <result column="replytimes" jdbcType="INTEGER" property="replytimes" />
   </resultMap>
+  <resultMap id="WithUserResultMap" type="com.njl.bean.Blog">
+  	<id column="blogid" jdbcType="INTEGER" property="blogid" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="pictureurl" jdbcType="VARCHAR" property="pictureurl" />
+    <result column="replytimes" jdbcType="INTEGER" property="replytimes" />
+    <!-- 使用association 指定联合查询出的字段的封装 -->
+    <association property="user" javaType="com.njl.bean.User">
+    	<id column="userid" property="userid"/>
+    	<result column="nickname" property="nickname"/>
+    	<result column="studentid" property="studentid"/>
+    	<result column="sex" property="sex"/>
+    	<result column="headurl" property="headurl"/>
+    </association>
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -71,6 +88,36 @@
   <sql id="Base_Column_List">
     blogid, userid, createtime, title, content, pictureurl, replytimes
   </sql>
+  <sql id="WithUser_Column_List">
+  	b.blogid, b.userid, b.createtime, b.title, b.content, b.pictureurl, b.replytimes, u.userid, u.nickname, u.studentid, u.sex, u.headurl
+  </sql>
+  
+  <!--  List<Blog> selectByExampleWithUser(BlogExample example);
+        Blog selectByPrimaryKeyWithUser(Integer blogid); -->
+  <select id="selectByExampleWithUser" resultMap="WithUserResultMap">
+  	select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="WithUser_Column_List" />
+    FROM t_blog b
+	LEFT JOIN t_user u ON b.userid = u.userid 
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause} DESC
+    </if>
+  </select>
+  <select id="selectByPrimaryKeyWithUser" resultMap="WithUserResultMap">
+  	select 
+    <include refid="WithUser_Column_List" />
+    FROM t_blog b
+	LEFT JOIN t_user u ON b.userid = u.userid 
+    where blogid = #{blogid,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 原生的 -->
   <select id="selectByExample" parameterType="com.njl.bean.BlogExample" resultMap="BaseResultMap">
     select
     <if test="distinct">

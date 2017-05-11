@@ -16,6 +16,9 @@ public class Blog {
     private String pictureurl;
 
     private Integer replytimes;
+    
+    //联合查询，查询出用户nickname
+    private User user;
 
     @Override
 	public String toString() {
@@ -94,4 +97,12 @@ public class Blog {
     public void setReplytimes(Integer replytimes) {
         this.replytimes = replytimes;
     }
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 }

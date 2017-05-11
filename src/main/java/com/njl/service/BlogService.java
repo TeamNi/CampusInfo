@@ -30,7 +30,7 @@ public class BlogService {
 		// TODO Auto-generated method stub
 		BlogExample example = new BlogExample();
 		example.setOrderByClause("createtime");
-		List<Blog> bloglist = blogMapper.selectByExample(example);
+		List<Blog> bloglist = blogMapper.selectByExampleWithUser(example);
 		return bloglist;
 	}
 
@@ -42,7 +42,7 @@ public class BlogService {
 	 */
 	public Blog getBlogDetails(Integer blogid) {
 		// TODO Auto-generated method stub
-		Blog blogdetails = blogMapper.selectByPrimaryKey(blogid);
+		Blog blogdetails = blogMapper.selectByPrimaryKeyWithUser(blogid);
 		return blogdetails;
 	}
 
