@@ -8,6 +8,11 @@ import org.springframework.stereotype.Service;
 import com.njl.bean.UsedReply;
 import com.njl.dao.UsedReplyMapper;
 
+/**
+ * used reply service
+ * @author njl
+ *
+ */
 @Service
 public class UsedReplyService {
 

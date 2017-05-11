@@ -11,6 +11,11 @@ import com.njl.bean.BlogReplyExample;
 import com.njl.bean.BlogReplyExample.Criteria;
 import com.njl.dao.BlogReplyMapper;
 
+/**
+ * blog reply service
+ * @author njl
+ *
+ */
 @Service
 public class BlogReplyService {
 

@@ -180,12 +180,13 @@
 							</c:forEach>
 							<div class="post-comment">
 								<h3>Leave a Comment</h3>
-								<form role="form" action="#">
+								<form id="from_post_reply" role="form" action="#">
 									<div class="form-group">
 										<label class="control-label">Message<span class="required">*</span></label>
-										<textarea class="col-md-10 form-control" rows="8"></textarea>
+										<input type="hidden" name="blogid" value="${blogdetails.blogid }"/>
+										<textarea id="reply_content" class="col-md-10 form-control" rows="8" name="content"></textarea>
 									</div>
-									<button class="margin-top-20 btn blue" type="submit">Post a Comment</button>
+									<button id="btn_post_reply" class="margin-top-20 btn blue" type="button">Post a Comment</button>
 								</form>
 							</div>
 						</div>
@@ -371,7 +372,9 @@
 		$("#remove_rid").live("click",function(){
 			var replyid = $(this).attr("remove_rid");
 			var blogid = $(this).attr("blogid");
-			alert(blogid+"==="+replyid)
+			if(confirm("Are you sure?") == false){
+				return;
+			}
 			$.ajax({
 				url : "${BASE_PATH}/removeblogreply/" + replyid,
 				async : false,
@@ -392,6 +395,29 @@
          			   alert("成功！请刷新页面");
          		   }
          	   }
+			});
+			//刷新页面
+			location.reload();
+		});
+		
+		//add blog reply
+		$("#btn_post_reply").live("click",function(){
+			var reply_content = $("#reply_content").val();
+			if(reply_content == ""){
+				alert("发布什么 ？")
+				return false;
+			}
+			if(confirm("Are you sure?") == false){
+				return;
+			}
+			$.ajax({
+				url : "${BASE_PATH}/addblogreply",
+				async : false,
+				type : "POST",
+				data : $("#from_post_reply").serialize(),
+				success : function(result){
+					alert(result.msg)
+				}
 			});
 			//刷新页面
 			location.reload();

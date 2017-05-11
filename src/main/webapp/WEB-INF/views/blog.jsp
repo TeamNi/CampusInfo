@@ -145,7 +145,7 @@
 								<div class="col-md-4 blog-img blog-tag-data">
 									<img src="assets/img/gallery/image2.jpg" alt="" class="img-responsive">
 									<ul class="list-inline">
-										<li><i class="glyphicon glyphicon-dashboard"></i> <a href="#">${blog.createtime }</a></li>
+										<li><i class="glyphicon glyphicon-dashboard"></i> <a href="#">${blog.createtime }</a></li><br>
 										<li><i class="fa fa-comments"></i> <a href="#">${blog.replytimes } Comments</a></li>
 									</ul>
 								</div>
@@ -160,59 +160,6 @@
 							</div>
 							<hr>
 							</c:forEach>
-							<div class="row">
-								<div class="col-md-4 blog-img blog-tag-data">
-									<img src="assets/img/gallery/image3.jpg" alt="" class="img-responsive">
-									<ul class="list-inline">
-										<li><i class="fa fa-calendar"></i> <a href="#">April 16, 2013</a></li>
-										<li><i class="fa fa-comments"></i> <a href="#">38 Comments</a></li>
-									</ul>
-								</div>
-								<div class="col-md-8 blog-article">
-									<h3><a href="blog_details">Hello here will be some recent news..</a></h3>
-									<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero consectetur adipiscing elit magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat. Pellentesque viverra vehicula sem ut volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat.</p>
-									<a class="btn blue" href="blog_details">
-									Read more 
-									<i class="m-icon-swapright m-icon-white"></i>
-									</a>
-								</div>
-							</div>
-							<hr>
-							<div class="row">
-								<div class="col-md-4 blog-img blog-tag-data">
-									<img src="assets/img/gallery/image2.jpg" alt="" class="img-responsive">
-									<ul class="list-inline">
-										<li><i class="fa fa-calendar"></i> <a href="#">April 16, 2013</a></li>
-										<li><i class="fa fa-comments"></i> <a href="#">38 Comments</a></li>
-									</ul>
-								</div>
-								<div class="col-md-8 blog-article">
-									<h3><a href="blog_details">Hello here will be some recent news..</a></h3>
-									<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero consectetur adipiscing elit magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat. Pellentesque viverra vehicula sem ut volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat.</p>
-									<a class="btn blue" href="blog_details">
-									Read more 
-									<i class="m-icon-swapright m-icon-white"></i>
-									</a>
-								</div>
-							</div>
-							<hr>
-							<div class="row">
-								<div class="col-md-4 blog-img blog-tag-data">
-									<img src="assets/img/gallery/image5.jpg" alt="" class="img-responsive">
-									<ul class="list-inline">
-										<li><i class="fa fa-calendar"></i> <a href="#">April 16, 2013</a></li>
-										<li><i class="fa fa-comments"></i> <a href="#">38 Comments</a></li>
-									</ul>
-								</div>
-								<div class="col-md-8 blog-article">
-									<h3><a href="blog_details">Hello here will be some recent news..</a></h3>
-									<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero consectetur adipiscing elit magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat.</p>
-									<a class="btn blue" href="blog_details">
-									Read more 
-									<i class="m-icon-swapright m-icon-white"></i>
-									</a>
-								</div>
-							</div>
 						</div>
 						<!--end col-md-9-->
 						<div class="col-md-3 col-sm-4 blog-sidebar">

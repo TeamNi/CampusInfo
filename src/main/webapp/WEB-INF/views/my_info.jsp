@@ -409,6 +409,9 @@
 				   alert("请再次检查昵称！");
 				   return false;
 			   }
+			   if(confirm("Are you sure?") == false){
+					return;
+			   }
 			   //发送ajax修改信息
 			   $.ajax({
 				  url : "${BASE_PATH}/updateuserinfo",
@@ -445,6 +448,9 @@
 				   alert("密码必须一致 ！");
 				   return false;
 			   }
+			   if(confirm("Are you sure?") == false){
+					return;
+			   }
 			   //发送ajax修改信息
 			   $.ajax({
 				  url : "${BASE_PATH}/updateuserpwd",
@@ -472,6 +478,9 @@
 		   
 		   //delete friend
 		   $("#delete_friend").live("click",function(){
+			   if(confirm("Are you sure?") == false){
+					return;
+			   }
 			   $.ajax({
 				  url : "${BASE_PATH}/deletemyattention/" + $(this).attr("friendid"),
 				  async : false,

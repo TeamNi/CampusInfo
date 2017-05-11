@@ -10,6 +10,11 @@ import com.njl.bean.UserAttentionExample;
 import com.njl.bean.UserAttentionExample.Criteria;
 import com.njl.dao.UserAttentionMapper;
 
+/**
+ * user attention service
+ * @author njl
+ *
+ */
 @Service
 public class UserAttentionService {
 

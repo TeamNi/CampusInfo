@@ -1,23 +1,28 @@
 package com.njl.controller;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.njl.bean.Blog;
 import com.njl.bean.BlogReply;
 import com.njl.bean.Msg;
+import com.njl.bean.User;
 import com.njl.service.BlogReplyService;
 import com.njl.service.BlogService;
+import com.njl.service.UserService;
 
 /**
  * 前台  blog 
@@ -25,12 +30,15 @@ import com.njl.service.BlogService;
  *
  */
 @Controller
+@SessionAttributes({"username","studentid"})
 public class BlogController {
 	
 	@Autowired
 	private BlogService blogService;
 	@Autowired
 	private BlogReplyService blogReplyService;
+	@Autowired
+	private UserService userService;
 	
 	/**
 	 * blog 首页
@@ -79,9 +87,7 @@ public class BlogController {
 		int blogid = blog.getBlogid();
 		blogReplyService.deleteReply(replyid);
 		//统计评论数
-		System.out.println(replyid+"====="+blogid);
 		int count = (int)blogReplyService.countReply(blogid);
-		System.out.println(count);
 		Blog blogreplytimes = new Blog();
 		blogreplytimes.setReplytimes(count);
 		blogService.updateReplytimes(blogreplytimes,blogid);
@@ -89,11 +95,65 @@ public class BlogController {
 	}
 	
 	/**
-	 * blog issue
+	 * add blog reply
+	 * @param blogReply
+	 * @return
+	 */
+	@RequestMapping(value="/addblogreply",method=RequestMethod.POST)
+	@ResponseBody
+	public Msg addBlogReply(BlogReply blogReply,@ModelAttribute("studentid") Integer studentid){
+		//根据学号拿到userid
+		int userid = 0;
+		List<User> userlist = userService.queryUserWithStu(studentid);
+		for (User user : userlist) {
+			userid = user.getUserid();
+		}
+		//将数据装载到BlogReply
+		blogReply.setUserid(userid);
+		long time = System.currentTimeMillis();
+		Date date = new Date(time);
+		blogReply.setCreatetime(date);
+		blogReplyService.addBlogReply(blogReply);//add reply
+		//统计评论数
+		int blogid = blogReply.getBlogid();
+		int count = (int)blogReplyService.countReply(blogid);
+		Blog blogreplytimes = new Blog();
+		blogreplytimes.setReplytimes(count);
+		blogService.updateReplytimes(blogreplytimes,blogid);//update replytimes
+		return Msg.success();
+	}
+	
+	/**
+	 * to blog issue page
 	 * @return
 	 */
 	@RequestMapping("/blog_issue")
-	public String getBlogIssue() {
+	public String toBlogIssuePage() {
 		return "blog_issue";
+	}
+	
+	/**
+	 * issue blog
+	 * @param blog
+	 * @param studentid
+	 * @return
+	 */
+	@RequestMapping(value="/issue_blog",method=RequestMethod.POST)
+	@ResponseBody
+	public Msg issueBlog(Blog blog,@ModelAttribute("studentid") Integer studentid){
+		//根据学号拿到userid
+		int userid = 0;
+		List<User> userlist = userService.queryUserWithStu(studentid);
+		for (User user : userlist) {
+			userid = user.getUserid();
+		}
+		//获取当前时间
+		long time = System.currentTimeMillis();
+		Date date = new Date(time);
+		//issue blog
+		blog.setUserid(userid);
+		blog.setCreatetime(date);
+		blogService.issueBlog(blog);
+		return Msg.success(); 
 	}
 }
