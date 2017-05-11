@@ -37,7 +37,8 @@ public class UserAttentionService {
 
 	/**
 	 * delete friend
-	 * @param id
+	 * @param friendid
+	 * @param userid
 	 */
 	public void deleteFriend(Integer friendid,Integer userid) {
 		// TODO Auto-generated method stub
@@ -45,5 +46,29 @@ public class UserAttentionService {
 		Criteria criteria = example.createCriteria();
 		criteria.andFriendidEqualTo(friendid).andUseridEqualTo(userid);
 		userAttentionMapper.deleteByExample(example);
+	}
+
+	/**
+	 * 查看好友是否已经存在
+	 * @param userid
+	 * @param friendid
+	 * @return
+	 */
+	public long selectFrient(int userid, Integer friendid) {
+		// TODO Auto-generated method stub
+		UserAttentionExample example = new UserAttentionExample();
+		Criteria  criteria = example.createCriteria();
+		criteria.andUseridEqualTo(userid).andFriendidEqualTo(friendid);
+		long count = userAttentionMapper.countByExample(example);
+		return count;
+	}
+
+	/**
+	 * add frieng
+	 * @param userAttention
+	 */
+	public void addFriend(UserAttention userAttention) {
+		// TODO Auto-generated method stub
+		userAttentionMapper.insert(userAttention);
 	}
 }

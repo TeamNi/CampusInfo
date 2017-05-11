@@ -142,8 +142,9 @@
 							<div class="blog-tag-data">
 								<img src="assets/img/gallery/item_img.jpg" class="img-responsive" alt="">
 								<div class="row">
-									<div class="col-md-6">
+									<div class="col-md-9">
 										<ul class="list-inline">
+											<li><i class="glyphicon glyphicon-user"></i> <a href="#">${blogdetails.user.nickname }</a></li>
 											<li><i class="fa fa-calendar"></i> <a href="#">${blogdetails.createtime }</a></li>
 											<li><i class="fa fa-comments"></i> <a href="#">${blogdetails.replytimes } Comments</a></li>
 										</ul>

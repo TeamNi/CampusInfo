@@ -145,6 +145,7 @@
 								<div class="col-md-4 blog-img blog-tag-data">
 									<img src="assets/img/gallery/image2.jpg" alt="" class="img-responsive">
 									<ul class="list-inline">
+										<li><i class="glyphicon glyphicon-user"></i> <a href="#" id="my_nickname" userid="${blog.user.userid }" nickname="${blog.user.nickname }">${blog.user.nickname }</a></li><br>
 										<li><i class="glyphicon glyphicon-dashboard"></i> <a href="#">${blog.createtime }</a></li><br>
 										<li><i class="fa fa-comments"></i> <a href="#">${blog.replytimes } Comments</a></li>
 									</ul>
@@ -356,6 +357,42 @@
 	<script>
 		jQuery(document).ready(function() {    
 		   App.init();
+		});
+		
+		//add attention
+		$("#my_nickname").live("click",function(){
+			var userid = $(this).attr("userid");
+			var nickname = $(this).attr("nickname");
+			if(confirm("确定将"+nickname+"添加为好友?") == false){
+				return;
+			}
+			$.ajax({
+				url : "${BASE_PATH}/addmyattention",
+				async : false,
+				type : "POST",
+				data : "userid=" + userid,
+				success : function(result){
+					if(result.code == 1){
+						alert("添加成功！");
+					}
+					if(result.code == 2){
+						alert("好友已经存在！");
+					}
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown){
+         		   console.log("readyState===========" + XMLHttpRequest.readyState);
+         		   console.log("status===========" + XMLHttpRequest.status);
+         		   console.log("statusText===========" + XMLHttpRequest.statusText);
+         		   console.log("responseText===========" + XMLHttpRequest.responseText);
+         		   if(XMLHttpRequest.status == 500) {
+         			   alert("失败！服务器内部错误：500，请检查你输入的数据");
+         		   }else if(XMLHttpRequest.status == 404){
+         			   alert("失败！未找到页面：404");
+         		   }else if(XMLHttpRequest.status == 200){
+         			   alert("成功！请刷新页面");
+         		   }
+         	    }
+			});
 		});
 	</script>
 <!-- END JAVASCRIPTS -->

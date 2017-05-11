@@ -20,6 +20,7 @@
     	<result column="nickname" property="nickname"/>
     	<result column="studentid" property="studentid"/>
     	<result column="sex" property="sex"/>
+    	<result column="headurl" property="headurl"/>
     </association>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -85,7 +86,7 @@
   </sql>
   
   <sql id="WithUser_Column_List">
-    br.replyid, br.blogid, br.userid, br.content, br.createtime, u.userid, u.nickname, u.studentid, u.sex
+    br.replyid, br.blogid, br.userid, br.content, br.createtime, u.userid, u.nickname, u.studentid, u.sex, u.headurl
   </sql>
   <!--  List<BlogReply> selectByExampleWithUser(BlogReplyExample example)
     	BlogReply selectByPrimaryKeyWithUser(Integer replyid); -->
