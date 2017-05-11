@@ -7,6 +7,11 @@ import com.njl.bean.AdminExample;
 import com.njl.bean.AdminExample.Criteria;
 import com.njl.dao.AdminMapper;
 
+/**
+ * admin service
+ * @author njl
+ *
+ */
 @Service
 public class AdminService {
 	

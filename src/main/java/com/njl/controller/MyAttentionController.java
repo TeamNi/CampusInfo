@@ -16,6 +16,11 @@ import com.njl.bean.User;
 import com.njl.service.UserAttentionService;
 import com.njl.service.UserService;
 
+/**
+ * my atttention friends
+ * @author njl
+ *
+ */
 @Controller
 @SessionAttributes({ "username", "studentid" })
 public class MyAttentionController {

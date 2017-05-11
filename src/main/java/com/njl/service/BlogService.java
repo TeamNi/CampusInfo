@@ -10,6 +10,11 @@ import com.njl.bean.BlogExample;
 import com.njl.bean.BlogExample.Criteria;
 import com.njl.dao.BlogMapper;
 
+/**
+ * 前台blog service
+ * @author njl
+ *
+ */
 @Service
 public class BlogService {
 
@@ -51,5 +56,14 @@ public class BlogService {
 		Criteria criteria = example.createCriteria();
 		criteria.andBlogidEqualTo(blogid);
 		blogMapper.updateByExampleSelective(blogreplytimes, example);
+	}
+
+	/**
+	 * issue blog
+	 * @param blog
+	 */
+	public void issueBlog(Blog blog) {
+		// TODO Auto-generated method stub
+		blogMapper.insertSelective(blog);
 	}
 }

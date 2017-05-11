@@ -8,6 +8,11 @@ import org.springframework.stereotype.Service;
 import com.njl.bean.Blog;
 import com.njl.dao.BlogMapper;
 
+/**
+ * blog manage service
+ * @author njl
+ *
+ */
 @Service
 public class BlogManageService {
 	

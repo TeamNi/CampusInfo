@@ -357,7 +357,6 @@
             		   }else if(XMLHttpRequest.status == 200){
             			   alert("成功！请刷新页面");
             		   }
-            		   
             	   }
                });
              	//刷新页面

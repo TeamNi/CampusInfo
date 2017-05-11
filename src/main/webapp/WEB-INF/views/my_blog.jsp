@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
@@ -9,6 +10,9 @@
 <head>
 	<meta charset="utf-8" />
 	<title>My Blog</title>
+	<%
+		pageContext.setAttribute("BASE_PATH",request.getContextPath());
+	%>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 	<meta content="" name="description" />
@@ -131,161 +135,48 @@
 				<div class="col-md-12 blog-page">
 				<div class="col-md-9 col-sm-8 article-block">
 					<ul class="timeline">
-						<li class="timeline-yellow">
-							<div class="timeline-time">
-								<span class="date">4/10/13</span>
-								<span class="time">18:30</span>
-							</div>
-							<div class="timeline-icon"><i class="fa fa-trophy"></i></div>
-							<div class="timeline-body">
-								<h2>ICT 2013 20th International Conference</h2>
-								<div class="timeline-content">
-									<img class="timeline-img pull-left" src="assets/img/blog/2.jpg" alt="">
-									Ricebean black-eyed pea maize scallion green bean spinach cabbage jicama bell pepper carrot onion corn plantain garbanzo. Winter purslane courgette pumpkin quandong komatsuna fennel green bean cucumber watercress.
-									Parsley amaranth tigernut silver beet maize fennel spinach. Ricebean black-eyed pea maize scallion green bean spinach cabbage jicama bell pepper carrot onion corn plantain garbanzo. 
+						<c:forEach items="${bloglist }" var="bloglist">
+							<c:if test="${bloglist.replytimes >= 20}">
+							<li class="timeline-red">
+							</c:if>
+							<c:if test="${bloglist.replytimes >= 10 && bloglist.replytimes < 20}">
+							<li class="timeline-purple">
+							</c:if>
+							<c:if test="${bloglist.replytimes >= 3 && bloglist.replytimes < 10 }">
+							<li class="timeline-green">
+							</c:if>
+							<c:if test="${bloglist.replytimes >= 1 && bloglist.replytimes < 3 }">
+							<li class="timeline-blue">
+							</c:if>
+							<c:if test="${bloglist.replytimes >= 0 && bloglist.replytimes < 1}">
+							<li class="timeline-yellow">
+							</c:if>
+								<div class="timeline-time">
+									<span class="date">
+									<fmt:formatDate value="${bloglist.createtime }" type="date" pattern="yyyy/MM/dd"/>
+									</span>
+									<span class="time">
+									<fmt:formatDate value="${bloglist.createtime }" type="time" pattern="hh:mm"/>
+									</span>
 								</div>
-								<div class="timeline-footer">
-									<a href="#" class="nav-link pull-left">
-									Remove <i class="m-icon-white"></i>                              
-									</a>  
-									<a href="blog_details" class="nav-link pull-right">
-									Read more <i class="m-icon-swapright m-icon-white"></i>                    
-									</a>  
-								</div>
-							</div>
-						</li>
-						<li class="timeline-blue">
-							<div class="timeline-time">
-								<span class="date">4/11/13</span>
-								<span class="time">12:04</span>
-							</div>
-							<div class="timeline-icon"><i class="fa fa-video-camera"></i></div>
-							<div class="timeline-body">
-								<h2>Management Meeting</h2>
-								<div class="timeline-content">
-									<img class="timeline-img pull-right" src="assets/img/blog/1.jpg" alt="">
-									Caulie dandelion maize lentil collard greens radish arugula sweet pepper water spinach kombu courgette lettuce. Celery coriander bitterleaf epazote radicchio shallot winter collard greens spring onion squash lentil. Artichoke salad bamboo shoot black-eyed pea brussels sprout garlic kohlrabi purslane collard greens spring onion squash lentil. Artichoke salad bamboo shoot black-eyed pea brussels sprout garlic kohlrabi..
-								</div>
-								<div class="timeline-footer">
-									<a href="#" class="nav-link pull-left">
-									Remove <i class="m-icon-white"></i>                              
-									</a>  
-									<a href="blog_details" class="nav-link pull-right">
-									Read more <i class="m-icon-swapright m-icon-white"></i>                       
-									</a>                         
-								</div>
-							</div>
-						</li>
-						<li class="timeline-green">
-							<div class="timeline-time">
-								<span class="date">4/13/13</span>
-								<span class="time">05:36</span>
-							</div>
-							<div class="timeline-icon"><i class="fa fa-comments"></i></div>
-							<div class="timeline-body">
-								<h2>New Project Launch</h2>
-								<div class="timeline-content">
-									<img class="timeline-img pull-left" src="assets/img/blog/3.jpg" alt="">
-									Winter purslane courgette pumpkin quandong komatsuna fennel green bean cucumber watercress. Pea sprouts wattle seed rutabaga okra yarrow cress avocado grape radish bush tomato ricebean. Pea sprouts wattle seed rutabaga okra yarrow cress avocado grape radish bush tomato ricebean.
-								</div>
-								<div class="timeline-footer">
-									<a href="#" class="nav-link">
-									Read more <i class="m-icon-swapright m-icon-white"></i>                              
-									</a>                        
-								</div>
-							</div>
-						</li>
-						<li class="timeline-purple">
-							<div class="timeline-time">
-								<span class="date">4/15/13</span>
-								<span class="time">13:15</span>
-							</div>
-							<div class="timeline-icon"><i class="fa fa-music"></i></div>
-							<div class="timeline-body">
-								<h2>Promotion Day</h2>
-								<div class="timeline-content">
-									<div class="scroller" data-height="175px" data-always-visible="1" data-rail-visible1="1">
-										<p>
-											<img class="timeline-img pull-right" src="assets/img/blog/4.jpg" alt="">
-											Caulie dandelion maize lentil collard greens radish arugula sweet pepper water spinach kombu courgette lettuce. Celery coriander bitterleaf epazote radicchio shallot winter purslane collard greens spring onion squash lentil. Artichoke salad bamboo shoot black-eyed pea brussels sprout garlic kohlrabi. coriander bitterleaf epazote radicchio shallot winter purslane collard.
-										</p>
-										<p>
-											Coriander bitterleaf epazote radicchio shallot winter purslane collard.
-											Caulie dandelion maize lentil collard greens radish arugula sweet pepper water spinach kombu courgette lettuce. Celery coriander bitterleaf epazote radicchio shallot winter purslane collard greens spring onion squash lentil. Artichoke salad bamboo shoot black-eyed pea brussels sprout garlic kohlrabi.
-										</p>
-										<p>
-											<img class="timeline-img pull-left" src="assets/img/blog/6.jpg" alt="">                                    
-											Caulie dandelion maize lentil collard greens radish arugula sweet pepper water spinach kombu courgette lettuce. Celery coriander bitterleaf epazote radicchio shallot winter purslane collard greens spring onion squash lentil. Artichoke salad bamboo shoot black-eyed pea brussels sprout garlic kohlrabi radicchio shallot winter purslane collard greens spring onion squash lentil.
-										</p>
-										<p>
-											Coriander bitterleaf epazote radicchio shallot winter purslane collard.
-											Caulie dandelion maize lentil collard greens radish arugula sweet pepper water spinach kombu courgette lettuce. Celery coriander bitterleaf epazote radicchio shallot winter purslane collard greens spring onion squash lentil. Artichoke salad bamboo shoot black-eyed pea brussels sprout garlic kohlrabi.
-										</p>
+								<div class="timeline-icon"><i class="fa fa-rss"></i></div>
+								<div class="timeline-body">
+									<h2>${bloglist.title }</h2>
+									<div class="timeline-content">
+										<img class="timeline-img pull-left" src="assets/img/blog/2.jpg" alt="">
+										${bloglist.content }
+									</div>
+									<div class="timeline-footer">
+										<a href="#" id="remove_blog" blogid="${bloglist.blogid }" class="nav-link pull-left">
+										Remove <i class="m-icon-white glyphicon glyphicon-remove"></i>                              
+										</a>  
+										<a href="blog_details?blogid=${bloglist.blogid }" class="nav-link pull-right">
+										Read more <i class="m-icon-swapright m-icon-white"></i>                    
+										</a>  
 									</div>
 								</div>
-								<div class="timeline-footer">
-									<a href="#" class="btn blue">
-									Read more <i class="m-icon-swapright m-icon-white"></i>                              
-									</a>                        
-								</div>
-							</div>
-						</li>
-						<li class="timeline-red">
-							<div class="timeline-time">
-								<span class="date">4/16/13</span>
-								<span class="time">21:30</span>
-							</div>
-							<div class="timeline-icon"><i class="fa fa-rss"></i></div>
-							<div class="timeline-body">
-								<h2>Daily Feeds</h2>
-								<div class="timeline-content">
-									<img class="timeline-img pull-left" src="assets/img/blog/5.jpg" alt="">
-									Parsley amaranth tigernut silver beet maize fennel spinach. Ricebean black-eyed pea maize scallion green bean spinach cabbage jicama bell pepper carrot onion corn plantain garbanzo. Sierra leone bologi komatsuna celery peanut swiss chard silver beet squash dandelion maize chicory burdock tatsoi dulse radish wakame beetroot.
-								</div>
-								<div class="timeline-footer">
-									<a href="#" class="btn green pull-right">
-									Read more <i class="m-icon-swapright m-icon-white"></i>                              
-									</a>     
-								</div>
-							</div>
-						</li>
-						<li class="timeline-grey">
-							<div class="timeline-time">
-								<span class="date">4/17/13</span>
-								<span class="time">12:11</span>
-							</div>
-							<div class="timeline-icon"><i class="fa fa-times"></i></div>
-							<div class="timeline-body">
-								<h2>Staff Meeting</h2>
-								<div class="timeline-content">
-									Caulie dandelion maize lentil collard greens radish arugula sweet pepper water spinach kombu courgette lettuce. Celery coriander bitterleaf epazote radicchio shallot winter purslane collard greens spring onion squash lentil. Artichoke salad bamboo shoot black-eyed pea brussels sprout garlic kohlrabi.
-								</div>
-								<div class="timeline-footer">
-									<a href="#" class="nav-link pull-right">
-									Read more <i class="m-icon-swapright m-icon-white"></i>                              
-									</a>     
-								</div>
-							</div>
-						</li>
-						<li class="timeline-blue">
-							<div class="timeline-time">
-								<span class="date">4/18/13</span>
-								<span class="time">09:56</span>
-							</div>
-							<div class="timeline-icon"><i class="fa fa-bar-chart-o"></i></div>
-							<div class="timeline-body">
-								<h2>Demo Europe 2013</h2>
-								<div class="timeline-content">
-									<img class="timeline-img pull-left" src="assets/img/blog/2.jpg" alt="">
-									Parsnip lotus root celery yarrow seakale tomato collard greens tigernut epazote ricebean melon tomatillo soybean chicory broccoli beet greens peanut salad. Lotus root burdock bell pepper chickweed shallot groundnut pea sprouts welsh onion wattle seed pea salsify turnip scallion peanut arugula bamboo shoot onion swiss chard.
-								</div>
-								<div class="timeline-footer">
-									<a href="#" class="nav-link">
-									Read more <i class="m-icon-swapright m-icon-white"></i>                              
-									</a>     
-								</div>
-							</div>
-						</li>
+							</li>
+						</c:forEach>
 					</ul>
 					</div>
 					<!--end col-md-9-->
@@ -446,6 +337,37 @@
 		jQuery(document).ready(function() {       
 		   // initiate layout and plugins
 		   App.init();
+		});
+		
+		//remove myself blog
+		$("#remove_blog").live("click",function(){
+			var blogid = $(this).attr("blogid");
+			if(confirm("Are you sure?") == false){
+				return;
+			}
+			$.ajax({
+				url : "${BASE_PATH}/removemyselfblog/" + blogid,
+				async : false,
+				type : "DELETE",
+				success : function(result){
+					alert(result.msg)
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown){
+         		   console.log("readyState===========" + XMLHttpRequest.readyState);
+         		   console.log("status===========" + XMLHttpRequest.status);
+         		   console.log("statusText===========" + XMLHttpRequest.statusText);
+         		   console.log("responseText===========" + XMLHttpRequest.responseText);
+         		   if(XMLHttpRequest.status == 500) {
+         			   alert("失败！服务器内部错误：500，请检查你输入的数据");
+         		   }else if(XMLHttpRequest.status == 404){
+         			   alert("失败！未找到页面：404");
+         		   }else if(XMLHttpRequest.status == 200){
+         			   alert("成功！请刷新页面");
+         		   }
+         	    }
+			});
+			//刷新页面
+			location.reload();
 		});
 	</script>
 	<!-- END JAVASCRIPTS -->

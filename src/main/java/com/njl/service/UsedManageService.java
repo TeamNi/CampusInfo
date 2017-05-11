@@ -8,6 +8,11 @@ import org.springframework.stereotype.Service;
 import com.njl.bean.Used;
 import com.njl.dao.UsedMapper;
 
+/**
+ * used manage service
+ * @author njl
+ *
+ */
 @Service
 public class UsedManageService {
 	

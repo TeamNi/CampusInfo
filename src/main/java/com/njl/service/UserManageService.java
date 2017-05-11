@@ -10,6 +10,11 @@ import com.njl.bean.UserExample;
 import com.njl.bean.UserExample.Criteria;
 import com.njl.dao.UserMapper;
 
+/**
+ * user manage service
+ * @author njl
+ *
+ */
 //业务逻辑组件
 @Service
 public class UserManageService {
