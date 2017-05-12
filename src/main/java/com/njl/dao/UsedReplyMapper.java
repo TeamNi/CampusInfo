@@ -19,6 +19,10 @@ public interface UsedReplyMapper {
     List<UsedReply> selectByExample(UsedReplyExample example);
 
     UsedReply selectByPrimaryKey(Integer replyid);
+    
+    List<UsedReply> selectByExampleWithUser(UsedReplyExample example);
+
+    UsedReply selectByPrimaryKeyWithUser(Integer replyid);
 
     int updateByExampleSelective(@Param("record") UsedReply record, @Param("example") UsedReplyExample example);
 

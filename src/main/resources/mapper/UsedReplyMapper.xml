@@ -8,6 +8,20 @@
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
   </resultMap>
+  <resultMap type="com.njl.bean.UsedReply" id="WithUserResultMap">
+  	<id column="replyid" jdbcType="INTEGER" property="replyid" />
+    <result column="usedid" jdbcType="INTEGER" property="usedid" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <association property="user" javaType="com.njl.bean.User">
+    	<id column="userid" property="userid"/>
+    	<result column="nickname" property="nickname"/>
+    	<result column="studentid" property="studentid"/>
+    	<result column="sex" property="sex"/>
+    	<result column="headurl" property="headurl"/>
+    </association>
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -69,6 +83,35 @@
   <sql id="Base_Column_List">
     replyid, usedid, userid, content, createtime
   </sql>
+  <sql id="WithUser_Column_List">
+  	u_re.replyid, u_re.usedid, u_re.userid, u_re.content, u_re.createtime, u.userid, u.nickname, u.studentid, u.sex, u.headurl
+  </sql>
+  
+  <!--  List<UsedReply> selectByExampleWithUser(UsedReplyExample example);
+    	UsedReply selectByPrimaryKeyWithUser(Integer replyid); -->
+  <select id="selectByExampleWithUser" resultMap="WithUserResultMap">
+  	select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="WithUser_Column_List" />
+    from t_used_reply u_re
+	LEFT JOIN t_user u ON u_re.userid = u.userid 
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKeyWithUser" resultMap="WithUserResultMap">
+  	select 
+    <include refid="WithUser_Column_List" />
+    from t_used_reply u_re
+	LEFT JOIN t_user u ON u_re.userid = u.userid 
+    where replyid = #{replyid,jdbcType=INTEGER
+  </select>
+  <!-- 原生 -->
   <select id="selectByExample" parameterType="com.njl.bean.UsedReplyExample" resultMap="BaseResultMap">
     select
     <if test="distinct">

@@ -21,12 +21,17 @@ public class Used {
 
     private Integer attentiontimes;
 
+    private Integer replytimes;
+    
+    //联合查询，查询出用户nickname
+    private User user;
+
     public Used() {
 		super();
 	}
 
 	public Used(Integer usedid, Integer userid, Date createtime, String title, Float price, String contact,
-			String content, String pictureurl, Integer attentiontimes) {
+			String content, String pictureurl, Integer attentiontimes, Integer replytimes) {
 		super();
 		this.usedid = usedid;
 		this.userid = userid;
@@ -37,13 +42,14 @@ public class Used {
 		this.content = content;
 		this.pictureurl = pictureurl;
 		this.attentiontimes = attentiontimes;
+		this.replytimes = replytimes;
 	}
 
 	@Override
 	public String toString() {
 		return "Used [usedid=" + usedid + ", userid=" + userid + ", createtime=" + createtime + ", title=" + title
 				+ ", price=" + price + ", contact=" + contact + ", content=" + content + ", pictureurl=" + pictureurl
-				+ ", attentiontimes=" + attentiontimes + "]";
+				+ ", attentiontimes=" + attentiontimes + ", replytimes=" + replytimes + ", user=" + user + "]";
 	}
 
 	public Integer getUsedid() {
@@ -117,4 +123,20 @@ public class Used {
     public void setAttentiontimes(Integer attentiontimes) {
         this.attentiontimes = attentiontimes;
     }
+
+	public Integer getReplytimes() {
+		return replytimes;
+	}
+
+	public void setReplytimes(Integer replytimes) {
+		this.replytimes = replytimes;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 }

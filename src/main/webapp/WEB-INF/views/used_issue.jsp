@@ -9,6 +9,9 @@
 <head>
 	<meta charset="utf-8" />
 	<title>Used Issue</title>
+	<%
+		pageContext.setAttribute("BASE_PATH", request.getContextPath());
+	%>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 	<meta content="" name="description" />
@@ -136,28 +139,28 @@
 			<div class="row">
 				<div class="col-md-8">
 					<div id="tab_3-3" class="tab-pane">
-						<form action="#">
+						<form action="#" id="form_issue_used">
 							<div class="form-group">
 								<label class="control-label">Title:</label>
-								<input type="text" maxlength="25" class="form-control" />
+								<input type="text" maxlength="25" class="form-control" value="" name="title" id="issue_title"/>
 							</div>
 							<div class="form-group">
 								<label class="control-label">Price:</label>
-								<input type="text" class="form-control" maxlength="6"/>
+								<input type="text" class="form-control" maxlength="6" value="" name="price" id="issue_price"/>
 							</div>
 							<div class="form-group">
 								<label class="control-label">Contact:</label>
-								<input type="text" class="form-control" maxlength="20" />
+								<input type="text" class="form-control" maxlength="20" value="" name="contact" id="issue_contact"/>
 							</div>
 							<div class="form-group">
 								<label class="control-label">Content:</label>
-								<textarea rows="6" cols="135" class="form-control" maxlength="800"></textarea>
+								<textarea rows="6" cols="135" class="form-control" maxlength="800" name="content" id="issue_content"></textarea>
 							</div>
 							<label class="control-label">Picture:</label>
-							<div action="assets/plugins/dropzone/upload.php" class="form-group dropzone" id="my-dropzone"></div>
+							<div action="assets/plugins/dropzone/upload.php" class="form-group dropzone" id="my-dropzone" name="pictureurl" id="issue_picture"></div>
 							<div class="margin-top-10">
-								<a href="#" class="btn green">发布</a>
-								<a href="#" class="btn default">取消</a>
+								<a href="#" class="btn green" id="btn_issue_used">发布</a>
+								<a href="#" class="btn default" id="btn_issue_cancel">取消</a>
 							</div>
 						</form>
 					</div>
@@ -206,6 +209,56 @@
 		   // initiate layout and plugins
 		   App.init();
 		         FormDropzone.init();
+		});
+		
+		//issue used 
+		$("#btn_issue_used").live("click",function(){
+			var regprice = /^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/;
+			
+			var title = $("#issue_title").val();
+			var price = $("#issue_price").val();
+			var contact = $("#issue_contact").val();
+			var content = $("#issue_content").val();
+			if(title == "" || price == "" || contact == "" || content == ""){
+				alert("以上内容均不能为空！")
+				return;
+			}
+			//检查价格只能为数字
+			if(!regprice.test(price)){
+				alert("价格格式不正确！")
+				return;
+			}
+			if(confirm("Are you sure?") == false){
+				return;
+			}
+			$.ajax({
+				url : "${BASE_PATH}/issue_used",
+				async : false,
+				type : "POST",
+				data : {
+					"title" : title,
+					"price" : price,
+					"contact" : contact,
+					"content" : content
+				},
+				success : function(result){
+					alert(result.msg);
+					window.location.href="${BASE_PATH}/used"
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown){
+         		   console.log("readyState===========" + XMLHttpRequest.readyState);
+         		   console.log("status===========" + XMLHttpRequest.status);
+         		   console.log("statusText===========" + XMLHttpRequest.statusText);
+         		   console.log("responseText===========" + XMLHttpRequest.responseText);
+         		   if(XMLHttpRequest.status == 500) {
+         			   alert("失败！服务器内部错误：500，请检查你输入的数据");
+         		   }else if(XMLHttpRequest.status == 404){
+         			   alert("失败！未找到页面：404");
+         		   }else if(XMLHttpRequest.status == 200){
+         			   alert("成功！请刷新页面");
+         		   }
+         	    }
+			});
 		});
 	</script>
 	<!-- END PAGE LEVEL SCRIPTS -->

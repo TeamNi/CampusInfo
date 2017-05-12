@@ -49,7 +49,7 @@ public class MapperTestUsed {
 			String string = UUID.randomUUID().toString().substring(0, 5);
 			String title = "Cascusamus et iusto odio" + string;
 			String content = string + i +"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culp orem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat. At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero consectetur adipiscing elit magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat. Pellentesque viverra vehicula sem ut volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero magna. Sed et quam lacus.";
-			mapper.insertSelective(new Used(null, i+1, date, title, 50.0f, "88888888", content, null, 5));
+			mapper.insertSelective(new Used(null, i+1, date, title, 50.0f, "88888888", content, null, 5, 0));
 		}
 		System.out.println("SUCCESSFUL!");
 	}

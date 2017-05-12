@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.njl.bean.Blog;
 import com.njl.bean.Msg;
 import com.njl.bean.User;
+import com.njl.service.BlogReplyService;
 import com.njl.service.MyBlogService;
 import com.njl.service.UserService;
 
@@ -28,9 +29,11 @@ import com.njl.service.UserService;
 public class MyBlogController {
 	
 	@Autowired 
-	UserService UserService ;
+	private UserService userService ;
 	@Autowired
-	MyBlogService myblogService;
+	private MyBlogService myblogService;
+	@Autowired
+	private BlogReplyService blogReplyservice;
 
 	/**
 	 * to my_blog page
@@ -42,7 +45,7 @@ public class MyBlogController {
 	public String getMyBlog(@ModelAttribute("studentid") Integer studentid,Model model) {
 		//根据studentid 获得userid
 		int userid = 0;
-		List<User> userlist = UserService.queryUserWithStu(studentid);
+		List<User> userlist = userService.queryUserWithStu(studentid);
 		for (User user : userlist) {
 			userid = user.getUserid();
 		}
@@ -61,6 +64,8 @@ public class MyBlogController {
 	@ResponseBody
 	public Msg removeMyBlog(@PathVariable("blogid") Integer blogid){
 		myblogService.removeMyBlog(blogid);
+		//删除blog时，将blog reply一并删除
+		blogReplyservice.deleteReplyWithBlogid(blogid);
 		return Msg.success();
 	}
 }

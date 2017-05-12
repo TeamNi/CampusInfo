@@ -31,8 +31,8 @@ public class BlogReply {
 
 	@Override
 	public String toString() {
-		return "blogReply [replyid=" + replyid + ", blogid=" + blogid + ", userid=" + userid + ", content=" + content
-				+ ", createtime=" + createtime + "]";
+		return "BlogReply [replyid=" + replyid + ", blogid=" + blogid + ", userid=" + userid + ", content=" + content
+				+ ", createtime=" + createtime + ", user=" + user + "]";
 	}
 
 	public Integer getReplyid() {

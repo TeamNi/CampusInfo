@@ -9,6 +9,9 @@
 <head>
 	<meta charset="utf-8" />
 	<title>Campus Used</title>
+	<%
+		pageContext.setAttribute("BASE_PATH", request.getContextPath());
+	%>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 	<meta content="" name="description" />
@@ -143,89 +146,62 @@
 								<!-- BEGIN FILTER -->           
 								<div class="filter-v1 margin-top-10">
 									<div class="row mix-grid thumbnails">
-										<div class="col-md-4 col-sm-6 mix category_1">
+									<c:forEach items="${pageInfo.list }" var="used">
+										<div class="col-md-4 col-sm-6 mix">
 											<div class="mix-inner">
 												<img class="img-responsive" src="assets/img/works/img1.jpg" alt="">
 												<div class="mix-details">
-													<h3>Cascusamus et iusto odio</h3>
-													<p>At vero eos et accusamus et iusto odio digniss imos duc sasdimus qui sint blanditiis prae sentium.</p>
-													<a class="mix-link" href="used_details"><i class="fa fa-link"></i></a>
-													<a class="mix-preview fancybox-button" href="assets/img/works/img1.jpg" title="Project Name" data-rel="fancybox-button"><i class="fa fa-heart"></i></a>
+													<h3>${used.title }</h3>
+													<p>${used.content }</p>
+													<a class="mix-link" href="used_details?usedid=${used.usedid }" title="click here for details"><i class="fa fa-link"></i></a>
+													<a class="mix-preview fancybox-button" href="assets/img/works/img1.jpg" title="${used.title }" data-rel="fancybox-button"><i class="fa fa-heart"></i></a>
 												</div>
 											</div>
 										</div>
-										<div class="col-md-4 col-sm-6 mix category_2">
-											<div class="mix-inner">
-												<img class="img-responsive" src="assets/img/works/img2.jpg" alt="">
-												<div class="mix-details">
-													<h3>Cascusamus et iusto odio</h3>
-													<p>At vero eos et accusamus et iusto odio digniss imos duc sasdimus qui sint blanditiis prae sentium.</p>
-													<a class="mix-link" href="used_details"><i class="fa fa-link"></i></a>
-													<a class="mix-preview fancybox-button" href="assets/img/works/img2.jpg" title="Project Name" data-rel="fancybox-button"><i class="fa fa-heart"></i></a>
-												</div>
-											</div>
-										</div>
-										<div class="col-md-4 col-sm-6 mix category_3">
-											<div class="mix-inner">
-												<img class="img-responsive" src="assets/img/works/img3.jpg" alt="">
-												<div class="mix-details">
-													<h3>Cascusamus et iusto odio</h3>
-													<p>At vero eos et accusamus et iusto odio digniss imos duc sasdimus qui sint blanditiis.</p>
-													<a class="mix-link" href="used_details"><i class="fa fa-link"></i></a>
-													<a class="mix-preview fancybox-button" href="assets/img/works/img3.jpg" title="Project Name" data-rel="fancybox-button"><i class="fa fa-heart"></i></a>
-												</div>
-											</div>
-										</div>
-										<div class="col-md-4 col-sm-6 mix category_1 category_2">
-											<div class="mix-inner">
-												<img class="img-responsive" src="assets/img/works/img4.jpg" alt="">
-												<div class="mix-details">
-													<h3>Cascusamus et iusto odio</h3>
-													<p>At vero eos et accusamus et iusto odio digniss imos duc sasdimus qui sint blanditiis prae sentium.</p>
-													<a class="mix-link" href="used_details"><i class="fa fa-link"></i></a>
-													<a class="mix-preview fancybox-button" href="assets/img/works/img4.jpg" title="Project Name" data-rel="fancybox-button"><i class="fa fa-heart"></i></a>                            
-												</div>
-											</div>
-										</div>
-										<div class="col-md-4 col-sm-6 mix category_2 category_1">
-											<div class="mix-inner">
-												<img class="img-responsive" src="assets/img/works/img5.jpg" alt="">
-												<div class="mix-details">
-													<h3>Cascusamus et iusto odio</h3>
-													<p>At vero eos et accusamus et iusto odio digniss imos duc sasdimus qui sint blanditiis prae.</p>
-													<a class="mix-link"><i class="fa fa-link"></i></a>
-													<a class="mix-preview fancybox-button" href="assets/img/works/img5.jpg" title="Project Name" data-rel="fancybox-button"><i class="fa fa-heart"></i></a>                            
-												</div>
-											</div>
-										</div>
-										<div class="col-md-4 col-sm-6 mix category_1 category_2">
-											<div class="mix-inner">
-												<img class="img-responsive" src="assets/img/works/img6.jpg" alt="">
-												<div class="mix-details">
-													<h3>Cascusamus et iusto odio</h3>
-													<p>At vero eos et accusamus et iusto odio digniss imos duc sasdimus qui sint blanditiis prae sentium.</p>
-													<a class="mix-link"><i class="fa fa-link"></i></a>
-													<a class="mix-preview fancybox-button" href="assets/img/works/img6.jpg" title="Project Name" data-rel="fancybox-button"><i class="fa fa-heart"></i></a>                            
-												</div>
-											</div>
-										</div>
-										<div class="col-md-4 col-sm-6 mix category_2 category_3">
-											<div class="mix-inner">
-												<img class="img-responsive" src="assets/img/works/img1.jpg" alt="">
-												<div class="mix-details">
-													<h3>Cascusamus et iusto odio</h3>
-													<p>At vero eos et accusamus et iusto odio digniss imos duc sasdimus qui sint blanditiis.</p>
-													<a class="mix-link"><i class="fa fa-link"></i></a>
-													<a class="mix-preview fancybox-button" href="assets/img/works/img1.jpg" title="Project Name" data-rel="fancybox-button"><i class="fa fa-heart"></i></a>                            
-												</div>
-											</div>
-										</div>
+									</c:forEach>
 									</div>
 								</div>
 								<!-- END FILTER --> 
 							</div>
 						</div>
 					</div>
+				</div>
+			</div>
+			<div class="row">
+				<!-- 分页文字信息 -->
+				<div class="col-md-9">
+					当前第  ${pageInfo.pageNum }  页,总  ${pageInfo.pages }  页,总  ${pageInfo.total }  条记录
+				</div>
+				<!-- 分页条信息 -->
+				<div class="col-md-3">
+					<nav aria-label="Page navigation">
+					  <ul class="pagination">
+					  	<li><a href="${BASE_PATH }/used?pn=1">首页</a></li>
+					  	<c:if test="${pageInfo.hasPreviousPage }">
+						    <li>
+						      <a href="${BASE_PATH }/used?pn=${pageInfo.pageNum-1 }" aria-label="Previous">
+						        <span aria-hidden="true">&laquo;</span>
+						      </a>
+						    </li>
+					    </c:if>
+					    <c:forEach items="${pageInfo.navigatepageNums }" var="page_num">
+					    	<c:if test="${page_num == pageInfo.pageNum }">
+						    	<li class="active"><a href="#">${page_num }</a></li>
+					    	</c:if>
+					    	<c:if test="${page_num != pageInfo.pageNum }">
+						    	<li><a href="${BASE_PATH }/used?pn=${page_num }">${page_num }</a></li>
+					    	</c:if>
+					    </c:forEach>
+					    <c:if test="${pageInfo.hasNextPage }">
+						    <li>
+						      <a href="${BASE_PATH }/used?pn=${pageInfo.pageNum+1 }" aria-label="Next">
+						        <span aria-hidden="true">&raquo;</span>
+						      </a>
+						    </li>
+					    </c:if>
+					    <li><a href="${BASE_PATH }/used?pn=${pageInfo.pages }">末页</a></li>
+					  </ul>
+					</nav>
 				</div>
 			</div>
 			<!-- END PAGE CONTENT-->

@@ -142,7 +142,10 @@
 							<c:if test="${bloglist.replytimes >= 10 && bloglist.replytimes < 20}">
 							<li class="timeline-purple">
 							</c:if>
-							<c:if test="${bloglist.replytimes >= 3 && bloglist.replytimes < 10 }">
+							<c:if test="${bloglist.replytimes >= 6 && bloglist.replytimes < 10 }">
+							<li class="timeline-grey">
+							</c:if>
+							<c:if test="${bloglist.replytimes >= 3 && bloglist.replytimes < 6 }">
 							<li class="timeline-green">
 							</c:if>
 							<c:if test="${bloglist.replytimes >= 1 && bloglist.replytimes < 3 }">
@@ -342,7 +345,7 @@
 		//remove myself blog
 		$("#remove_blog").live("click",function(){
 			var blogid = $(this).attr("blogid");
-			if(confirm("Are you sure?") == false){
+			if(confirm("删除帖子时，帖子中的回复将一起删除。确定删除?") == false){
 				return;
 			}
 			$.ajax({

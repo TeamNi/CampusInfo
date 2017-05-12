@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.njl.bean.Blog;
 import com.njl.bean.BlogReply;
 import com.njl.bean.BlogReplyExample;
 import com.njl.bean.BlogReplyExample.Criteria;
@@ -95,5 +94,18 @@ public class BlogReplyService {
 		// TODO Auto-generated method stub
 		BlogReply blog = blogReplyMapper.selectByPrimaryKey(replyid);
 		return blog;
+	}
+
+	/**
+	 * delete blog reply with blogid
+	 * 删除blog时，将blog reply一并删除
+	 * @param blogid
+	 */
+	public void deleteReplyWithBlogid(Integer blogid) {
+		// TODO Auto-generated method stub
+		BlogReplyExample example = new BlogReplyExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andBlogidEqualTo(blogid);
+		blogReplyMapper.deleteByExample(example);
 	}
 }
