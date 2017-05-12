@@ -42,6 +42,8 @@ public class BlogController {
 	
 	/**
 	 * blog 首页
+	 * @param pn
+	 * @param model
 	 * @return
 	 */
 	@RequestMapping("/blog")
@@ -53,13 +55,13 @@ public class BlogController {
 		List<Blog> bloglist = blogService.getBlog();
 		//使用PageInfo包装查询后的结果，只需要将PageInfo交给页面就行
 		//它封装了详细的分页数据，包括我们查询出来的数据。传入连续显示的页数
-		PageInfo page = new PageInfo(bloglist,5);
-		model.addAttribute("pageInfo", page);
+		PageInfo<Blog> pageInfo = new PageInfo<Blog>(bloglist,5);
+		model.addAttribute("pageInfo", pageInfo);
 		return "blog";
 	}
 	
 	/**
-	 * blog details
+	 * to blog details page
 	 * @return
 	 */
 	@RequestMapping("/blog_details")
@@ -82,9 +84,9 @@ public class BlogController {
 	@RequestMapping(value="/removeblogreply/{replyid}",method=RequestMethod.DELETE)
 	@ResponseBody
 	public Msg removeMyReply(@PathVariable("replyid") Integer replyid){
-		//delete my reply
 		BlogReply blog = blogReplyService.queryBlogid(replyid);
 		int blogid = blog.getBlogid();
+		//delete my reply
 		blogReplyService.deleteReply(replyid);
 		//统计评论数
 		int count = (int)blogReplyService.countReply(blogid);
@@ -110,6 +112,7 @@ public class BlogController {
 		}
 		//将数据装载到BlogReply
 		blogReply.setUserid(userid);
+		//获取时间
 		long time = System.currentTimeMillis();
 		Date date = new Date(time);
 		blogReply.setCreatetime(date);

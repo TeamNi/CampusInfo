@@ -12,6 +12,9 @@ public class UsedReply {
     private String content;
 
     private Date createtime;
+    
+    //联合查询，查询出用户nickname
+    private User user;
 
     public UsedReply() {
 		super();
@@ -29,7 +32,7 @@ public class UsedReply {
 	@Override
 	public String toString() {
 		return "UsedReply [replyid=" + replyid + ", usedid=" + usedid + ", userid=" + userid + ", content=" + content
-				+ ", createtime=" + createtime + "]";
+				+ ", createtime=" + createtime + ", user=" + user + "]";
 	}
 
 	public Integer getReplyid() {
@@ -71,4 +74,12 @@ public class UsedReply {
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
     }
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 }

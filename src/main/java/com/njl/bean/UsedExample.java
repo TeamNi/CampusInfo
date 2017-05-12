@@ -684,6 +684,66 @@ public class UsedExample {
             addCriterion("attentiontimes not between", value1, value2, "attentiontimes");
             return (Criteria) this;
         }
+        
+        public Criteria andReplytimesIsNull() {
+            addCriterion("Replytimes is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplytimesIsNotNull() {
+            addCriterion("Replytimes is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplytimesEqualTo(Integer value) {
+            addCriterion("Replytimes =", value, "Replytimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplytimesNotEqualTo(Integer value) {
+            addCriterion("Replytimes <>", value, "Replytimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplytimesGreaterThan(Integer value) {
+            addCriterion("Replytimes >", value, "Replytimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplytimesGreaterThanOrEqualTo(Integer value) {
+            addCriterion("Replytimes >=", value, "Replytimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplytimesLessThan(Integer value) {
+            addCriterion("Replytimes <", value, "Replytimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplytimesLessThanOrEqualTo(Integer value) {
+            addCriterion("Replytimes <=", value, "Replytimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplytimesIn(List<Integer> values) {
+            addCriterion("Replytimes in", values, "Replytimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplytimesNotIn(List<Integer> values) {
+            addCriterion("Replytimes not in", values, "Replytimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplytimesBetween(Integer value1, Integer value2) {
+            addCriterion("Replytimes between", value1, value2, "Replytimes");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplytimesNotBetween(Integer value1, Integer value2) {
+            addCriterion("Replytimes not between", value1, value2, "Replytimes");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

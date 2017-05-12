@@ -11,6 +11,27 @@
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="pictureurl" jdbcType="VARCHAR" property="pictureurl" />
     <result column="attentiontimes" jdbcType="INTEGER" property="attentiontimes" />
+    <result column="replytimes" jdbcType="INTEGER" property="replytimes" />
+  </resultMap>
+  <resultMap id="WithUserResultMap" type="com.njl.bean.Used">
+  	<id column="usedid" jdbcType="INTEGER" property="usedid" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="price" jdbcType="REAL" property="price" />
+    <result column="contact" jdbcType="VARCHAR" property="contact" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="pictureurl" jdbcType="VARCHAR" property="pictureurl" />
+    <result column="attentiontimes" jdbcType="INTEGER" property="attentiontimes" />
+    <result column="replytimes" jdbcType="INTEGER" property="replytimes" />
+    <!-- 使用association 指定联合查询出的字段的封装 -->
+    <association property="user" javaType="com.njl.bean.User">
+    	<id column="userid" property="userid"/>
+    	<result column="nickname" property="nickname"/>
+    	<result column="studentid" property="studentid"/>
+    	<result column="sex" property="sex"/>
+    	<result column="headurl" property="headurl"/>
+    </association>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -71,8 +92,37 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    usedid, userid, createtime, title, price, contact, content, pictureurl, attentiontimes
+    usedid, userid, createtime, title, price, contact, content, pictureurl, attentiontimes, replytimes
   </sql>
+  <sql id="WithUser_Column_List">
+  	ud.usedid, ud.userid, ud.createtime, ud.title, ud.price, ud.contact, ud.content, ud.pictureurl, ud.attentiontimes, ud.replytimes, u.userid, u.nickname, u.studentid, u.sex, u.headurl
+  </sql>
+  
+  <!--  List<Used> selectByExampleWithUser(UsedExample example);
+    	Used selectByPrimaryKeyWithUser(Integer usedid); -->
+  <select id="selectByExampleWithUser" resultMap="WithUserResultMap">
+  	select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="WithUser_Column_List" />
+    from t_used ud
+	LEFT JOIN t_user u ON ud.userid = u.userid 
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause} DESC
+    </if>
+  </select>
+  <select id="selectByPrimaryKeyWithUser" resultMap="WithUserResultMap">
+  	select 
+    <include refid="WithUser_Column_List" />
+    from t_used ud
+	LEFT JOIN t_user u ON ud.userid = u.userid 
+    where usedid = #{usedid,jdbcType=INTEGER}
+  </select>
+  <!-- 原生的 -->
   <select id="selectByExample" parameterType="com.njl.bean.UsedExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -84,7 +134,7 @@
       <include refid="Example_Where_Clause" />
     </if>
     <if test="orderByClause != null">
-      order by ${orderByClause}
+      order by ${orderByClause} DESC
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -110,8 +160,7 @@
       )
     values (#{usedid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
       #{title,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, #{contact,jdbcType=VARCHAR}, 
-      #{content,jdbcType=VARCHAR}, #{pictureurl,jdbcType=VARCHAR}, #{attentiontimes,jdbcType=INTEGER}
-      )
+      #{content,jdbcType=VARCHAR}, #{pictureurl,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.njl.bean.Used">
     insert into t_used
@@ -143,6 +192,9 @@
       <if test="attentiontimes != null">
         attentiontimes,
       </if>
+      <if test="replytimes != null">
+        replytimes,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="usedid != null">
@@ -171,6 +223,9 @@
       </if>
       <if test="attentiontimes != null">
         #{attentiontimes,jdbcType=INTEGER},
+      </if>
+      <if test="replytimes != null">
+        #{replytimes,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -210,6 +265,9 @@
       <if test="record.attentiontimes != null">
         attentiontimes = #{record.attentiontimes,jdbcType=INTEGER},
       </if>
+      <if test="record.replytimes != null">
+        replytimes = #{record.replytimes,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -225,7 +283,8 @@
       contact = #{record.contact,jdbcType=VARCHAR},
       content = #{record.content,jdbcType=VARCHAR},
       pictureurl = #{record.pictureurl,jdbcType=VARCHAR},
-      attentiontimes = #{record.attentiontimes,jdbcType=INTEGER}
+      attentiontimes = #{record.attentiontimes,jdbcType=INTEGER},
+      replytimes = #{record.replytimes,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -257,6 +316,9 @@
       <if test="attentiontimes != null">
         attentiontimes = #{attentiontimes,jdbcType=INTEGER},
       </if>
+      <if test="replytimes != null">
+        replytimes = #{replytimes,jdbcType=INTEGER},
+      </if>
     </set>
     where usedid = #{usedid,jdbcType=INTEGER}
   </update>
@@ -269,7 +331,8 @@
       contact = #{contact,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
       pictureurl = #{pictureurl,jdbcType=VARCHAR},
-      attentiontimes = #{attentiontimes,jdbcType=INTEGER}
+      attentiontimes = #{attentiontimes,jdbcType=INTEGER},
+      replytimes = #{replytimes,jdbcType=INTEGER}
     where usedid = #{usedid,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -9,6 +9,9 @@
 <head>
 	<meta charset="utf-8" />
 	<title>Used Details</title>
+	<%
+		pageContext.setAttribute("BASE_PATH", request.getContextPath());
+	%>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 	<meta content="" name="description" />
@@ -136,88 +139,71 @@
 				<div class="col-md-12 news-page blog-page">
 					<div class="row">
 						<div class="col-md-9 blog-tag-data">
-							<h3>Recent News</h3>
-							<img src="assets/img/gallery/item_img1.jpg" class="img-responsive" alt="">
+							<h3>${useddetails.title }</h3>
+							<img src="assets/img/works/img1.jpg" class="img-responsive" alt="">
 							<div class="row">
-								<div class="col-md-6">
-									<ul class="list-inline blog-tags">
-										<li>
-											<i class="fa fa-tags"></i> 
-											<a href="#">Technology</a> 
-											<a href="#">Education</a>
-											<a href="#">Internet</a>
-										</li>
-									</ul>
-								</div>
-								<div class="col-md-6 blog-tag-data-inner">
+								<div class="col-md-12">
 									<ul class="list-inline">
-										<li><i class="fa fa-calendar"></i> <a href="#">April 16, 2013</a></li>
-										<li><i class="fa fa-comments"></i> <a href="#">38 Comments</a></li>
+										<li><i class="glyphicon glyphicon-user"></i> <a href="#">${useddetails.user.nickname }</a></li>
+										<li><i class="fa fa-calendar"></i> <a href="#">${useddetails.createtime }</a></li>
+										<li><i class="fa fa-comments"></i> <a href="#">${useddetails.replytimes } Comments</a></li>
+										<li><i class="glyphicon glyphicon-heart"></i> <a href="#" id="add_attention" usedid="${useddetails.usedid }">${useddetails.attentiontimes } Attention</a></li>
 									</ul>
 								</div>
 							</div>
 							<div class="news-item-page">
-								<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culp orem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat. At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero consectetur adipiscing elit magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat. Pellentesque viverra vehicula sem ut volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero magna. Sed et quam lacus.</p>
+								<p></p>
+									<div class="panel panel-success">
+									  <div class="panel-heading">
+									    <h3 class="panel-title">
+									    title : ${useddetails.title }
+									    </h3>
+									  </div>
+									  <div class="panel-body">
+									    content : ${useddetails.content }
+									  </div>
+									  <div class="panel-body">
+									    price : ${useddetails.price }
+									  </div>
+									  <div class="panel-body">
+									    contact : ${useddetails.contact }
+									  </div>
+									</div>
+								<hr>
 								<blockquote class="hero">
 									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit posuere erat a ante.</p>
 									<small>Someone famous <cite title="Source Title">Source Title</cite></small>
 								</blockquote>
-								<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique dimentum eleifend enim a feugiat. Pellentesque viverra vehicula sem ut volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero magna. Sed et quam lacus.</p>
 							</div>
 							<hr>
 							<h3>Comments</h3>
+							<c:forEach items="${replylist }" var="replylist">
 							<div class="media">
 								<a href="#" class="pull-left">
 								<img alt="" src="assets/img/blog/9.jpg" class="media-object">
 								</a>
 								<div class="media-body">
-									<h4 class="media-heading">Media heading <span>5 hours ago / <a href="#">Reply</a></span></h4>
-									<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+									<c:if test="${studentid == replylist.user.studentid }">
+									<h4 class="media-heading">${replylist.user.nickname } <span>${replylist.createtime } / <a href="#" remove_rid="${replylist.replyid }" id="remove_rid">Remove</a></span></h4>
+									</c:if>
+									<c:if test="${studentid != replylist.user.studentid }">
+									<h4 class="media-heading">${replylist.user.nickname } <span>${replylist.createtime } / </span></h4>
+									</c:if>
+									<p>${replylist.content }</p>
 								</div>
 							</div>
 							<hr>
+							</c:forEach>
 							<!-- Nested media object -->
-							<div class="media">
-								<a href="#" class="pull-left">
-								<img alt="" src="assets/img/blog/5.jpg" class="media-object">
-								</a>
-								<div class="media-body">
-									<h4 class="media-heading">Media heading <span>17 hours ago / <a href="#">Reply</a></span></h4>
-									<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-								</div>
-							</div>
-							<hr>
-							<!--end media-->
-							<div class="media">
-								<a href="#" class="pull-left">
-								<img alt="" src="assets/img/blog/7.jpg" class="media-object">
-								</a>
-								<div class="media-body">
-									<h4 class="media-heading">Media heading <span>2 days ago / <a href="#">Reply</a></span></h4>
-									<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-								</div>
-							</div>
-							<hr>
-							<!--end media-->
-							<div class="media">
-								<a href="#" class="pull-left">
-								<img alt="" src="assets/img/blog/6.jpg" class="media-object">
-								</a>
-								<div class="media-body">
-									<h4 class="media-heading">Media heading <span>July 5,2013 / <a href="#">Reply</a></span></h4>
-									<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-								</div>
-							</div>
-							<!--end media-->
-							<hr>
 							<div class="post-comment">
 								<h3>Leave a Comment</h3>
-								<form role="form" action="#">
+								<form role="form" action="#" id="form_post_reply">
 									<div class="form-group">
 										<label class="control-label">Message<span class="required">*</span></label>
-										<textarea class="col-md-10 form-control" rows="8"></textarea>
+										<input type="hidden" name="usedid" value="${useddetails.usedid }">
+										<textarea id="reply_content" class="col-md-10 form-control" rows="8" name="content"></textarea>
 									</div>
-									<button class="margin-top-20 btn blue" type="submit">Post a Comment</button>
+									<button id="btn_post_reply" class="margin-top-20 btn blue" type="button">Post a Comment</button>
 								</form>
 							</div>
 						</div>
@@ -386,6 +372,108 @@
 	<script>
 		jQuery(document).ready(function() {    
 		   App.init();
+		});
+		
+		//post used reply
+		$("#btn_post_reply").live("click",function(){
+			var reply_content = $("#reply_content").val();
+			if(reply_content == ""){
+				alert("请输入评论！")
+				return false;
+			}
+			if(confirm("Are you sure?") == false){
+				return;
+			}
+			$.ajax({
+				url : "${BASE_PATH}/addusedreply",
+				async : false,
+				type : "POST",
+				data : $("#form_post_reply").serialize(),
+				success : function(result){
+					alert(result.msg);
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown){
+         		   console.log("readyState===========" + XMLHttpRequest.readyState);
+         		   console.log("status===========" + XMLHttpRequest.status);
+         		   console.log("statusText===========" + XMLHttpRequest.statusText);
+         		   console.log("responseText===========" + XMLHttpRequest.responseText);
+         		   if(XMLHttpRequest.status == 500) {
+         			   alert("失败！服务器内部错误：500，请检查你输入的数据");
+         		   }else if(XMLHttpRequest.status == 404){
+         			   alert("失败！未找到页面：404");
+         		   }else if(XMLHttpRequest.status == 200){
+         			   alert("成功！请刷新页面");
+         		   }
+         	    }
+			});
+			location.reload();
+		});
+		
+		//remove myself reply
+		$("#remove_rid").live("click",function(){
+			var replyid = $(this).attr("remove_rid");
+			if(confirm("Are you sure?") == false){
+				return;
+			}
+			$.ajax({
+				url : "${BASE_PATH}/removeusedreply/" + replyid,
+				async : false,
+				type : "DELETE",
+				success : function(result){
+					alert(result.msg);
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown){
+         		   console.log("readyState===========" + XMLHttpRequest.readyState);
+         		   console.log("status===========" + XMLHttpRequest.status);
+         		   console.log("statusText===========" + XMLHttpRequest.statusText);
+         		   console.log("responseText===========" + XMLHttpRequest.responseText);
+         		   if(XMLHttpRequest.status == 500) {
+         			   alert("失败！服务器内部错误：500，请检查你输入的数据");
+         		   }else if(XMLHttpRequest.status == 404){
+         			   alert("失败！未找到页面：404");
+         		   }else if(XMLHttpRequest.status == 200){
+         			   alert("成功！请刷新页面");
+         		   }
+         	   }
+			});
+			//刷新页面
+			location.reload();
+		});
+		
+		//add my attention
+		$("#add_attention").live("click",function(){
+			var usedid = $(this).attr("usedid");
+			if(confirm("将此件物品添加为我关心的物品?") == false){
+				return;
+			}
+			$.ajax({
+				url : "${BASE_PATH}/addattention",
+				async : false,
+				type : "POST",
+				data : "usedid=" + usedid,
+				success : function(result){
+					if(result.code == 1){
+						alert(result.msg);
+					}
+					if(result.code ==2 ){
+						alert(result.extend.info);
+					}
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown){
+         		   console.log("readyState===========" + XMLHttpRequest.readyState);
+         		   console.log("status===========" + XMLHttpRequest.status);
+         		   console.log("statusText===========" + XMLHttpRequest.statusText);
+         		   console.log("responseText===========" + XMLHttpRequest.responseText);
+         		   if(XMLHttpRequest.status == 500) {
+         			   alert("失败！服务器内部错误：500，请检查你输入的数据");
+         		   }else if(XMLHttpRequest.status == 404){
+         			   alert("失败！未找到页面：404");
+         		   }else if(XMLHttpRequest.status == 200){
+         			   alert("成功！请刷新页面");
+         		   }
+         	    }
+			});
+			location.reload();
 		});
 	</script>
 	<!-- END JAVASCRIPTS -->

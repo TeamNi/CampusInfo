@@ -19,6 +19,10 @@ public interface UsedMapper {
     List<Used> selectByExample(UsedExample example);
 
     Used selectByPrimaryKey(Integer usedid);
+    
+    List<Used> selectByExampleWithUser(UsedExample example);
+
+    Used selectByPrimaryKeyWithUser(Integer usedid);
 
     int updateByExampleSelective(@Param("record") Used record, @Param("example") UsedExample example);
 

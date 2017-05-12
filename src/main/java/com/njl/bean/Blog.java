@@ -20,10 +20,11 @@ public class Blog {
     //联合查询，查询出用户nickname
     private User user;
 
-    @Override
+	@Override
 	public String toString() {
 		return "Blog [blogid=" + blogid + ", userid=" + userid + ", createtime=" + createtime + ", title=" + title
-				+ ", content=" + content + ", pictureurl=" + pictureurl + ", replytimes=" + replytimes + "]";
+				+ ", content=" + content + ", pictureurl=" + pictureurl + ", replytimes=" + replytimes + ", user="
+				+ user + "]";
 	}
 
 	public Blog() {

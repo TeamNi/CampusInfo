@@ -154,6 +154,7 @@
 							<!--end news-tag-data-->
 							<div>
 								<p>${blogdetails.content }</p>
+								<hr>
 								<blockquote class="hero">
 									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit posuere erat a ante.</p>
 									<small>Someone famous <cite title="Source Title">Source Title</cite></small>
@@ -405,7 +406,7 @@
 		$("#btn_post_reply").live("click",function(){
 			var reply_content = $("#reply_content").val();
 			if(reply_content == ""){
-				alert("发布什么 ？")
+				alert("请输入评论！")
 				return false;
 			}
 			if(confirm("Are you sure?") == false){

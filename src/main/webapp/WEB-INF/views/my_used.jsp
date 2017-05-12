@@ -9,6 +9,9 @@
 <head>
 	<meta charset="utf-8" />
 	<title>My Used</title>
+	<%
+		pageContext.setAttribute("BASE_PATH", request.getContextPath());
+	%>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 	<meta content="" name="description" />
@@ -134,151 +137,65 @@
 							<div id="tab_2_2" class="tab-pane active">
 								<div class="row booking-results">
 									<div class="col-md-6">
-										<div class="booking-result">
-											<div class="booking-img">
-												<img src="assets/img/gallery/image4.jpg" alt="">
-												<ul class="list-unstyled price-location">
-													<li ><a href="#"><i class="glyphicon glyphicon-remove"></i> Remove</a></li>
-													<li ><a href="#"><i class="glyphicon glyphicon-pencil"></i> Edit</a></li>
-												</ul>
+										<div class="row">
+											<div class="panel panel-default">
+											  <div class="panel-heading">我发布的物品</div>
 											</div>
-											<div class="booking-info">
-												<h2><a href="used_details">Here Any Title</a></h2>
-												<ul class="stars list-inline">
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star-empty"></i></li>
-												</ul>
-												<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum. <a href="used_details">read more...</a></p>
-											</div>
+										</div>
+										<div class="row">
+											<c:forEach items="${usedlist }" var="usedlist">
+												<div class="booking-result">
+													<div class="booking-img">
+														<img src="assets/img/gallery/image4.jpg" alt="">
+														<ul class="list-unstyled price-location">
+															<li ><a href="#" id="remove_used" usedid="${usedlist.usedid }"><i class="glyphicon glyphicon-remove"></i> Remove</a></li>
+														</ul>
+													</div>
+													<div class="booking-info">
+														<h2><a href="used_details?usedid=${usedlist.usedid }">${usedlist.title }</a></h2>
+														<ul class="stars list-inline">
+															<li><i class="fa fa-star"></i></li>
+															<li><i class="fa fa-star"></i></li>
+															<li><i class="fa fa-star"></i></li>
+															<li><i class="fa fa-star"></i></li>
+															<li><i class="fa fa-star-empty"></i></li>
+														</ul>
+														<p>${usedlist.content }<a href="used_details?usedid=${usedlist.usedid }">read more...</a></p>
+													</div>
+												</div>
+											</c:forEach>
 										</div>
 									</div>
 									<div class="col-md-6">
-										<div class="booking-result">
-											<div class="booking-img">
-												<img src="assets/img/gallery/image1.jpg" alt="">
-												<ul class="list-unstyled price-location">
-													<li ><a href="#"><i class="glyphicon glyphicon-remove"></i> Remove</a></li>
-													<li ><a href="#"><i class="glyphicon glyphicon-pencil"></i> Edit</a></li>
-												</ul>
-											</div>
-											<div class="booking-info">
-												<h2><a href="used_details">Here Any Title</a></h2>
-												<ul class="stars list-inline">
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star-empty"></i></li>
-												</ul>
-												<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum. <a href="used_details">read more...</a></p>
+										<div class="row">
+											<div class="panel panel-default">
+											  <div class="panel-heading">我关注的物品</div>
 											</div>
 										</div>
-									</div>
-								</div>
-								<div class="row booking-results">
-									<div class="col-md-6">
-										<div class="booking-result">
-											<div class="booking-img">
-												<img src="assets/img/gallery/image2.jpg" alt="">
-												<ul class="list-unstyled price-location">
-													<li ><a href="#"><i class="glyphicon glyphicon-remove"></i> Remove</a></li>
-													<li ><a href="#"><i class="glyphicon glyphicon-pencil"></i> Edit</a></li>
-												</ul>
-											</div>
-											<div class="booking-info">
-												<h2><a href="used_details">Here Any Title</a></h2>
-												<ul class="stars list-inline">
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star-empty"></i></li>
-												</ul>
-												<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum. <a href="used_details">read more...</a></p>
-											</div>
+										<div class="row">
+											<c:forEach items="${attentionUsed }" var="attentionUsed">
+												<div class="booking-result">
+													<div class="booking-img">
+														<img src="assets/img/gallery/image1.jpg" alt="">
+														<ul class="list-unstyled price-location">
+						 									<li ><a href="#" id="remove_attention_used" usedid="${attentionUsed.usedid }"><i class="glyphicon glyphicon-remove"></i> Remove</a></li>
+														</ul>
+													</div>
+													<div class="booking-info">
+														<h2><a href="used_details?usedid=${attentionUsed.usedid }">${attentionUsed.title }</a></h2>
+														<ul class="stars list-inline">
+															<li><i class="fa fa-star"></i></li>
+															<li><i class="fa fa-star"></i></li>
+															<li><i class="fa fa-star"></i></li>
+															<li><i class="fa fa-star"></i></li>
+															<li><i class="fa fa-star-empty"></i></li>
+														</ul>
+														<p>${attentionUsed.content }<a href="used_details?usedid=${attentionUsed.usedid }">read more...</a></p>
+													</div>
+												</div>
+											</c:forEach>
 										</div>
 									</div>
-									<div class="col-md-6">
-										<div class="booking-result">
-											<div class="booking-img">
-												<img src="assets/img/gallery/image3.jpg" alt="">
-												<ul class="list-unstyled price-location">
-													<li ><a href="#"><i class="glyphicon glyphicon-remove"></i> Remove</a></li>
-													<li ><a href="#"><i class="glyphicon glyphicon-pencil"></i> Edit</a></li>
-												</ul>
-											</div>
-											<div class="booking-info">
-												<h2><a href="used_details">Here Any Title</a></h2>
-												<ul class="stars list-inline">
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star-empty"></i></li>
-												</ul>
-												<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum. <a href="used_details">read more...</a></p>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="row booking-results">
-									<div class="col-md-6">
-										<div class="booking-result">
-											<div class="booking-img">
-												<img src="assets/img/gallery/image5.jpg" alt="">
-												<ul class="list-unstyled price-location">
-													<li><i class="fa fa-minus"></i> Remove</li>
-												</ul>
-											</div>
-											<div class="booking-info">
-												<h2><a href="#">Here Any Title</a></h2>
-												<ul class="stars list-inline">
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star-empty"></i></li>
-												</ul>
-												<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum. <a href="#">read more...</a></p>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="booking-result">
-											<div class="booking-img">
-												<img src="assets/img/gallery/image1.jpg" alt="">
-												<ul class="list-unstyled price-location">
-													<li><i class="fa fa-money"></i> From $126</li>
-													<li><i class="fa fa-map-marker"></i> Tioman, Malaysia</li>
-												</ul>
-											</div>
-											<div class="booking-info">
-												<h2><a href="#">Here Any Title</a></h2>
-												<ul class="stars list-inline">
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star"></i></li>
-													<li><i class="fa fa-star-empty"></i></li>
-												</ul>
-												<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum. <a href="#">read more...</a></p>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="margin-top-20">
-									<ul class="pagination">
-										<li><a href="#">Prev</a></li>
-										<li><a href="#">1</a></li>
-										<li><a href="#">2</a></li>
-										<li class="active"><a href="#">3</a></li>
-										<li><a href="#">4</a></li>
-										<li><a href="#">5</a></li>
-										<li><a href="#">Next</a></li>
-									</ul>
 								</div>
 							</div>
 							<!--end tab-pane-->
@@ -325,6 +242,66 @@
 		jQuery(document).ready(function() {    
 		   App.init();
 		   Search.init();
+		});
+		
+		//remove myself used
+		$("#remove_used").live("click",function(){
+			var usedid = $(this).attr("usedid");
+			if(confirm("删除帖子时，帖子中的回复将一起删除。确定删除?") == false){
+				return;
+			}
+			$.ajax({
+				url : "${BASE_PATH}/removemyselfused/" + usedid,
+				async : false,
+				type : "DELETE",
+				success : function(result){
+					alert(result.msg)
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown){
+         		   console.log("readyState===========" + XMLHttpRequest.readyState);
+         		   console.log("status===========" + XMLHttpRequest.status);
+         		   console.log("statusText===========" + XMLHttpRequest.statusText);
+         		   console.log("responseText===========" + XMLHttpRequest.responseText);
+         		   if(XMLHttpRequest.status == 500) {
+         			   alert("失败！服务器内部错误：500，请检查你输入的数据");
+         		   }else if(XMLHttpRequest.status == 404){
+         			   alert("失败！未找到页面：404");
+         		   }else if(XMLHttpRequest.status == 200){
+         			   alert("成功！请刷新页面");
+         		   }
+         	    }
+			});
+			location.reload();
+		});
+		
+		//remove my attention used
+		$("#remove_attention_used").live("click",function(){
+			var usedid = $(this).attr("usedid");
+			if(confirm("将此物品从我的关注中移除?") == false){
+				return;
+			}
+			$.ajax({
+				url : "${BASE_PATH}/removemyattentionused/" + usedid,
+				async : false,
+				type : "DELETE",
+				success : function(result){
+					alert(result.msg)
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown){
+         		   console.log("readyState===========" + XMLHttpRequest.readyState);
+         		   console.log("status===========" + XMLHttpRequest.status);
+         		   console.log("statusText===========" + XMLHttpRequest.statusText);
+         		   console.log("responseText===========" + XMLHttpRequest.responseText);
+         		   if(XMLHttpRequest.status == 500) {
+         			   alert("失败！服务器内部错误：500，请检查你输入的数据");
+         		   }else if(XMLHttpRequest.status == 404){
+         			   alert("失败！未找到页面：404");
+         		   }else if(XMLHttpRequest.status == 200){
+         			   alert("成功！请刷新页面");
+         		   }
+         	    }
+			});
+			location.reload();
 		});
 	</script>
 	<!-- END JAVASCRIPTS -->

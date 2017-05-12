@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.njl.bean.Used;
 import com.njl.bean.User;
 import com.njl.bean.UserExample;
 import com.njl.bean.UserExample.Criteria;
@@ -136,5 +137,4 @@ public class UserService {
 		User user2 = userMapper.selectByPrimaryKey(friendid);
 		return user2;
 	}
-
 }
