@@ -3,7 +3,6 @@ package com.njl.controller;
 import java.sql.Date;
 import java.util.List;
 
-import org.apache.jasper.tagplugins.jstl.core.Remove;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.njl.bean.Blog;
 import com.njl.bean.Msg;
 import com.njl.bean.Used;
 import com.njl.bean.UsedReply;
