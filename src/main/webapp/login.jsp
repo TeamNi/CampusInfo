@@ -189,17 +189,6 @@
 					<input id="register_gender" class="form-control placeholder-no-fix" type="text" placeholder="Gender" name="sex" onblur="validate_sex()"/>
 				</div>
 			</div>
-			<div class="form-group">
-				<label class="control-label visible-ie8 visible-ie9">Head Portrait</label>
-				<div class="input-icon">
-					<i class="glyphicon glyphicon-user"></i>
-					<input id="lefile" type="file" style="display:none" />
-					<div class="input-append"> 
-						<input id="photoCover" class="form-control" type="text" placeholder="Head Portrait" name="headurl"/>
-						<span class="input-group-addon" onclick="$('input[id=lefile]').click();">Click Here Browse Picture</span>
-					</div> 
-				</div>
-			</div>
 			<p>Enter your account details below:</p>
 			<div class="form-group">
 				<label class="control-label visible-ie8 visible-ie9">Username</label>

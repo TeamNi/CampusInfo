@@ -89,7 +89,7 @@
 				<!-- BEGIN USER LOGIN DROPDOWN -->
 				<li class="dropdown user">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-					<img alt="" src="assets/img/avatar1_small.jpg"/>
+					<img alt="" src="${user.headurl }" width="29px" height="29px"/>
 					<span class="username"><c:out value="${username }"></c:out></span>
 					<i class="fa fa-angle-down"></i>
 					</a>
@@ -193,13 +193,12 @@
 													</div>
 													<div class="margiv-top-10">
 														<a href="#" id="save_changes" ajax_validata="success" class="btn green">Save Changes</a>
-														<a href="#" class="btn default">Cancel</a>
 													</div>
 												</form>
 											</div>
 											<div id="tab_2-2" class="tab-pane">
 												<p>change you head portrait</p>
-												<form action="#" role="form">
+												<form action="change_my_headportrait" role="form" method="post" enctype="multipart/form-data">
 													<div class="form-group">
 														<div class="thumbnail" style="width: 310px;">
 															<img src="http://www.placehold.it/310x170/EFEFEF/AAAAAA&amp;text=no+image" alt="">
@@ -215,7 +214,7 @@
 																<span class="btn default btn-file">
 																<span class="fileupload-new"><i class="fa fa-paper-clip"></i> Select file</span>
 																<span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
-																<input type="file" class="default" />
+																<input type="file" class="default" name="file"/>
 																</span>
 																<a href="#" class="btn red fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash-o"></i> Remove</a>
 															</div>
@@ -228,8 +227,8 @@
 														</span>
 													</div>
 													<div class="margin-top-10">
-														<a href="#" ajax_validata="success" class="btn green">Submit</a>
-														<a href="#" class="btn default">Cancel</a>
+														<input type="submit" class="btn green" value="Submit">
+														<input type="reset" class="btn default" value="Cancel">
 													</div>
 												</form>
 											</div>
@@ -245,7 +244,7 @@
 													</div>
 													<div class="margin-top-10">
 														<a href="#" id="change_pwd" ajax_validata="success" class="btn green">Change Password</a>
-														<a href="#" class="btn default">Cancel</a>
+														<input type="reset" class="btn default" value="Cancel">
 													</div>
 												</form>
 											</div>
