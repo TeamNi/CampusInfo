@@ -202,7 +202,7 @@
 												<form action="change_my_headportrait" role="form" method="post" enctype="multipart/form-data">
 													<div class="form-group">
 														<div class="thumbnail" style="width: 310px;">
-															<img src="http://www.placehold.it/310x170/EFEFEF/AAAAAA&amp;text=no+image" width="310px" height="170px">
+															<img id="pre_image" src="assets/img/pages/noimage.png" width="310px" height="170px">
 														</div>
 														<div class="margin-top-10 fileupload fileupload-new" data-provides="fileupload">
 															<div class="input-group input-group-fixed">
@@ -215,7 +215,7 @@
 																<span class="btn default btn-file">
 																<span class="fileupload-new"><i class="fa fa-paper-clip"></i> Select file</span>
 																<span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
-																<input type="file" class="default" name="file"/>
+																<input type="file" id="file" class="default" name="file"/>
 																</span>
 																<a href="#" class="btn red fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash-o"></i> Remove</a>
 															</div>
@@ -226,6 +226,12 @@
 														supported in Latest Firefox, Chrome, Opera, 
 														Safari and Internet Explorer 10 only
 														</span>
+													</div>
+													<div class="bg-danger">
+														<font size="3" face="楷体" color="red">${uploadinfo }</font>
+														<%session.removeAttribute("uploadinfo"); %>
+														${SPRING_SECURITY_LAST_EXCEPTION.message}
+										                <%session.removeAttribute("SPRING_SECURITY_LAST_EXCEPTION");%>
 													</div>
 													<div class="margin-top-10">
 														<input type="submit" class="btn green" value="Submit">
@@ -504,6 +510,18 @@
 			   });
 			   //刷新页面
 			   location.reload();
+		   });
+		   
+		   //头像预览
+		   $("#file").change(function(){
+			   var pattern = /(\.*.jpg$)|(\.*.png$)|(\.*.gif$)/;
+			   if(!pattern.test(this.value)){
+				   alert("格式不支持，只支持.jpg .png .gif三种格式的图片。");
+				   this.value = "";
+				   return;
+			   }
+			   var path = URL.createObjectURL(this.files[0]);
+			   $("#pre_image").attr("src",path);
 		   });
 	</script>
 	<!-- END JAVASCRIPTS -->
