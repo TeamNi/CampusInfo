@@ -50,7 +50,8 @@
 		<div class="header-inner container">
 			<!-- BEGIN LOGO -->
 			<a class="navbar-brand" href="manage_user">
-			<img src="assets/img/logo.png" alt="logo" class="img-responsive" />
+				<font size="5" face="Comic Sans MS" color="white">Campus</font>
+				<font size="5" face="Comic Sans MS" color="red">Life</font>
 			</a>
 			<!-- END LOGO -->
 			<!-- BEGIN HORIZANTAL MENU -->

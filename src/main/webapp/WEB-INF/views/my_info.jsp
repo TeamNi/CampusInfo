@@ -45,7 +45,8 @@
 		<div class="header-inner container">
 			<!-- BEGIN LOGO -->
 			<a class="navbar-brand" href="index">
-			<img src="assets/img/logo.png" alt="logo" class="img-responsive" />
+				<font size="5" face="Comic Sans MS" color="white">Campus</font>
+				<font size="5" face="Comic Sans MS" color="red">Life</font>
 			</a>
 			<!-- END LOGO -->
 			<!-- BEGIN HORIZANTAL MENU -->
@@ -201,7 +202,7 @@
 												<form action="change_my_headportrait" role="form" method="post" enctype="multipart/form-data">
 													<div class="form-group">
 														<div class="thumbnail" style="width: 310px;">
-															<img src="http://www.placehold.it/310x170/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+															<img src="http://www.placehold.it/310x170/EFEFEF/AAAAAA&amp;text=no+image" width="310px" height="170px">
 														</div>
 														<div class="margin-top-10 fileupload fileupload-new" data-provides="fileupload">
 															<div class="input-group input-group-fixed">

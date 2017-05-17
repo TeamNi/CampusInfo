@@ -1,7 +1,11 @@
 package com.njl.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -158,5 +163,15 @@ public class BlogController {
 		blog.setCreatetime(date);
 		blogService.issueBlog(blog);
 		return Msg.success(); 
+	}
+	
+	@RequestMapping(value="/uploadblogpicture",method=RequestMethod.POST)
+	@ResponseBody
+	public Msg uploadBlobPicture(MultipartFile file,HttpServletRequest request) throws IllegalStateException, IOException{
+		System.out.println("0000");
+		System.out.println(file);
+		String fileName = file .getOriginalFilename();//文件原名称
+		file.transferTo(new File(request.getSession().getServletContext().getRealPath("/") + "image/" + String.valueOf(System.currentTimeMillis()) + fileName));
+		return Msg.success();
 	}
 }
