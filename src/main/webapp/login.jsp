@@ -41,7 +41,9 @@
 <body class="login">
 	<!-- BEGIN LOGO -->
 	<div class="logo">
-		<img src="assets/img/logo-big.png" alt="" /> 
+		<!-- <img src="assets/img/logo-big.png" alt="" /> -->
+		<font size="6" face="Comic Sans MS" color="white">Campus Life Information </font><br>
+		<font size="6" face="Gabriola" color="white">Communication Platform</font> 
 	</div>
 	<!-- END LOGO -->
 	<!-- BEGIN LOGIN -->
@@ -307,7 +309,6 @@
 				   if(result.code == 2){
 					   $("#register-submit-btn").attr("ajax_validata","error");
 					   alert("无效的昵称，昵称已经存在，请重新输入！");
-					   $("#register_nickname").focus();
 				   }else if(result.code == 1){
 					   $("#register-submit-btn").attr("ajax_validata","success");
 				   }
@@ -331,7 +332,6 @@
 				  if(result.code == 2){
 					  $("#register-submit-btn").attr("ajax_validata","error");
 					  alert("无效的学号，学号已经存在，请重新输入！");
-					  $("#register_studentid").focus();
 				  }else if(result.code == 1){
 					  $("#register-submit-btn").attr("ajax_validata","success");
 				  }
