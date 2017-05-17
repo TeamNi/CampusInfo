@@ -149,13 +149,16 @@ public class MyInfoController {
 	@RequestMapping(value = "/change_my_headportrait", method = RequestMethod.POST)
 	public String changeHeadportrait(MultipartFile file, HttpServletRequest request, HttpServletResponse response,
 			@ModelAttribute("studentid") Integer studentid) throws IllegalStateException, IOException {
-
+		
 		String trueFileName = savePicture(file, request);
-		User user = new User();
-		user.setHeadurl(trueFileName);
-		// 将图片路径保存到数据库中
-		userService.updateUserWithStudentid(user, studentid);
-
+		if(trueFileName.contains(".")){
+			User user = new User();
+			user.setHeadurl(trueFileName);
+			// 将图片路径保存到数据库中
+			userService.updateUserWithStudentid(user, studentid);
+		}else{
+			request.getSession().setAttribute("uploadinfo", trueFileName);
+		}
 		return "redirect:/my_info";
 	}
 	
@@ -177,27 +180,26 @@ public class MyInfoController {
 			//判断文件类型
 			type = fileName.indexOf(".") != -1 ? fileName.substring(fileName.lastIndexOf(".")+1, fileName.length()) : null;
 			if(type != null){//判断文件类型是否为空
-				if("GIF".equals(type.toUpperCase()) || "PNG".equals(type.toUpperCase()) || "JPG".equals(type.toUpperCase()) || "TXT".equals(type.toUpperCase())){
+				if("GIF".equals(type.toUpperCase()) || "PNG".equals(type.toUpperCase()) || "JPG".equals(type.toUpperCase())){
 					//项目在容器中实际发布运行的根路径
 					String readPath = request.getSession().getServletContext().getRealPath("/");
 					System.out.println("项目在服务器中实际发布运行的根路径" + readPath);
 					//文件名称
-					trueFileName = "image/" + String.valueOf(System.currentTimeMillis()) + fileName;
+					trueFileName = "image/user/" + String.valueOf(System.currentTimeMillis()) + fileName;
 					//设置存放文件的路径
 					path = readPath + trueFileName;
-					
 					System.out.println("存放文件的路径是：" + path);
 					//转存文件到指定路径
 					file.transferTo(new File(path));
 					System.out.println("文件成功上传的指定目录下");
 				}else{
-					System.out.println("不是我们想要的文件类型");
+					trueFileName = "上传失败！不是我们想要的文件类型";
 				}
 			}else{
-				System.out.println("文件类型为空");
+				trueFileName = "上传失败！文件类型为空";
 			}
 		}else{
-			System.out.println("没有找到对应的文件");
+			trueFileName = "上传失败！没有找到对应的文件";
 		}
 		return trueFileName;
 	}
