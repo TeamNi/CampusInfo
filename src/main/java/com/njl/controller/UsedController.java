@@ -22,7 +22,6 @@ import com.njl.bean.UsedReply;
 import com.njl.bean.User;
 import com.njl.service.UsedReplyService;
 import com.njl.service.UsedService;
-import com.njl.service.UserService;
 
 /**
  * 前台 used
@@ -30,15 +29,13 @@ import com.njl.service.UserService;
  *
  */
 @Controller
-@SessionAttributes({"username","studentid"})
+@SessionAttributes({"myself" })
 public class UsedController {
 	
 	@Autowired
 	private UsedService usedService;
 	@Autowired
 	private UsedReplyService usedReplyService;
-	@Autowired
-	private UserService userService;
 
 	/**
 	 * to used page 首页
@@ -82,26 +79,18 @@ public class UsedController {
 	 */
 	@RequestMapping(value="/addusedreply",method=RequestMethod.POST)
 	@ResponseBody
-	public Msg addUsedReply(UsedReply usedReply,@ModelAttribute("studentid") Integer studentid){
-		//根据学号拿到userid
-		int userid = 0;
-		List<User> userlist = userService.queryUserWithStu(studentid);
-		for (User user : userlist) {
-			userid = user.getUserid();
-		}
-		usedReply.setUserid(userid);
+	public Msg addUsedReply(UsedReply usedReply,@ModelAttribute("myself") User userinfo){
+		usedReply.setUserid(userinfo.getUserid());
 		//获取时间
 		long time = System.currentTimeMillis();
 		Date date = new Date(time);
 		usedReply.setCreatetime(date);
-		System.out.println(usedReply);
 		usedReplyService.addUsedReply(usedReply);
 		//统计评论数
 		int usedid = usedReply.getUsedid();
 		int count = (int)usedReplyService.countReply(usedid);//从 usedreply表中查出reply count
 		Used usedreplytimes = new Used();
 		usedreplytimes.setReplytimes(count);
-		System.out.println(usedreplytimes);
 		usedService.updateTimes(usedreplytimes,usedid);//update replytimes
 		return Msg.success();
 	}
@@ -122,7 +111,6 @@ public class UsedController {
 		int count = (int)usedReplyService.countReply(usedid);//从 usedreply表中查出reply count
 		Used used = new Used();
 		used.setReplytimes(count);
-		System.out.println(used);
 		usedService.updateTimes(used, usedid);//update replytimes
 		return Msg.success();
 	}
@@ -138,14 +126,8 @@ public class UsedController {
 	
 	@RequestMapping(value="/issue_used",method=RequestMethod.POST)
 	@ResponseBody
-	public Msg issueUsed(Used used,@ModelAttribute("studentid")Integer studentid){
-		//根据学号拿到userid
-		int userid = 0;
-		List<User> userlist = userService.queryUserWithStu(studentid);
-		for (User user : userlist) {
-			userid = user.getUserid();
-		}
-		used.setUserid(userid);
+	public Msg issueUsed(Used used,@ModelAttribute("myself")User userinfo){
+		used.setUserid(userinfo.getUserid());
 		//获取当前时间
 		long time = System.currentTimeMillis();
 		Date date = new Date(time);

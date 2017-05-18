@@ -87,8 +87,8 @@
 				<!-- BEGIN USER LOGIN DROPDOWN -->
 				<li class="dropdown user">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-					<img alt="" src="assets/img/avatar1_small.jpg"/>
-					<span class="username"><c:out value="${username }"></c:out></span>
+					<img alt="" src="${myself.headurl }" width="29px" height="29px"/>
+					<span class="username"><c:out value="${myself.username }"></c:out></span>
 					<i class="fa fa-angle-down"></i>
 					</a>
 					<ul class="dropdown-menu">

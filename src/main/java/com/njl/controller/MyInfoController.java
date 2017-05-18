@@ -32,7 +32,7 @@ import com.njl.service.UserService;
  *
  */
 @Controller
-@SessionAttributes({ "username", "studentid" })
+@SessionAttributes({"myself" })
 public class MyInfoController {
 
 	@Autowired
@@ -46,34 +46,11 @@ public class MyInfoController {
 	 * @return
 	 */
 	@RequestMapping("/my_info")
-	public String getMyInfo(@ModelAttribute("username") String username,
-			@ModelAttribute("studentid") Integer studentid, Model model) {
-
-		//my info
-		User user = new User();
-		List<User> userlist = userService.queryUserWithStu(studentid);
-		for (User us : userlist) {
-			user.setContact(us.getContact());
-			user.setCreatetime(us.getCreatetime());
-			user.setHeadurl(us.getHeadurl());
-			user.setNickname(us.getNickname());
-			user.setPassword(us.getPassword());
-			user.setSafeanswer(us.getSafeanswer());
-			user.setSafequestion(us.getSafequestion());
-			user.setSex(us.getSex());
-			user.setStudentid(us.getStudentid());
-			user.setUserid(us.getUserid());
-			user.setUsername(us.getUsername());
-		}
-		model.addAttribute("user", user);
+	public String getMyInfo(@ModelAttribute("myself") User userinfo, Model model) {
+		model.addAttribute("myinfo", userinfo);
 		//get my attention
 		List<User> nicknames = new ArrayList<>();
-		List<User> userids = userService.getMyAttention(studentid);//get userid with studentid
-		int userid = 0;
-		for (User user2 : userids) {
-			userid = user2.getUserid();			
-		}
-		List<UserAttention> friendids = userAttentionService.getMyAttention(userid);//get friendid with userid
+		List<UserAttention> friendids = userAttentionService.getMyAttention(userinfo.getUserid());//get friendid with userid
 		for (UserAttention userAttention : friendids) {
 			User user2 = userService.getAttentionNickname(userAttention.getFriendid());//get nickname with friendid
 			nicknames.add(user2);
@@ -90,8 +67,11 @@ public class MyInfoController {
 	 */
 	@RequestMapping(value="/updateuserinfo",method=RequestMethod.PUT)
 	@ResponseBody
-	public Msg updateUserInfo(User user, @ModelAttribute("studentid")Integer studentid){
-		userService.updateUserWithStudentid(user,studentid);
+	public Msg updateUserInfo(User user, @ModelAttribute("myself")User userinfo,Model model){
+		userService.updateUserWithStudentid(user,userinfo.getStudentid());
+		//update session value
+		User myself = userService.queryUserWithUserid(userinfo.getUserid());
+		model.addAttribute("myself",myself);
 		return Msg.success();
 	}
 	
@@ -103,8 +83,8 @@ public class MyInfoController {
 	 */
 	@RequestMapping(value="/updateuserpwd",method=RequestMethod.PUT)
 	@ResponseBody
-	public Msg updateUserPwd(User user, @ModelAttribute("studentid")Integer studentid){
-		userService.updateUserWithStudentid(user,studentid);
+	public Msg updateUserPwd(User user, @ModelAttribute("myself")User userinfo,Model model){
+		userService.updateUserWithStudentid(user,userinfo.getStudentid());
 		return Msg.success();
 	}
 	
@@ -116,7 +96,7 @@ public class MyInfoController {
 	 */
 	@RequestMapping(value="/checknickname")
 	@ResponseBody
-	public Msg checkNick(@RequestParam("nickname") String nickname, @ModelAttribute("studentid")Integer studentid){
+	public Msg checkNick(@RequestParam("nickname") String nickname, @ModelAttribute("myself")User userinfo){
 		List<User> list = userService.checkNick(nickname);
 		
 		int cnn = 0;
@@ -129,7 +109,7 @@ public class MyInfoController {
 		case 0:
 			return Msg.success();
 		case 1:
-			if(cnn == studentid){
+			if(cnn == userinfo.getStudentid()){
 				return Msg.success();
 			}else {
 				return Msg.fail();
@@ -148,14 +128,17 @@ public class MyInfoController {
 	 */
 	@RequestMapping(value = "/change_my_headportrait", method = RequestMethod.POST)
 	public String changeHeadportrait(MultipartFile file, HttpServletRequest request, HttpServletResponse response,
-			@ModelAttribute("studentid") Integer studentid) throws IllegalStateException, IOException {
+			@ModelAttribute("myself") User userinfo,Model model) throws IllegalStateException, IOException {
 		
 		String trueFileName = savePicture(file, request);
 		if(trueFileName.contains(".")){
 			User user = new User();
 			user.setHeadurl(trueFileName);
 			// 将图片路径保存到数据库中
-			userService.updateUserWithStudentid(user, studentid);
+			userService.updateUserWithStudentid(user, userinfo.getStudentid());
+			//update session value
+			User myself = userService.queryUserWithUserid(userinfo.getUserid());
+			model.addAttribute("myself",myself);
 		}else{
 			request.getSession().setAttribute("uploadinfo", trueFileName);
 		}

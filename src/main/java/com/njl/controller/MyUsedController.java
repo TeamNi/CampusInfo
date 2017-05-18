@@ -20,7 +20,6 @@ import com.njl.bean.User;
 import com.njl.service.MyUsedService;
 import com.njl.service.UsedAttentionService;
 import com.njl.service.UsedReplyService;
-import com.njl.service.UserService;
 
 /**
  * my used
@@ -28,11 +27,9 @@ import com.njl.service.UserService;
  *
  */
 @Controller
-@SessionAttributes({"username","studentid"})
+@SessionAttributes({"myself" })
 public class MyUsedController {
 	
-	@Autowired
-	private UserService userService;
 	@Autowired
 	private MyUsedService myUsedService;
 	@Autowired
@@ -45,19 +42,13 @@ public class MyUsedController {
 	 * @return
 	 */
 	@RequestMapping("/my_used")
-	public String getMyUsed(@ModelAttribute("studentid")Integer studentid,Model model){
-		//根据studentid 获得userid
-		int userid = 0;
-		List<User> userlist = userService.queryUserWithStu(studentid);
-		for (User user : userlist) {
-			userid = user.getUserid();
-		}
+	public String getMyUsed(@ModelAttribute("myself")User userinfo,Model model){
 		//get my used
-		List<Used> usedlist = myUsedService.getMyUsed(userid);
+		List<Used> usedlist = myUsedService.getMyUsed(userinfo.getUserid());
 		model.addAttribute("usedlist", usedlist);
 		//get my attention used
 		List<Used> attentionUsed = new ArrayList<Used>();
-		List<UsedAttention> usedAttentions = usedAttentionService.queryAttentionUsedid(userid);
+		List<UsedAttention> usedAttentions = usedAttentionService.queryAttentionUsedid(userinfo.getUserid());
 		for (UsedAttention usedAttention : usedAttentions) {
 			Used used = myUsedService.selectUsed(usedAttention.getUsedid());
 			attentionUsed.add(used);

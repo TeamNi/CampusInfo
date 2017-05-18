@@ -27,7 +27,6 @@ import com.njl.bean.Msg;
 import com.njl.bean.User;
 import com.njl.service.BlogReplyService;
 import com.njl.service.BlogService;
-import com.njl.service.UserService;
 
 /**
  * 前台  blog 
@@ -35,15 +34,13 @@ import com.njl.service.UserService;
  *
  */
 @Controller
-@SessionAttributes({"username","studentid"})
+@SessionAttributes({"myself"})
 public class BlogController {
 	
 	@Autowired
 	private BlogService blogService;
 	@Autowired
 	private BlogReplyService blogReplyService;
-	@Autowired
-	private UserService userService;
 	
 	/**
 	 * blog 首页
@@ -108,15 +105,9 @@ public class BlogController {
 	 */
 	@RequestMapping(value="/addblogreply",method=RequestMethod.POST)
 	@ResponseBody
-	public Msg addBlogReply(BlogReply blogReply,@ModelAttribute("studentid") Integer studentid){
-		//根据学号拿到userid
-		int userid = 0;
-		List<User> userlist = userService.queryUserWithStu(studentid);
-		for (User user : userlist) {
-			userid = user.getUserid();
-		}
+	public Msg addBlogReply(BlogReply blogReply,@ModelAttribute("myself") User userinfo){
 		//将数据装载到BlogReply
-		blogReply.setUserid(userid);
+		blogReply.setUserid(userinfo.getUserid());
 		//获取时间
 		long time = System.currentTimeMillis();
 		Date date = new Date(time);
@@ -148,18 +139,12 @@ public class BlogController {
 	 */
 	@RequestMapping(value="/issue_blog",method=RequestMethod.POST)
 	@ResponseBody
-	public Msg issueBlog(Blog blog,@ModelAttribute("studentid") Integer studentid){
-		//根据学号拿到userid
-		int userid = 0;
-		List<User> userlist = userService.queryUserWithStu(studentid);
-		for (User user : userlist) {
-			userid = user.getUserid();
-		}
+	public Msg issueBlog(Blog blog,@ModelAttribute("myself") User userinfo){
 		//获取当前时间
 		long time = System.currentTimeMillis();
 		Date date = new Date(time);
 		//issue blog
-		blog.setUserid(userid);
+		blog.setUserid(userinfo.getUserid());
 		blog.setCreatetime(date);
 		blogService.issueBlog(blog);
 		return Msg.success(); 

@@ -1,7 +1,5 @@
 package com.njl.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,7 +22,7 @@ import com.njl.service.UserService;
  *
  */
 @Controller
-@SessionAttributes({ "username", "studentid" })
+@SessionAttributes({ "myself" })
 public class MyAttentionController {
 
 	@Autowired
@@ -40,14 +38,8 @@ public class MyAttentionController {
 	 */
 	@RequestMapping(value = "/deletemyattention/{id}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public Msg deleteMyAttention(@PathVariable("id") Integer friendid, @ModelAttribute("studentid") Integer studentid) {
-		//根据studentid 获取 userid
-		int userid = 0;
-		List<User> us = userService.queryUserWithStu(studentid);
-		for (User user2 : us) {
-			userid = user2.getUserid();
-		}
-		userAttentionService.deleteFriend(friendid,userid);
+	public Msg deleteMyAttention(@PathVariable("id") Integer friendid, @ModelAttribute("myself") User userinfo) {
+		userAttentionService.deleteFriend(friendid,userinfo.getUserid());
 		return Msg.success();
 	}
 	
@@ -59,21 +51,15 @@ public class MyAttentionController {
 	 */
 	@RequestMapping(value="/addmyattention",method=RequestMethod.POST)
 	@ResponseBody
-	public Msg addMyAttention(@RequestParam("userid") Integer friendid,@ModelAttribute("studentid") Integer studentid){
-		//根据studentid 获取 userid
-		int userid = 0;
-		List<User> us = userService.queryUserWithStu(studentid);
-		for (User user2 : us) {
-			userid = user2.getUserid();
-		}
+	public Msg addMyAttention(@RequestParam("userid") Integer friendid,@ModelAttribute("myself") User userinfo){
 		//查看好友是否已经存在
-		long count = userAttentionService.selectFrient(userid,friendid);
+		long count = userAttentionService.selectFrient(userinfo.getUserid(),friendid);
 		if(count > 0){
 			return Msg.fail();
 		}else{
 			//add friend
 			UserAttention userAttention = new UserAttention();
-			userAttention.setUserid(userid);
+			userAttention.setUserid(userinfo.getUserid());
 			userAttention.setFriendid(friendid);
 			userAttentionService.addFriend(userAttention);
 			return Msg.success();

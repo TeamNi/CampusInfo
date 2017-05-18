@@ -90,8 +90,8 @@
 				<!-- BEGIN USER LOGIN DROPDOWN -->
 				<li class="dropdown user">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-					<img alt="" src="${user.headurl }" width="29px" height="29px"/>
-					<span class="username"><c:out value="${username }"></c:out></span>
+					<img alt="" src="${myself.headurl }" width="29px" height="29px"/>
+					<span class="username"><c:out value="${myself.username }"></c:out></span>
 					<i class="fa fa-angle-down"></i>
 					</a>
 					<ul class="dropdown-menu">
@@ -162,35 +162,35 @@
 												<form id="forminfo" role="form" action="#">
 													<div class="form-group">
 														<label class="control-label">Student Id</label>
-														<input class="form-control" type="text" placeholder="Student Id" name="studentid" value="${user.studentid }" readonly="readonly"/>
+														<input class="form-control" type="text" placeholder="Student Id" name="studentid" value="${myself.studentid }" readonly="readonly"/>
 													</div>
 													<div class="form-group">
 														<label class="control-label">Registration Time</label>
-														<input class="form-control" type="text" placeholder="Registration Time" name="createtime" value="${user.createtime }" readonly="readonly"/>
+														<input class="form-control" type="text" placeholder="Registration Time" name="createtime" value="${myself.createtime }" readonly="readonly"/>
 													</div>
 													<div class="form-group">
 														<label class="control-label">Username</label>
-														<input id="reset_username" type="text" placeholder="Username" class="form-control" name="username" value="${user.username }" onblur="validate_username()" />
+														<input id="reset_username" type="text" placeholder="Username" class="form-control" name="username" value="${myself.username }" onblur="validate_username()" />
 													</div>
 													<div class="form-group">
 														<label class="control-label">Nickname</label>
-														<input id="reset_nickname" type="text" placeholder="Nickname" class="form-control" name="nickname" value="${user.nickname }" onblur="checkNickname()"/>
+														<input id="reset_nickname" type="text" placeholder="Nickname" class="form-control" name="nickname" value="${myself.nickname }" onblur="checkNickname()"/>
 													</div>
 													<div class="form-group">
 														<label class="control-label">Contact</label>
-														<input type="text" placeholder="Contact" class="form-control" name="contact" value="${user.contact }" />
+														<input type="text" placeholder="Contact" class="form-control" name="contact" value="${myself.contact }" />
 													</div>
 													<div class="form-group">
 														<label class="control-label">Safe Question</label>
-														<input type="text" placeholder="Safe Question" class="form-control" name="safequestion" value="${user.safequestion }"/>
+														<input type="text" placeholder="Safe Question" class="form-control" name="safequestion" value="${myself.safequestion }"/>
 													</div>
 													<div class="form-group">
 														<label class="control-label">Safe Answer</label>
-														<input type="text" placeholder="Safe Answer" class="form-control" name="safeanswer" value="${user.safeanswer }"/>
+														<input type="text" placeholder="Safe Answer" class="form-control" name="safeanswer" value="${myself.safeanswer }"/>
 													</div>
 													<div class="form-group">
 														<label class="control-label">Gender</label>
-														<input id="reset_gender" type="text" placeholder="Gender" class="form-control" name="sex" value="${user.sex }" onblur="validate_sex()"/>
+														<input id="reset_gender" type="text" placeholder="Gender" class="form-control" name="sex" value="${myself.sex }" onblur="validate_sex()"/>
 													</div>
 													<div class="margiv-top-10">
 														<a href="#" id="save_changes" ajax_validata="success" class="btn green">Save Changes</a>
