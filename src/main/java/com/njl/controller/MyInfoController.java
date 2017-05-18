@@ -134,7 +134,13 @@ public class MyInfoController {
 		if(trueFileName.contains(".")){
 			User user = new User();
 			user.setHeadurl(trueFileName);
-			// 将图片路径保存到数据库中
+			//先删除已有的头像图片
+			User userHead = userService.queryUserWithUserid(userinfo.getUserid());
+			File imgFile = new File(request.getSession().getServletContext().getRealPath("/") + userHead.getHeadurl());
+			if(imgFile.exists() && (!"image/user/14950345129689.jpg".equals(userHead.getHeadurl()))){
+				imgFile.delete();
+			}
+			//将图片路径保存到数据库中
 			userService.updateUserWithStudentid(user, userinfo.getStudentid());
 			//update session value
 			User myself = userService.queryUserWithUserid(userinfo.getUserid());
