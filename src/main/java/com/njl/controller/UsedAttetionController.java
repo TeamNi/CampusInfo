@@ -1,7 +1,5 @@
 package com.njl.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,18 +16,15 @@ import com.njl.bean.UsedAttention;
 import com.njl.bean.User;
 import com.njl.service.UsedAttentionService;
 import com.njl.service.UsedService;
-import com.njl.service.UserService;
 
 @Controller
-@SessionAttributes({"username","studentid"})
+@SessionAttributes({"myself" })
 public class UsedAttetionController {
 
 	@Autowired
 	private UsedAttentionService usedAttentionService;
 	@Autowired
 	private UsedService  usedService;
-	@Autowired
-	private UserService userService;
 	
 	/**
 	 * add my attention used
@@ -39,27 +34,21 @@ public class UsedAttetionController {
 	 */
 	@RequestMapping(value="/addattention",method=RequestMethod.POST)
 	@ResponseBody
-	public Msg addAttentionUsed(@RequestParam("usedid")Integer usedid,@ModelAttribute("studentid")Integer studentid){
-		//根据学号拿到userid
-		int userid = 0;
-		List<User> userlist = userService.queryUserWithStu(studentid);
-		for (User user : userlist) {
-			userid = user.getUserid();
-		}
+	public Msg addAttentionUsed(@RequestParam("usedid")Integer usedid,@ModelAttribute("myself")User userinfo){
 		//查看used是否为我自己发布的used
 		Used useduser = usedService.queryWithUsedid(usedid);
-		if(useduser.getUserid() == userid){
+		if(useduser.getUserid() == userinfo.getUserid()){
 			return Msg.fail().add("info", "自己发布的物品不能添加到我的关注中！");
 		}
 		//查看used是否已经在我的关注中
-		long num = usedAttentionService.selectAttention(userid,usedid);
+		long num = usedAttentionService.selectAttention(userinfo.getUserid(),usedid);
 		if(num > 0){
 			return Msg.fail().add("info", "此物品已经在我的关注中!");
 		}else{
 			//转载数据
 			UsedAttention usedAttention = new UsedAttention();
 			usedAttention.setUsedid(usedid);
-			usedAttention.setUserid(userid);
+			usedAttention.setUserid(userinfo.getUserid());
 			//add attention used
 			usedAttentionService.addAttentionUsed(usedAttention);
 			//更新used 表中attentiontimes 的值 
@@ -78,15 +67,9 @@ public class UsedAttetionController {
 	 */
 	@RequestMapping(value="/removemyattentionused/{usedid}",method=RequestMethod.DELETE)
 	@ResponseBody
-	public Msg removeMyAttentionUsed(@PathVariable("usedid")Integer usedid,@ModelAttribute("studentid")Integer studentid){
-		//根据studentid 获得userid
-		int userid = 0;
-		List<User> userlist = userService.queryUserWithStu(studentid);
-		for (User user : userlist) {
-			userid = user.getUserid();
-		}
+	public Msg removeMyAttentionUsed(@PathVariable("usedid")Integer usedid,@ModelAttribute("myself")User userinfo){
 		//delete my attention used 
-		usedAttentionService.deleteMyAttention(userid, usedid);
+		usedAttentionService.deleteMyAttention(userinfo.getUserid(), usedid);
 		//更新used 表中attentiontimes 的值 
 		int count = (int)usedAttentionService.countAttention(usedid);
 		Used used = new Used();

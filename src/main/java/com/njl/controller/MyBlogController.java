@@ -17,7 +17,6 @@ import com.njl.bean.Msg;
 import com.njl.bean.User;
 import com.njl.service.BlogReplyService;
 import com.njl.service.MyBlogService;
-import com.njl.service.UserService;
 
 /**
  * my blog
@@ -25,11 +24,9 @@ import com.njl.service.UserService;
  *
  */
 @Controller
-@SessionAttributes({"username","studentid"})
+@SessionAttributes({"myself" })
 public class MyBlogController {
 	
-	@Autowired 
-	private UserService userService ;
 	@Autowired
 	private MyBlogService myblogService;
 	@Autowired
@@ -42,15 +39,9 @@ public class MyBlogController {
 	 * @return
 	 */
 	@RequestMapping("/my_blog")
-	public String getMyBlog(@ModelAttribute("studentid") Integer studentid,Model model) {
-		//根据studentid 获得userid
-		int userid = 0;
-		List<User> userlist = userService.queryUserWithStu(studentid);
-		for (User user : userlist) {
-			userid = user.getUserid();
-		}
+	public String getMyBlog(@ModelAttribute("myself") User userinfo,Model model) {
 		//根据userid获取 blog
-		List<Blog> bloglist = myblogService.getMyblog(userid);
+		List<Blog> bloglist = myblogService.getMyblog(userinfo.getUserid());
 		model.addAttribute("bloglist", bloglist);
 		return "my_blog";
 	}

@@ -27,7 +27,7 @@ public class UserService {
 	 * 
 	 * @param user
 	 */
-	public List<User> queryUser(String username, String password) {
+	public List<User> queryUserLogin(String username, String password) {
 		// TODO Auto-generated method stub
 		UserExample example = new UserExample();
 		Criteria criteria = example.createCriteria();
@@ -124,5 +124,16 @@ public class UserService {
 		// TODO Auto-generated method stub
 		User user2 = userMapper.selectByPrimaryKey(friendid);
 		return user2;
+	}
+
+	/**
+	 * 获取myself info 
+	 * @param userid
+	 * @return
+	 */
+	public User queryUserWithUserid(int userid) {
+		// TODO Auto-generated method stub
+		User user = userMapper.selectByPrimaryKey(userid);
+		return user;
 	}
 }
