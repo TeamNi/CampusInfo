@@ -152,11 +152,13 @@ public class BlogController {
 	
 	@RequestMapping(value="/uploadblogpicture",method=RequestMethod.POST)
 	@ResponseBody
-	public Msg uploadBlobPicture(MultipartFile file,HttpServletRequest request) throws IllegalStateException, IOException{
-		System.out.println("0000");
-		System.out.println(file);
+	public String uploadBlobPicture(MultipartFile file,HttpServletRequest request) throws IllegalStateException, IOException{
+		String trueFileNamePath = null;
 		String fileName = file .getOriginalFilename();//文件原名称
-		file.transferTo(new File(request.getSession().getServletContext().getRealPath("/") + "image/" + String.valueOf(System.currentTimeMillis()) + fileName));
-		return Msg.success();
+		String readPath = request.getSession().getServletContext().getRealPath("/");
+		trueFileNamePath = "image/blog/" + String.valueOf(System.currentTimeMillis()) + fileName;
+		String path = readPath + trueFileNamePath;
+		file.transferTo(new File(path));
+		return trueFileNamePath;
 	}
 }

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+    pageEncoding="utf-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
@@ -513,12 +513,16 @@
 		   });
 		   
 		   //头像预览
+		   var orpath = $("#pre_image").attr("src");
 		   $("#file").change(function(){
 			   var pattern = /(\.*.jpg$)|(\.*.png$)|(\.*.gif$)/;
-			   if(!pattern.test(this.value)){
+			   if(!pattern.test(this.value) && this.value != ""){
 				   alert("格式不支持，只支持.jpg .png .gif三种格式的图片。");
 				   this.value = "";
 				   return;
+			   }
+			   if(this.value == ""){
+			       $("#pre_image").attr("src",orpath);
 			   }
 			   var path = URL.createObjectURL(this.files[0]);
 			   $("#pre_image").attr("src",path);
