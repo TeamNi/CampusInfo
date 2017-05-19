@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+    pageEncoding="utf-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
@@ -212,9 +212,6 @@
 				alert("标题和内容必须填写！")
 				return false;
 			}
-			if(confirm("Are you sure?") == false){
-				return;
-			}
 			$.ajax({
 				url : "${BASE_PATH}/issue_blog",
 				async : false,
@@ -243,34 +240,44 @@
 			});
 		});
 		
-		Dropzone.autoDiscover = false;
+		//upload file
+ 		Dropzone.autoDiscover = false;
 		var myDropzone = new Dropzone("#my-dropzone", {
 			url: "${BASE_PATH}/uploadblogpicture",
 			addRemoveLinks: true,
 			method: 'post',
-			maxFiles:10,//一次性上传的文件数量上限
+			maxFiles:3,//一次性上传的文件数量上限
 			filesizeBase: 1024,
+			parallelUploads: 100,
+	        acceptedFiles: ".jpg,.gif,.png",
+			autoProcessQueue: false,
 			init:function(){
-	            this.on("addedfile", function(file) { 
-	            	alert("start");
-	            	if(!confirm("????")){
-	            		return;
-	            	}
-	            //上传文件时触发的事件
+	        	var submitButton = document.querySelector("#btn_issue_blog")
+	            myDropzone = this; // closure
+
+		        submitButton.addEventListener("click", function() {
+		          myDropzone.processQueue(); // Tell Dropzone to process all queued files.
+		        });
+	            
+	            this.on("addedfile", function(file) {
+	                console.log("File: " + file.name + ">>added");
+	            });
+	            this.on("success", function(file) {
+	                console.log("File: " + file.name + ">>uploaded");
+	            });
+	            this.on("removedfile", function(file) {
+	                console.log("File: " + file.name + ">>removed");
 	            });
 	            this.on("queuecomplete",function(file) {
 	            	alert("SUCCESS!");
+	                console.log("File: " + file.getAcceptedFiles().length + ">>queuecomplete");
 	                //上传完成后触发的方法
-	            });
-	            this.on("removedfile",function(file){
-	            	alert("REMOVE!");
-	                //删除文件时触发的方法
-	            });
+	            })
 	        },
 			sending: function(file, xhr, formData) {
 				formData.append("filesize", file.size);
 			}
-		});
+		}); 
 		
 /* 		var myDropzone = new Dropzone("#my-dropzone", {
 			url: "${BASE_PATH}/uploadblogpicture", //必须填写
