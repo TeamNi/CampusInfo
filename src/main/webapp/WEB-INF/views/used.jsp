@@ -150,12 +150,12 @@
 									<c:forEach items="${pageInfo.list }" var="used">
 										<div class="col-md-4 col-sm-6 mix">
 											<div class="mix-inner">
-												<img class="img-responsive" src="assets/img/works/img1.jpg" alt="">
+												<img class="img-responsive" src="${used.pictureurl }" alt="">
 												<div class="mix-details">
 													<h3>${used.title }</h3>
 													<p>${used.content }</p>
 													<a class="mix-link" href="used_details?usedid=${used.usedid }" title="click here for details"><i class="fa fa-link"></i></a>
-													<a class="mix-preview fancybox-button" href="assets/img/works/img1.jpg" title="${used.title }" data-rel="fancybox-button"><i class="fa fa-heart"></i></a>
+													<a class="mix-preview fancybox-button" href="${used.pictureurl }" title="${used.title }" data-rel="fancybox-button"><i class="fa fa-heart"></i></a>
 												</div>
 											</div>
 										</div>

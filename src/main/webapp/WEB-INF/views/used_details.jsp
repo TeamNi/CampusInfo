@@ -139,9 +139,23 @@
 			<div class="row">
 				<div class="col-md-12 news-page blog-page">
 					<div class="row">
-						<div class="col-md-9 blog-tag-data">
+						<div class="col-md-12 blog-tag-data">
 							<h3>${useddetails.title }</h3>
-							<img src="assets/img/works/img1.jpg" class="img-responsive" alt="">
+							<div class="tab-pane">
+								<!-- BEGIN FILTER -->           
+								<div class="filter-v1 margin-top-10">
+									<div class="row mix-grid thumbnails">
+										<c:forEach items="${usedPics }" var="usedPics">
+											<div class="col-md-6 col-sm-6 mix">
+												<div class="mix-inner">
+													<img src="${usedPics.pictureurl }" class="img-responsive" alt="">
+												</div>
+											</div>
+										</c:forEach>
+									</div>
+								</div>
+								<!-- END FILTER --> 
+							</div>
 							<div class="row">
 								<div class="col-md-12">
 									<ul class="list-inline">
@@ -152,184 +166,60 @@
 									</ul>
 								</div>
 							</div>
-							<div class="news-item-page">
+							<div class="row col-md-9">
+								<div class="news-item-page">
+									<hr>
+									<blockquote class="hero">
+										<div class="panel panel-success">
+										  <div class="panel-heading">
+										    <h3 class="panel-title">
+										    title : ${useddetails.title }
+										    </h3>
+										  </div>
+										  <div class="panel-body">
+										    content : ${useddetails.content }
+										  </div>
+										  <div class="panel-body">
+										    price : ${useddetails.price }
+										  </div>
+										  <div class="panel-body">
+										    contact : ${useddetails.contact }
+										  </div>
+										</div>
+									</blockquote>
+								</div>
 								<hr>
-								<blockquote class="hero">
-									<div class="panel panel-success">
-									  <div class="panel-heading">
-									    <h3 class="panel-title">
-									    title : ${useddetails.title }
-									    </h3>
-									  </div>
-									  <div class="panel-body">
-									    content : ${useddetails.content }
-									  </div>
-									  <div class="panel-body">
-									    price : ${useddetails.price }
-									  </div>
-									  <div class="panel-body">
-									    contact : ${useddetails.contact }
-									  </div>
-									</div>
-								</blockquote>
-							</div>
-							<hr>
-							<h3>Comments</h3>
-							<c:forEach items="${replylist }" var="replylist">
-							<div class="media">
-								<a href="#" class="pull-left">
-								<img alt="" src="${replylist.user.headurl }" class="media-object">
-								</a>
-								<div class="media-body">
-									<c:if test="${myself.studentid == replylist.user.studentid }">
-									<h4 class="media-heading">${replylist.user.nickname } <span>${replylist.createtime } / <a href="#" remove_rid="${replylist.replyid }" id="remove_rid">Remove</a></span></h4>
-									</c:if>
-									<c:if test="${myself.studentid != replylist.user.studentid }">
-									<h4 class="media-heading">${replylist.user.nickname } <span>${replylist.createtime } / </span></h4>
-									</c:if>
-									<p>${replylist.content }</p>
-								</div>
-							</div>
-							<hr>
-							</c:forEach>
-							<!-- Nested media object -->
-							<div class="post-comment">
-								<h3>Leave a Comment</h3>
-								<form role="form" action="#" id="form_post_reply">
-									<div class="form-group">
-										<label class="control-label">Message<span class="required">*</span></label>
-										<input type="hidden" name="usedid" value="${useddetails.usedid }">
-										<textarea id="reply_content" class="col-md-10 form-control" rows="8" name="content"></textarea>
-									</div>
-									<button id="btn_post_reply" class="margin-top-20 btn blue" type="button">Post a Comment</button>
-								</form>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<h3>News Feeds</h3>
-							<div class="top-news">
-								<a href="#" class="btn green">
-								<span>Top Week</span>
-								<em>Posted on: April 15, 2013</em>
-								<em>
-								<i class="fa fa-tags"></i>
-								Internet, Music, People
-								</em>
-								<i class="fa fa-music top-news-icon"></i>                             
-								</a>
-								<a href="#" class="btn yellow">
-								<span>Study Abroad</span>
-								<em>Posted on: April 13, 2013</em>
-								<em>
-								<i class="fa fa-tags"></i>
-								Education, Students, Canada
-								</em>
-								<i class="fa fa-book top-news-icon"></i>                              
-								</a>
-								<a href="#" class="btn red">
-								<span>Metronic News</span>
-								<em>Posted on: April 16, 2013</em>
-								<em>
-								<i class="fa fa-tags"></i>
-								Money, Business, Google
-								</em>
-								<i class="fa fa-briefcase top-news-icon"></i>
-								</a>
-								<a href="#" class="btn blue">
-								<span>Gold Price Falls</span>
-								<em>Posted on: April 14, 2013</em>
-								<em>
-								<i class="fa fa-tags"></i>
-								USA, Business, Apple
-								</em>
-								<i class="fa fa-globe top-news-icon"></i>                             
-								</a>
-							</div>
-							<div class="space20"></div>
-							<h3>News Tags</h3>
-							<ul class="list-inline sidebar-tags">
-								<li><a href="#"><i class="fa fa-tags"></i> Business</a></li>
-								<li><a href="#"><i class="fa fa-tags"></i> Music</a></li>
-								<li><a href="#"><i class="fa fa-tags"></i> Internet</a></li>
-								<li><a href="#"><i class="fa fa-tags"></i> Money</a></li>
-								<li><a href="#"><i class="fa fa-tags"></i> Google</a></li>
-								<li><a href="#"><i class="fa fa-tags"></i> TV Shows</a></li>
-								<li><a href="#"><i class="fa fa-tags"></i> Education</a></li>
-								<li><a href="#"><i class="fa fa-tags"></i> People</a></li>
-								<li><a href="#"><i class="fa fa-tags"></i> People</a></li>
-								<li><a href="#"><i class="fa fa-tags"></i> Math</a></li>
-								<li><a href="#"><i class="fa fa-tags"></i> Photos</a></li>
-								<li><a href="#"><i class="fa fa-tags"></i> Electronics</a></li>
-								<li><a href="#"><i class="fa fa-tags"></i> Apple</a></li>
-								<li><a href="#"><i class="fa fa-tags"></i> Canada</a></li>
-							</ul>
-							<div class="space20"></div>
-							<h3>Tabs</h3>
-							<div class="tabbable tabbable-custom">
-								<ul class="nav nav-tabs">
-									<li class="active"><a data-toggle="tab" href="#tab_1_1">Section 1</a></li>
-									<li ><a data-toggle="tab" href="#tab_1_2">Section 2</a></li>
-								</ul>
-								<div class="tab-content">
-									<div id="tab_1_1" class="tab-pane active">
-										<p>I'm in Section 1.</p>
-										<p>
-											Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat.
-										</p>
-									</div>
-									<div id="tab_1_2" class="tab-pane">
-										<p>Howdy, I'm in Section 2.</p>
-										<p>
-											Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat. Ut wisi enim ad minim veniam, quis nostrud exerci tation.
-										</p>
-									</div>
-								</div>
-							</div>
-							<div class="space20"></div>
-							<h3>Recent Twitts</h3>
-							<div class="blog-twitter">
-								<div class="blog-twitter-block">
-									<a href="">@keenthemes</a> 
-									<p>At vero eos et accusamus et iusto odio.</p>
-									<a href="#"><em>http://t.co/sBav7dm</em></a> 
-									<span>5 hours ago</span>
-									<i class="fa fa-twitter blog-twiiter-icon"></i>
-								</div>
-								<div class="blog-twitter-block">
-									<a href="">@keenthemes</a> 
-									<p>At vero eos et accusamus et iusto odio.</p>
-									<a href="#"><em>http://t.co/sBav7dm</em></a> 
-									<span>8 hours ago</span>
-									<i class="fa fa-twitter blog-twiiter-icon"></i>
-								</div>
-								<div class="blog-twitter-block">
-									<a href="">@keenthemes</a> 
-									<p>At vero eos et accusamus et iusto odio.</p>
-									<a href="#"><em>http://t.co/sBav7dm</em></a> 
-									<span>12 hours ago</span>
-									<i class="fa fa-twitter blog-twiiter-icon"></i>
-								</div>
-							</div>
-							<div class="space20"></div>
-							<h3>Flickr</h3>
-							<ul class="list-inline blog-images">
-								<li>
-									<a class="fancybox-button" data-rel="fancybox-button" title="390 x 220 - keenthemes.com" href="assets/img/blog/1.jpg">
-									<img alt="" src="assets/img/blog/1.jpg">
+								<h3>Comments</h3>
+								<c:forEach items="${replylist }" var="replylist">
+								<div class="media">
+									<a href="#" class="pull-left">
+									<img alt="" src="${replylist.user.headurl }" class="media-object">
 									</a>
-								</li>
-								<li><a href="#"><img alt="" src="assets/img/blog/2.jpg"></a></li>
-								<li><a href="#"><img alt="" src="assets/img/blog/3.jpg"></a></li>
-								<li><a href="#"><img alt="" src="assets/img/blog/4.jpg"></a></li>
-								<li><a href="#"><img alt="" src="assets/img/blog/5.jpg"></a></li>
-								<li><a href="#"><img alt="" src="assets/img/blog/6.jpg"></a></li>
-								<li><a href="#"><img alt="" src="assets/img/blog/8.jpg"></a></li>
-								<li><a href="#"><img alt="" src="assets/img/blog/10.jpg"></a></li>
-								<li><a href="#"><img alt="" src="assets/img/blog/11.jpg"></a></li>
-								<li><a href="#"><img alt="" src="assets/img/blog/1.jpg"></a></li>
-								<li><a href="#"><img alt="" src="assets/img/blog/2.jpg"></a></li>
-								<li><a href="#"><img alt="" src="assets/img/blog/7.jpg"></a></li>
-							</ul>
+									<div class="media-body">
+										<c:if test="${myself.studentid == replylist.user.studentid }">
+										<h4 class="media-heading">${replylist.user.nickname } <span>${replylist.createtime } / <a href="#" remove_rid="${replylist.replyid }" id="remove_rid">Remove</a></span></h4>
+										</c:if>
+										<c:if test="${myself.studentid != replylist.user.studentid }">
+										<h4 class="media-heading">${replylist.user.nickname } <span>${replylist.createtime } / </span></h4>
+										</c:if>
+										<p>${replylist.content }</p>
+									</div>
+								</div>
+								<hr>
+								</c:forEach>
+								<!-- Nested media object -->
+								<div class="post-comment">
+									<h3>Leave a Comment</h3>
+									<form role="form" action="#" id="form_post_reply">
+										<div class="form-group">
+											<label class="control-label">Message<span class="required">*</span></label>
+											<input type="hidden" name="usedid" value="${useddetails.usedid }">
+											<textarea id="reply_content" class="col-md-10 form-control" rows="8" name="content"></textarea>
+										</div>
+										<button id="btn_post_reply" class="margin-top-20 btn blue" type="button">Post a Comment</button>
+									</form>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

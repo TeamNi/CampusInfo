@@ -140,7 +140,7 @@
 			<div class="row">
 				<div class="col-md-8">
 					<div id="tab_3-3" class="tab-pane">
-						<form action="#" id="form_issue_used">
+						<form action="#" id="form_issue_used" method="post">
 							<div class="form-group">
 								<label class="control-label">Title:</label>
 								<input type="text" maxlength="25" class="form-control" value="" name="title" id="issue_title"/>
@@ -158,7 +158,7 @@
 								<textarea rows="6" cols="135" class="form-control" maxlength="800" name="content" id="issue_content"></textarea>
 							</div>
 							<label class="control-label">Picture:</label>
-							<div action="assets/plugins/dropzone/upload.php" class="form-group dropzone" id="my-dropzone" name="pictureurl" id="issue_picture"></div>
+							<div class="form-group dropzone" id="my-dropzone"></div>
 							<div class="margin-top-10">
 								<a href="#" class="btn green" id="btn_issue_used">发布</a>
 								<a href="#" class="btn default" id="btn_issue_cancel">取消</a>
@@ -229,9 +229,6 @@
 				alert("价格格式不正确！")
 				return;
 			}
-			if(confirm("Are you sure?") == false){
-				return;
-			}
 			$.ajax({
 				url : "${BASE_PATH}/issue_used",
 				async : false,
@@ -261,6 +258,45 @@
          	    }
 			});
 		});
+		
+		//upload file
+ 		Dropzone.autoDiscover = false;
+		var myDropzone = new Dropzone("#my-dropzone", {
+			url: "${BASE_PATH}/uploadusedpicture",
+			addRemoveLinks: true,
+			method: 'post',
+			maxFiles:5,//一次性上传的文件数量上限
+			filesizeBase: 1024,
+			parallelUploads: 100,
+	        acceptedFiles: ".jpg,.gif,.png",
+			autoProcessQueue: false,
+			init:function(){
+	        	var submitButton = document.querySelector("#btn_issue_used")
+	            myDropzone = this; // closure
+
+		        submitButton.addEventListener("click", function() {
+		          myDropzone.processQueue(); // Tell Dropzone to process all queued files.
+		        });
+	            
+	            this.on("addedfile", function(file) {
+	                console.log("File: " + file.name + ">>added");
+	            });
+	            this.on("success", function(file) {
+	                console.log("File: " + file.name + ">>uploaded");
+	            });
+	            this.on("removedfile", function(file) {
+	                console.log("File: " + file.name + ">>removed");
+	            });
+	            this.on("queuecomplete",function(file) {
+	            	alert("SUCCESS!");
+	                console.log("File: " + file.getAcceptedFiles().length + ">>queuecomplete");
+	                //上传完成后触发的方法
+	            })
+	        },
+			sending: function(file, xhr, formData) {
+				formData.append("filesize", file.size);
+			}
+		}); 
 	</script>
 	<!-- END PAGE LEVEL SCRIPTS -->
 </body>

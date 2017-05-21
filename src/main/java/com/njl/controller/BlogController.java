@@ -166,7 +166,6 @@ public class BlogController {
 		BlogPic blogPic = new BlogPic();
 		blogPic.setBlogid(blog.getBlogid());
 		for (String string : blogPath) {
-			truePathOne = string;
 			blogPic.setPictureurl(string);
 			blogPicService.addBlogPic(blogPic);
 		}
