@@ -1,7 +1,12 @@
 package com.njl.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,13 +18,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.njl.bean.Msg;
 import com.njl.bean.Used;
+import com.njl.bean.UsedPic;
 import com.njl.bean.UsedReply;
 import com.njl.bean.User;
+import com.njl.service.UsedPicService;
 import com.njl.service.UsedReplyService;
 import com.njl.service.UsedService;
 
@@ -31,11 +39,14 @@ import com.njl.service.UsedService;
 @Controller
 @SessionAttributes({"myself" })
 public class UsedController {
+	private List<String> usedPath = new ArrayList<String>();
 	
 	@Autowired
 	private UsedService usedService;
 	@Autowired
 	private UsedReplyService usedReplyService;
+	@Autowired
+	private UsedPicService usedPicService;
 
 	/**
 	 * to used page 首页
@@ -65,6 +76,8 @@ public class UsedController {
 		//get used details
 		Used useddetails = usedService.getUsedDetails(usedid);
 		model.addAttribute("useddetails", useddetails);
+		List<UsedPic> usedPics = usedPicService.queryPic(usedid);
+		model.addAttribute("usedPics", usedPics);
 		//get used reply
 		List<UsedReply> replylist = usedReplyService.getUsedReply(usedid);
 		model.addAttribute("replylist", replylist);
@@ -124,16 +137,54 @@ public class UsedController {
 		return "used_issue";
 	}
 	
+	/**
+	 * issue used
+	 * @param used
+	 * @param userinfo
+	 * @return
+	 */
 	@RequestMapping(value="/issue_used",method=RequestMethod.POST)
 	@ResponseBody
 	public Msg issueUsed(Used used,@ModelAttribute("myself")User userinfo){
-		used.setUserid(userinfo.getUserid());
+		String truePathOne = null;
+		for (String string : usedPath) {
+			truePathOne = string;
+		}
 		//获取当前时间
 		long time = System.currentTimeMillis();
 		Date date = new Date(time);
-		used.setCreatetime(date);
 		//add used
+		used.setUserid(userinfo.getUserid());
+		used.setCreatetime(date);
+		used.setPictureurl(truePathOne);
 		usedService.addUsed(used);
+		//add pictures to database
+		UsedPic usedPic = new UsedPic();
+		usedPic.setUsedid(used.getUsedid());
+		for (String string : usedPath) {
+			usedPic.setPictureurl(string);
+			usedPicService.addUsedPic(usedPic);
+		}
+		usedPath.clear();
 		return Msg.success();
+	}
+	
+	/**
+	 * upload used pictures
+	 * @param file
+	 * @param request
+	 * @throws IllegalStateException
+	 * @throws IOException
+	 */
+	@RequestMapping(value="uploadusedpicture", method=RequestMethod.POST)
+	@ResponseBody
+	public void uploadUsedPicture(MultipartFile file,HttpServletRequest request) throws IllegalStateException, IOException{
+		String trueFileNamePath = null;
+		String fileName = file.getOriginalFilename();
+		String readPath = request.getSession().getServletContext().getRealPath("/");
+		trueFileNamePath = "image/used/" + String.valueOf(System.currentTimeMillis()) + fileName;
+		String path = readPath + trueFileNamePath;
+		file.transferTo(new File(path));
+		usedPath.add(trueFileNamePath);
 	}
 }

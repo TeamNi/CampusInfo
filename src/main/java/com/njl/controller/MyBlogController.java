@@ -61,9 +61,7 @@ public class MyBlogController {
 	@RequestMapping(value="/removemyselfblog/{blogid}",method=RequestMethod.DELETE)
 	@ResponseBody
 	public Msg removeMyBlog(@PathVariable("blogid") Integer blogid,HttpServletRequest request){
-		myblogService.removeMyBlog(blogid);
-		//删除blog时，将blog picture一并删除
-		//删除服务器上的图片
+		//删除blog 时  将服务器上的图片一并删除
 		List<BlogPic> picslist = blogPicService.queryPic(blogid);
 		for (BlogPic blogPic : picslist) {
 			File picFile = new File(request.getSession().getServletContext().getRealPath("/") + blogPic.getPictureurl());
@@ -71,10 +69,12 @@ public class MyBlogController {
 				picFile.delete();
 			}
 		}
-		//删除数据库里的路径
+		//delete blogPic database data
 		blogPicService.deletePicWithBlogid(blogid);
 		//删除blog时，将blog reply一并删除
 		blogReplyservice.deleteReplyWithBlogid(blogid);
+		//删除blog
+		myblogService.removeMyBlog(blogid);
 		return Msg.success();
 	}
 }

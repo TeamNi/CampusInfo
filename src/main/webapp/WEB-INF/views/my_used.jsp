@@ -147,7 +147,7 @@
 											<c:forEach items="${usedlist }" var="usedlist">
 												<div class="booking-result">
 													<div class="booking-img">
-														<img src="assets/img/gallery/image4.jpg" alt="">
+														<img src="${usedlist.pictureurl }" alt="">
 														<ul class="list-unstyled price-location">
 															<li ><a href="#" id="remove_used" usedid="${usedlist.usedid }"><i class="glyphicon glyphicon-remove"></i> Remove</a></li>
 														</ul>
@@ -177,7 +177,7 @@
 											<c:forEach items="${attentionUsed }" var="attentionUsed">
 												<div class="booking-result">
 													<div class="booking-img">
-														<img src="assets/img/gallery/image1.jpg" alt="">
+														<img src="${attentionUsed.pictureurl }" alt="">
 														<ul class="list-unstyled price-location">
 						 									<li ><a href="#" id="remove_attention_used" usedid="${attentionUsed.usedid }"><i class="glyphicon glyphicon-remove"></i> Remove</a></li>
 														</ul>

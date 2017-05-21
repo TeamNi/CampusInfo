@@ -162,7 +162,7 @@
       #{title,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, #{contact,jdbcType=VARCHAR}, 
       #{content,jdbcType=VARCHAR}, #{pictureurl,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.njl.bean.Used">
+  <insert id="insertSelective" parameterType="com.njl.bean.Used" useGeneratedKeys="true" keyProperty="usedid">
     insert into t_used
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="usedid != null">
