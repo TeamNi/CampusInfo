@@ -167,7 +167,7 @@
 								<div class="timeline-body">
 									<h2>${bloglist.title }</h2>
 									<div class="timeline-content">
-										<img class="timeline-img pull-left" src="assets/img/blog/2.jpg" alt="">
+										<img class="timeline-img pull-left" src="${bloglist.pictureurl }" alt="">
 										${bloglist.content }
 									</div>
 									<div class="timeline-footer">

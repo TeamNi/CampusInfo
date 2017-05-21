@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+    pageEncoding="utf-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
@@ -144,7 +144,7 @@
 							<c:forEach items="${pageInfo.list }" var="blog">
 							<div class="row">
 								<div class="col-md-4 blog-img blog-tag-data">
-									<img src="assets/img/gallery/image2.jpg" alt="" class="img-responsive">
+									<img src="${blog.pictureurl }" alt="" class="img-responsive">
 									<ul class="list-inline">
 										<li><i class="glyphicon glyphicon-user"></i> <a href="#" id="my_nickname" userid="${blog.user.userid }" nickname="${blog.user.nickname }">${blog.user.nickname }</a></li><br>
 										<li><i class="glyphicon glyphicon-dashboard"></i> <a href="#">${blog.createtime }</a></li><br>

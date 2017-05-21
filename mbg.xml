@@ -13,7 +13,8 @@
 
 		<!-- 配置数据库连接信息 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://localhost:3306/campus" userId="root"
+			connectionURL="jdbc:mysql://localhost:3306/campus?useSSL=true" 
+			userId="root"
 			password="password">
 		</jdbcConnection>
 
@@ -40,7 +41,7 @@
 		</javaClientGenerator>
 
 		<!-- table指定每张表的生成策略 -->
-		<table tableName="t_admin" domainObjectName="Admin"></table>
+<!-- 		<table tableName="t_admin" domainObjectName="Admin"></table>
 		<table tableName="t_blog" domainObjectName="Blog"></table>
 		<table tableName="t_blog_reply" domainObjectName="BlogReply"></table>
 		<table tableName="t_link" domainObjectName="Link"></table>
@@ -48,7 +49,9 @@
 		<table tableName="t_used_attention" domainObjectName="UsedAttention"></table>
 		<table tableName="t_used_reply" domainObjectName="UsedReply"></table>
 		<table tableName="t_user" domainObjectName="User"></table>
-		<table tableName="t_user_attention" domainObjectName="UserAttention"></table>
+		<table tableName="t_user_attention" domainObjectName="UserAttention"></table> -->
+		<table tableName="t_blog_pic" domainObjectName="BlogPic"></table>
+		<table tableName="t_used_pic" domainObjectName="UsedPic"></table>
 
 	</context>
 </generatorConfiguration>

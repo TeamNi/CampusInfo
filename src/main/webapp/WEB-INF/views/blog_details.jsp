@@ -141,7 +141,9 @@
 						<div class="col-md-9 article-block">
 							<h3>${blogdetails.title }</h3>
 							<div class="blog-tag-data">
-								<img src="assets/img/gallery/item_img.jpg" class="img-responsive" alt="">
+							<c:forEach items="${blogPics }" var="blogPics">
+								<img src="${blogPics.pictureurl }" class="img-responsive" alt="">
+							</c:forEach>
 								<div class="row">
 									<div class="col-md-9">
 										<ul class="list-inline">
@@ -154,11 +156,9 @@
 							</div>
 							<!--end news-tag-data-->
 							<div>
-								<p>${blogdetails.content }</p>
 								<hr>
 								<blockquote class="hero">
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit posuere erat a ante.</p>
-									<small>Someone famous <cite title="Source Title">Source Title</cite></small>
+									<p>${blogdetails.content }</p>
 								</blockquote>
 							</div>
 							<hr>
@@ -167,13 +167,13 @@
 							<c:forEach items="${replylist }" var="replylist">
 								<div class="media">
 									<a href="#" class="pull-left">
-									<img alt="" src="assets/img/blog/5.jpg" class="media-object">
+									<img alt="" src="${replylist.user.headurl }" class="media-object">
 									</a>
 									<div class="media-body">
-									<c:if test="${studentid == replylist.user.studentid }">
+									<c:if test="${myself.studentid == replylist.user.studentid }">
 										<h4 class="media-heading">${replylist.user.nickname } <span>${replylist.createtime } / <a href="#" id="remove_rid" remove_rid="${replylist.replyid }" blogid="${blogdetails.blogid }">Remove</a></span></h4>
 									</c:if>
-									<c:if test="${studentid != replylist.user.studentid }">
+									<c:if test="${myself.studentid != replylist.user.studentid }">
 										<h4 class="media-heading">${replylist.user.nickname } <span> ${replylist.createtime } </span></h4>
 									</c:if>
 										<p>${replylist.content }</p>

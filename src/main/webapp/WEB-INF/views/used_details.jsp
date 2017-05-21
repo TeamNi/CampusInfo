@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+    pageEncoding="utf-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
@@ -153,7 +153,8 @@
 								</div>
 							</div>
 							<div class="news-item-page">
-								<p></p>
+								<hr>
+								<blockquote class="hero">
 									<div class="panel panel-success">
 									  <div class="panel-heading">
 									    <h3 class="panel-title">
@@ -170,10 +171,6 @@
 									    contact : ${useddetails.contact }
 									  </div>
 									</div>
-								<hr>
-								<blockquote class="hero">
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit posuere erat a ante.</p>
-									<small>Someone famous <cite title="Source Title">Source Title</cite></small>
 								</blockquote>
 							</div>
 							<hr>
@@ -181,13 +178,13 @@
 							<c:forEach items="${replylist }" var="replylist">
 							<div class="media">
 								<a href="#" class="pull-left">
-								<img alt="" src="assets/img/blog/9.jpg" class="media-object">
+								<img alt="" src="${replylist.user.headurl }" class="media-object">
 								</a>
 								<div class="media-body">
-									<c:if test="${studentid == replylist.user.studentid }">
+									<c:if test="${myself.studentid == replylist.user.studentid }">
 									<h4 class="media-heading">${replylist.user.nickname } <span>${replylist.createtime } / <a href="#" remove_rid="${replylist.replyid }" id="remove_rid">Remove</a></span></h4>
 									</c:if>
-									<c:if test="${studentid != replylist.user.studentid }">
+									<c:if test="${myself.studentid != replylist.user.studentid }">
 									<h4 class="media-heading">${replylist.user.nickname } <span>${replylist.createtime } / </span></h4>
 									</c:if>
 									<p>${replylist.content }</p>
