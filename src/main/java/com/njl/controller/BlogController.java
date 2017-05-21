@@ -3,6 +3,7 @@ package com.njl.controller;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,9 +23,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.njl.bean.Blog;
+import com.njl.bean.BlogPic;
 import com.njl.bean.BlogReply;
 import com.njl.bean.Msg;
 import com.njl.bean.User;
+import com.njl.service.BlogPicService;
 import com.njl.service.BlogReplyService;
 import com.njl.service.BlogService;
 
@@ -37,10 +40,14 @@ import com.njl.service.BlogService;
 @SessionAttributes({"myself"})
 public class BlogController {
 	
+	private List<String> blogPath = new ArrayList<String>();
+	
 	@Autowired
 	private BlogService blogService;
 	@Autowired
 	private BlogReplyService blogReplyService;
+	@Autowired
+	private BlogPicService blogPicService;
 	
 	/**
 	 * blog 首页
@@ -71,6 +78,8 @@ public class BlogController {
 		//blog details
 		Blog blogdetails = blogService.getBlogDetails(blogid);
 		model.addAttribute("blogdetails", blogdetails);
+		List<BlogPic> blogPics = blogPicService.queryPic(blogid);
+		model.addAttribute("blogPics", blogPics);
 		//blog reply
 		List<BlogReply> replylist = blogReplyService.getBlogReply(blogid);
 		model.addAttribute("replylist", replylist);
@@ -140,25 +149,47 @@ public class BlogController {
 	@RequestMapping(value="/issue_blog",method=RequestMethod.POST)
 	@ResponseBody
 	public Msg issueBlog(Blog blog,@ModelAttribute("myself") User userinfo){
+		//获取一张图片 插入blog表
+		String truePathOne = null;
+		for (String string : blogPath) {
+			truePathOne = string;
+		}
 		//获取当前时间
 		long time = System.currentTimeMillis();
 		Date date = new Date(time);
 		//issue blog
 		blog.setUserid(userinfo.getUserid());
 		blog.setCreatetime(date);
+		blog.setPictureurl(truePathOne);
 		blogService.issueBlog(blog);
+		//add picture in database
+		BlogPic blogPic = new BlogPic();
+		blogPic.setBlogid(blog.getBlogid());
+		for (String string : blogPath) {
+			truePathOne = string;
+			blogPic.setPictureurl(string);
+			blogPicService.addBlogPic(blogPic);
+		}
+		blogPath.clear();
 		return Msg.success(); 
 	}
 	
+	/**
+	 * upload blog picture
+	 * @param file
+	 * @param request
+	 * @throws IllegalStateException
+	 * @throws IOException
+	 */
 	@RequestMapping(value="/uploadblogpicture",method=RequestMethod.POST)
 	@ResponseBody
-	public String uploadBlobPicture(MultipartFile file,HttpServletRequest request) throws IllegalStateException, IOException{
+	public void uploadBlobPicture(MultipartFile file,HttpServletRequest request) throws IllegalStateException, IOException{
 		String trueFileNamePath = null;
 		String fileName = file .getOriginalFilename();//文件原名称
 		String readPath = request.getSession().getServletContext().getRealPath("/");
 		trueFileNamePath = "image/blog/" + String.valueOf(System.currentTimeMillis()) + fileName;
 		String path = readPath + trueFileNamePath;
 		file.transferTo(new File(path));
-		return trueFileNamePath;
+		blogPath.add(trueFileNamePath);
 	}
 }

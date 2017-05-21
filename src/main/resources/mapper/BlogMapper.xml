@@ -156,7 +156,7 @@
       #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{pictureurl,jdbcType=VARCHAR}, 
       #{replytimes,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.njl.bean.Blog">
+  <insert id="insertSelective" parameterType="com.njl.bean.Blog" useGeneratedKeys="true" keyProperty="blogid">
     insert into t_blog
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="blogid != null">

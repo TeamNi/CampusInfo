@@ -66,4 +66,19 @@ public class BlogService {
 		// TODO Auto-generated method stub
 		blogMapper.insertSelective(blog);
 	}
+
+	/**
+	 * get blog
+	 * @param blog
+	 * @return
+	 */
+	public List<Blog> queryBlog(Blog blog) {
+		// TODO Auto-generated method stub
+		BlogExample example = new BlogExample();
+		Criteria criteria = example.createCriteria();
+		System.out.println(blog);
+		criteria.andUseridEqualTo(blog.getUserid()).andCreatetimeEqualTo(blog.getCreatetime());
+		List<Blog> blogs = blogMapper.selectByExample(example);
+		return blogs;
+	}
 }
