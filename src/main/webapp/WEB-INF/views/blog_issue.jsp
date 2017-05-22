@@ -118,7 +118,7 @@
 				<div class="col-md-12">
 					<!-- BEGIN PAGE TITLE & BREADCRUMB-->
 					<h3 class="page-title">
-						Blog Issue <small>Issue you own blog</small>
+						Blog Issue <small>Issue your own blog</small>
 					</h3>
 					<ul class="page-breadcrumb breadcrumb">
 						<li>
