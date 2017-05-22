@@ -50,6 +50,8 @@ public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String getLogin(@RequestParam("username") String username, @RequestParam("password") String password,
 			@RequestParam("role") String role, Model model, HttpServletRequest request) {
+		//该session用于权限管理拦截器
+		request.getSession().setAttribute("login", "login");
 
 		// 管理员 admin
 		if ("admin".equals(role)) {

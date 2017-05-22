@@ -118,7 +118,7 @@
 				<div class="col-md-12">
 					<!-- BEGIN PAGE TITLE & BREADCRUMB-->
 					<h3 class="page-title">
-						Used Issue <small>Issue you own used</small>
+						Used Issue <small>Issue your own used</small>
 					</h3>
 					<ul class="page-breadcrumb breadcrumb">
 						<li>
