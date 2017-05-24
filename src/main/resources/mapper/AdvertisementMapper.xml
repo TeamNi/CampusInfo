@@ -7,9 +7,10 @@
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="pictureurl" jdbcType="VARCHAR" property="pictureurl" />
-    <result column="condition" jdbcType="INTEGER" property="condition" />
+    <result column="conditionck" jdbcType="INTEGER" property="conditionck" />
     <result column="priority" jdbcType="INTEGER" property="priority" />
     <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="checkuser" jdbcType="INTEGER" property="checkuser" />
   </resultMap>
   <resultMap id="WithUserResultMap" type="com.njl.bean.Advertisement">
     <id column="adid" jdbcType="INTEGER" property="adid" />
@@ -17,9 +18,10 @@
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="pictureurl" jdbcType="VARCHAR" property="pictureurl" />
-    <result column="condition" jdbcType="INTEGER" property="condition" />
+    <result column="conditionck" jdbcType="INTEGER" property="conditionck" />
     <result column="priority" jdbcType="INTEGER" property="priority" />
     <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="checkuser" jdbcType="INTEGER" property="checkuser" />
     <!-- 使用association 指定联合查询出的字段的封装 -->
     <association property="user" javaType="com.njl.bean.User">
     	<id column="userid" property="userid"/>
@@ -30,6 +32,7 @@
     	<result column="headurl" property="headurl"/>
     </association>
   </resultMap>
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -89,24 +92,21 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    adid, userid, title, content, pictureurl, condition, priority, createtime
+    adid, userid, title, content, pictureurl, conditionck, priority, createtime, checkuser
   </sql>
   <sql id="WithUser_Column_List">
-    a.adid, a.userid, a.title, a.content, a.pictureurl, a.condition, a.priority, a.createtime, u.userid, u.username, u.nickname, u.studentid, u.sex, u.headurl
+    a.adid, a.userid, a.title, a.content, a.pictureurl, a.conditionck, a.priority, a.createtime, a.checkuser, u.userid, u.username, u.nickname, u.studentid, u.sex, u.headurl
   </sql>
-  
-  
-    <!--  List<Advertisement> selectByExampleWithUser(AdvertisementExample example);
-    	Advertisement selectByPrimaryKeyWithUser(Integer adid);
-   -->
+  <!--  List<Advertisement> selectByExampleWithUser(AdvertisementExample example);
+    	Advertisement selectByPrimaryKeyWithUser(Integer adid); -->
   <select id="selectByExampleWithUser" resultMap="WithUserResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="WithUser_Column_List" />
-    FROM t_advertisement a
-	LEFT JOIN t_user u ON a.userid = u.userid 
+    from t_advertisement a
+    LEFT JOIN t_user u ON a.userid = u.userid
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -117,12 +117,12 @@
   <select id="selectByPrimaryKeyWithUser" resultMap="WithUserResultMap">
     select 
     <include refid="WithUser_Column_List" />
-    FROM t_advertisement a
-	LEFT JOIN t_user u ON a.userid = u.userid 
+    from t_advertisement a
+    LEFT JOIN t_user u ON a.userid = u.userid
     where adid = #{adid,jdbcType=INTEGER}
   </select>
-   
-   <!-- 原生的 -->
+  
+  <!-- 原生 -->
   <select id="selectByExample" parameterType="com.njl.bean.AdvertisementExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -155,11 +155,13 @@
   </delete>
   <insert id="insert" parameterType="com.njl.bean.Advertisement">
     insert into t_advertisement (adid, userid, title, 
-      content, pictureurl, condition, 
-      priority, createtime)
+      content, pictureurl, conditionck, 
+      priority, createtime, checkuser
+      )
     values (#{adid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
-      #{content,jdbcType=VARCHAR}, #{pictureurl,jdbcType=VARCHAR}, #{condition,jdbcType=INTEGER}, 
-      #{priority,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP})
+      #{content,jdbcType=VARCHAR}, #{pictureurl,jdbcType=VARCHAR}, #{conditionck,jdbcType=INTEGER}, 
+      #{priority,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{checkuser,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.njl.bean.Advertisement">
     insert into t_advertisement
@@ -179,14 +181,17 @@
       <if test="pictureurl != null">
         pictureurl,
       </if>
-      <if test="condition != null">
-        condition,
+      <if test="conditionck != null">
+        conditionck,
       </if>
       <if test="priority != null">
         priority,
       </if>
       <if test="createtime != null">
         createtime,
+      </if>
+      <if test="checkuser != null">
+        checkuser,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -205,14 +210,17 @@
       <if test="pictureurl != null">
         #{pictureurl,jdbcType=VARCHAR},
       </if>
-      <if test="condition != null">
-        #{condition,jdbcType=INTEGER},
+      <if test="conditionck != null">
+        #{conditionck,jdbcType=INTEGER},
       </if>
       <if test="priority != null">
         #{priority,jdbcType=INTEGER},
       </if>
       <if test="createtime != null">
         #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkuser != null">
+        #{checkuser,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -240,14 +248,17 @@
       <if test="record.pictureurl != null">
         pictureurl = #{record.pictureurl,jdbcType=VARCHAR},
       </if>
-      <if test="record.condition != null">
-        condition = #{record.condition,jdbcType=INTEGER},
+      <if test="record.conditionck != null">
+        conditionck = #{record.conditionck,jdbcType=INTEGER},
       </if>
       <if test="record.priority != null">
         priority = #{record.priority,jdbcType=INTEGER},
       </if>
       <if test="record.createtime != null">
         createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.checkuser != null">
+        checkuser = #{record.checkuser,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null">
@@ -261,9 +272,10 @@
       title = #{record.title,jdbcType=VARCHAR},
       content = #{record.content,jdbcType=VARCHAR},
       pictureurl = #{record.pictureurl,jdbcType=VARCHAR},
-      condition = #{record.condition,jdbcType=INTEGER},
+      conditionck = #{record.conditionck,jdbcType=INTEGER},
       priority = #{record.priority,jdbcType=INTEGER},
-      createtime = #{record.createtime,jdbcType=TIMESTAMP}
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      checkuser = #{record.checkuser,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -283,14 +295,17 @@
       <if test="pictureurl != null">
         pictureurl = #{pictureurl,jdbcType=VARCHAR},
       </if>
-      <if test="condition != null">
-        condition = #{condition,jdbcType=INTEGER},
+      <if test="conditionck != null">
+        conditionck = #{conditionck,jdbcType=INTEGER},
       </if>
       <if test="priority != null">
         priority = #{priority,jdbcType=INTEGER},
       </if>
       <if test="createtime != null">
         createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkuser != null">
+        checkuser = #{checkuser,jdbcType=INTEGER},
       </if>
     </set>
     where adid = #{adid,jdbcType=INTEGER}
@@ -301,9 +316,10 @@
       title = #{title,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
       pictureurl = #{pictureurl,jdbcType=VARCHAR},
-      condition = #{condition,jdbcType=INTEGER},
+      conditionck = #{conditionck,jdbcType=INTEGER},
       priority = #{priority,jdbcType=INTEGER},
-      createtime = #{createtime,jdbcType=TIMESTAMP}
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      checkuser = #{checkuser,jdbcType=INTEGER}
     where adid = #{adid,jdbcType=INTEGER}
   </update>
 </mapper>

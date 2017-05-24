@@ -234,10 +234,9 @@
                    	type : "DELETE",
                    	success : function(result){
                    		alert(result.msg);
+                   		window.location.href="${BASE_PATH}/manage_user";
                    	}
                    });
-                 //刷新页面
-           		location.reload();
                }
            });
 		   
@@ -285,7 +284,7 @@
             	   dataType : "json",
             	   success : function(result){
             		   alert(result.msg);
-            		   console.log(result.msg);
+            		   window.location.href="${BASE_PATH}/manage_user";
             	   },
             	   error : function(XMLHttpRequest, textStatus, errorThrown){
             		   console.log("readyState===========" + XMLHttpRequest.readyState);
@@ -299,11 +298,8 @@
             		   }else if(XMLHttpRequest.status == 200){
             			   alert("成功！请刷新页面");
             		   }
-            		   
             	   } 
 			   });
-			    //刷新页面
-         		location.reload();
 		   });
  		   
 		   //增加
@@ -350,7 +346,7 @@
             	   dataType : "json",
             	   success : function(result){
             		   alert(result.msg);
-            		   console.log(result.msg);
+            		   window.location.href="${BASE_PATH}/manage_user";
             	   },
             	   error : function(XMLHttpRequest, textStatus, errorThrown){
             		   console.log("readyState===========" + XMLHttpRequest.readyState);
@@ -366,8 +362,6 @@
             		   }
             	   }
                });
-             	//刷新页面
-          		location.reload();
            });
 		});
  		
