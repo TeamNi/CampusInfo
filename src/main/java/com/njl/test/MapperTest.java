@@ -59,7 +59,7 @@ public class MapperTest {
 		for(int i = 0 ; i < 10 ; i ++){
 			String username = UUID.randomUUID().toString().substring(0, 5);
 			String nickname = username + i;
-			mapper.insertSelective(new User(null, username, nickname, 13170700+i, "abcd@1234", date, "你的学校", "沈阳化工大学", null, "88888888", "美丽动人"));
+			mapper.insertSelective(new User(null, username, nickname, 13170700+i, "abcd@1234", date, "你的学校", "沈阳化工大学", null, "88888888", "美丽动人", 0));
 		}
 		System.out.println("SUCCESSFUL!");
 	}

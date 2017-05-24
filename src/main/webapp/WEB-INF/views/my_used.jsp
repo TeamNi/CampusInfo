@@ -53,27 +53,19 @@
 						<a href="index">首页</a>
 					</li>
 					<li>
-						<a href="blog">校园论坛</a>                       
+						<a href="blog">校园动态</a>                       
 					</li>
 					<li>
 						<a href="used">校园闲置</a>
 					</li>
 					<li>
-						<a href="#">教材征订</a>                      
+						<a href="notification">通知与广告</a>                      
 					</li>
+					<c:if test="${myself.permission == 1 }">
 					<li>
-						<span class="hor-menu-search-form-toggler">&nbsp;</span>
-						<div class="search-form">
-							<form class="form-search" action="search" method="get">
-								<div class="input-group">
-									<input type="text" placeholder="Search..." class="form-control">
-									<div class="input-group-btn">
-										<button type="button" class="btn"></button>
-									</div>
-								</div>
-							</form>
-						</div>
+						<a href="notification_check">审核</a>                      
 					</li>
+					</c:if>
 				</ul>
 			</div>
 			<!-- END HORIZANTAL MENU -->
@@ -93,8 +85,9 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li><a href="my_info"><i class="fa fa-user"></i> My Profile</a></li>
-						<li><a href="my_blog"><i class="fa fa-envelope"></i> My Blog <span class="badge badge-danger">3</span></a></li>
-						<li><a href="my_used"><i class="fa fa-tasks"></i> My Used <span class="badge badge-success">7</span></a></li>
+						<li><a href="my_blog"><i class="fa fa-envelope"></i> My Dynamic </a></li>
+						<li><a href="my_used"><i class="fa fa-tasks"></i> My Used </a></li>
+						<li><a href="my_notification"><i class="glyphicon glyphicon-bullhorn"></i> My Notification </a></li>
 						<li class="divider"></li>
 						<li><a href="logout"><i class="fa fa-key"></i> Log Out</a></li>
 					</ul>
@@ -140,7 +133,7 @@
 									<div class="col-md-6">
 										<div class="row">
 											<div class="panel panel-default">
-											  <div class="panel-heading">我发布的物品</div>
+											  <div class="panel-heading">I issued goods</div>
 											</div>
 										</div>
 										<div class="row">
@@ -170,7 +163,7 @@
 									<div class="col-md-6">
 										<div class="row">
 											<div class="panel panel-default">
-											  <div class="panel-heading">我关注的物品</div>
+											  <div class="panel-heading">I focus on the goods</div>
 											</div>
 										</div>
 										<div class="row">
@@ -213,7 +206,7 @@
 	<!-- BEGIN FOOTER -->
 	<div class="footer">
 		<div class="footer-inner">
-			2013 &copy; Metronic by keenthemes.
+			2017 &copy; 版权归倪吉龙所有.
 		</div>
 		<div class="footer-tools">
 			<span class="go-top">
