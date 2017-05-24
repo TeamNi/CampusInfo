@@ -13,36 +13,39 @@ public class Advertisement {
 
     private String pictureurl;
 
-    private Integer condition;
+    private Integer conditionck;
 
     private Integer priority;
 
     private Date createtime;
+
+    private Integer checkuser;
     
     private User user;
 
+    public Advertisement() {
+		super();
+	}
+
 	public Advertisement(Integer adid, Integer userid, String title, String content, String pictureurl,
-			Integer condition, Integer priority, Date createtime) {
+			Integer conditionck, Integer priority, Date createtime, Integer checkuser) {
 		super();
 		this.adid = adid;
 		this.userid = userid;
 		this.title = title;
 		this.content = content;
 		this.pictureurl = pictureurl;
-		this.condition = condition;
+		this.conditionck = conditionck;
 		this.priority = priority;
 		this.createtime = createtime;
+		this.checkuser = checkuser;
 	}
 
 	@Override
 	public String toString() {
 		return "Advertisement [adid=" + adid + ", userid=" + userid + ", title=" + title + ", content=" + content
-				+ ", pictureurl=" + pictureurl + ", condition=" + condition + ", priority=" + priority + ", createtime="
-				+ createtime + ", user=" + user + "]";
-	}
-
-	public Advertisement() {
-		super();
+				+ ", pictureurl=" + pictureurl + ", conditionck=" + conditionck + ", priority=" + priority + ", createtime="
+				+ createtime + ", checkuser=" + checkuser + ", user=" + user + "]";
 	}
 
 	public Integer getAdid() {
@@ -85,12 +88,12 @@ public class Advertisement {
         this.pictureurl = pictureurl == null ? null : pictureurl.trim();
     }
 
-    public Integer getCondition() {
-        return condition;
+    public Integer getConditionck() {
+        return conditionck;
     }
 
-    public void setCondition(Integer condition) {
-        this.condition = condition;
+    public void setConditionck(Integer conditionck) {
+        this.conditionck = conditionck;
     }
 
     public Integer getPriority() {
@@ -107,6 +110,14 @@ public class Advertisement {
 
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
+    }
+
+    public Integer getCheckuser() {
+        return checkuser;
+    }
+
+    public void setCheckuser(Integer checkuser) {
+        this.checkuser = checkuser;
     }
 
 	public User getUser() {

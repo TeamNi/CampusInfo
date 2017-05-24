@@ -365,63 +365,63 @@ public class NotificationExample {
             return (Criteria) this;
         }
 
-        public Criteria andConditionIsNull() {
-            addCriterion("condition is null");
+        public Criteria andConditionckIsNull() {
+            addCriterion("conditionck is null");
             return (Criteria) this;
         }
 
-        public Criteria andConditionIsNotNull() {
-            addCriterion("condition is not null");
+        public Criteria andConditionckIsNotNull() {
+            addCriterion("conditionck is not null");
             return (Criteria) this;
         }
 
-        public Criteria andConditionEqualTo(Integer value) {
-            addCriterion("condition =", value, "condition");
+        public Criteria andConditionckEqualTo(Integer value) {
+            addCriterion("conditionck =", value, "conditionck");
             return (Criteria) this;
         }
 
-        public Criteria andConditionNotEqualTo(Integer value) {
-            addCriterion("condition <>", value, "condition");
+        public Criteria andConditionckNotEqualTo(Integer value) {
+            addCriterion("conditionck <>", value, "conditionck");
             return (Criteria) this;
         }
 
-        public Criteria andConditionGreaterThan(Integer value) {
-            addCriterion("condition >", value, "condition");
+        public Criteria andConditionckGreaterThan(Integer value) {
+            addCriterion("conditionck >", value, "conditionck");
             return (Criteria) this;
         }
 
-        public Criteria andConditionGreaterThanOrEqualTo(Integer value) {
-            addCriterion("condition >=", value, "condition");
+        public Criteria andConditionckGreaterThanOrEqualTo(Integer value) {
+            addCriterion("conditionck >=", value, "conditionck");
             return (Criteria) this;
         }
 
-        public Criteria andConditionLessThan(Integer value) {
-            addCriterion("condition <", value, "condition");
+        public Criteria andConditionckLessThan(Integer value) {
+            addCriterion("conditionck <", value, "conditionck");
             return (Criteria) this;
         }
 
-        public Criteria andConditionLessThanOrEqualTo(Integer value) {
-            addCriterion("condition <=", value, "condition");
+        public Criteria andConditionckLessThanOrEqualTo(Integer value) {
+            addCriterion("conditionck <=", value, "conditionck");
             return (Criteria) this;
         }
 
-        public Criteria andConditionIn(List<Integer> values) {
-            addCriterion("condition in", values, "condition");
+        public Criteria andConditionckIn(List<Integer> values) {
+            addCriterion("conditionck in", values, "conditionck");
             return (Criteria) this;
         }
 
-        public Criteria andConditionNotIn(List<Integer> values) {
-            addCriterion("condition not in", values, "condition");
+        public Criteria andConditionckNotIn(List<Integer> values) {
+            addCriterion("conditionck not in", values, "conditionck");
             return (Criteria) this;
         }
 
-        public Criteria andConditionBetween(Integer value1, Integer value2) {
-            addCriterion("condition between", value1, value2, "condition");
+        public Criteria andConditionckBetween(Integer value1, Integer value2) {
+            addCriterion("conditionck between", value1, value2, "conditionck");
             return (Criteria) this;
         }
 
-        public Criteria andConditionNotBetween(Integer value1, Integer value2) {
-            addCriterion("condition not between", value1, value2, "condition");
+        public Criteria andConditionckNotBetween(Integer value1, Integer value2) {
+            addCriterion("conditionck not between", value1, value2, "conditionck");
             return (Criteria) this;
         }
 
@@ -542,6 +542,66 @@ public class NotificationExample {
 
         public Criteria andCreatetimeNotBetween(Date value1, Date value2) {
             addCriterion("createtime not between", value1, value2, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckuserIsNull() {
+            addCriterion("checkuser is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckuserIsNotNull() {
+            addCriterion("checkuser is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckuserEqualTo(Integer value) {
+            addCriterion("checkuser =", value, "checkuser");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckuserNotEqualTo(Integer value) {
+            addCriterion("checkuser <>", value, "checkuser");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckuserGreaterThan(Integer value) {
+            addCriterion("checkuser >", value, "checkuser");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckuserGreaterThanOrEqualTo(Integer value) {
+            addCriterion("checkuser >=", value, "checkuser");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckuserLessThan(Integer value) {
+            addCriterion("checkuser <", value, "checkuser");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckuserLessThanOrEqualTo(Integer value) {
+            addCriterion("checkuser <=", value, "checkuser");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckuserIn(List<Integer> values) {
+            addCriterion("checkuser in", values, "checkuser");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckuserNotIn(List<Integer> values) {
+            addCriterion("checkuser not in", values, "checkuser");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckuserBetween(Integer value1, Integer value2) {
+            addCriterion("checkuser between", value1, value2, "checkuser");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckuserNotBetween(Integer value1, Integer value2) {
+            addCriterion("checkuser not between", value1, value2, "checkuser");
             return (Criteria) this;
         }
     }

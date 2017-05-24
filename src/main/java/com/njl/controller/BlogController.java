@@ -58,8 +58,8 @@ public class BlogController {
 	@RequestMapping("/blog")
 	public String getBlog(@RequestParam(value="pn",defaultValue="1") Integer pn, Model model) {
 		//引入PageHelper分页插件
-		//在查询之前只需要调用
-		PageHelper.startPage(pn, 4);
+		//在查询之前只需要调用,传入每页显示的数目
+		PageHelper.startPage(pn, 5);
 		//startPage后面紧跟的查询 就是一个分页查询
 		List<Blog> bloglist = blogService.getBlog();
 		//使用PageInfo包装查询后的结果，只需要将PageInfo交给页面就行

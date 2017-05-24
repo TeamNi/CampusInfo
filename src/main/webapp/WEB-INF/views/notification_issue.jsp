@@ -219,8 +219,9 @@
 			$("#my-dropzone").show();
 		})
 		
-		//issue blog
-		$("#btn_issue_blog").live("click",function(){
+		//issue notification
+		$("#btn_issue_notification").live("click",function(){
+			var type = $("input[type='radio']:checked").val();
 			var title = $("#issue_title").val();
 			var content = $("#issue_content").val();
 			if(title == "" || content == ""){
@@ -232,12 +233,13 @@
 				async : false,
 				type : "POST",
 				data : {
+					"type" : type,
 					"title" : title,
 					"content" : content
 				},
 				success : function(result){
-					alert(result.msg)
-					window.location.href="${BASE_PATH}/blog"
+					alert(result.msg + "等待审核...")
+					window.location.href="${BASE_PATH}/notification"
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown){
          		   console.log("readyState===========" + XMLHttpRequest.readyState);

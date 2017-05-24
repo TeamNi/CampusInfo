@@ -9,6 +9,9 @@
 <head>
 	<meta charset="utf-8" />
 	<title>Notification Check</title>
+	<%
+		pageContext.setAttribute("BASE_PATH",request.getContextPath());
+	%>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 	<meta content="" name="description" />
@@ -133,49 +136,74 @@
 							<div class="caption"><i class="glyphicon glyphicon-flag"></i>Notifications</div>
 						</div>
 						<div class="portlet-body">
-							<div class="alert alert-block alert-danger fade in">
-								<button type="button" class="close" data-dismiss="alert"></button>
-								<h4 class="alert-heading">Error!</h4>
+						<c:forEach items="${pageInfo.list }" var="notifications">
+							<c:if test="${notifications.conditionck == 0 }">
+								<div class="alert alert-block alert-danger fade in">
+								<h4 class="alert-heading">${notifications.title }</h4>
+								<p>${notifications.content }</p>
 								<p>
-									Duis mollis, est non commodo luctus, 
-									nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.
-								</p>
-								<p>
-									<a class="btn green" href="#">Do this</a> <a class="btn dark" href="#">Cancel</a>
-								</p>
-							</div>
-							<div class="alert alert-block alert-success fade in">
-								<button type="button" class="close" data-dismiss="alert"></button>
-								<h4 class="alert-heading">Success!</h4>
-								<p>
-									Duis mollis, est non commodo luctus, 
-									nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.
-								</p>
-								<p>
-									<a class="btn green" href="#">Do this</a> <a class="btn dark" href="#">Cancel</a>
+									<a class="btn green" href="check_notification?conditionck=1&noid=${notifications.noid }">审核通过</a> <a class="btn dark" href="check_notification?conditionck=2&noid=${notifications.noid }">审核不通过</a>
+									<br><span>当前状态：未审核</span>
 								</p>
 							</div>
-							<div class="alert alert-block alert-info fade in">
-								<button type="button" class="close" data-dismiss="alert"></button>
-								<h4 class="alert-heading">Info!</h4>
+							</c:if>
+							<c:if test="${notifications.conditionck == 1 }">
+								<div class="alert alert-block alert-success fade in">
+								<h4 class="alert-heading">${notifications.title }</h4>
+								<p>${notifications.content }</p>
 								<p>
-									Duis mollis, est non commodo luctus, 
-									nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.
-								</p>
-								<p>
-									<a class="btn purple" href="#">Do this</a> <a class="btn dark" href="#">Cancel</a>
+									<a class="btn green" href="check_notification?conditionck=2&noid=${notifications.noid }">取消审核通过</a>
+									<br><span>当前状态：审核通过</span>
 								</p>
 							</div>
+							</c:if>
+							<c:if test="${notifications.conditionck == 2 }">
+								<div class="alert alert-block alert-info fade in">
+								<h4 class="alert-heading">${notifications.title }</h4>
+								<p>${notifications.content }</p>
+								<p>
+									<a class="btn green" href="check_notification?conditionck=1&noid=${notifications.noid }">审核通过</a>
+									<br><span>当前状态：审核未通过</span>
+								</p>
+							</div>
+							</c:if>
+						</c:forEach>
 							<div class="alert alert-block alert-warning fade in">
-								<button type="button" class="close" data-dismiss="alert"></button>
-								<h4 class="alert-heading">Warning!</h4>
-								<p>
-									Duis mollis, est non commodo luctus, 
-									nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.
-								</p>
-								<p>
-									<a class="btn red" href="#">Do this</a> <a class="btn blue" href="#">Cancel</a>
-								</p>
+								<!-- 分页文字信息 -->
+								<div class="row">
+									当前第  ${pageInfo.pageNum }  页,总  ${pageInfo.pages }  页,总  ${pageInfo.total }  条记录
+								</div>
+								<!-- 分页条信息 -->
+								<div class="row">
+									<nav aria-label="Page navigation">
+									  <ul class="pagination">
+									  	<li><a href="${BASE_PATH }/notification_check?pn=1">首页</a></li>
+									  	<c:if test="${pageInfo.hasPreviousPage }">
+										    <li>
+										      <a href="${BASE_PATH }/notification_check?pn=${pageInfo.pageNum-1 }" aria-label="Previous">
+										        <span aria-hidden="true">&laquo;</span>
+										      </a>
+										    </li>
+									    </c:if>
+									    <c:forEach items="${pageInfo.navigatepageNums }" var="page_num">
+									    	<c:if test="${page_num == pageInfo.pageNum }">
+										    	<li class="active"><a href="#">${page_num }</a></li>
+									    	</c:if>
+									    	<c:if test="${page_num != pageInfo.pageNum }">
+										    	<li><a href="${BASE_PATH }/notification_check?pn=${page_num }">${page_num }</a></li>
+									    	</c:if>
+									    </c:forEach>
+									    <c:if test="${pageInfo.hasNextPage }">
+										    <li>
+										      <a href="${BASE_PATH }/notification_check?pn=${pageInfo.pageNum+1 }" aria-label="Next">
+										        <span aria-hidden="true">&raquo;</span>
+										      </a>
+										    </li>
+									    </c:if>
+									    <li><a href="${BASE_PATH }/notification_check?pn=${pageInfo.pages }">末页</a></li>
+									  </ul>
+									</nav>
+								</div>
 							</div>
 						</div>
 					</div>

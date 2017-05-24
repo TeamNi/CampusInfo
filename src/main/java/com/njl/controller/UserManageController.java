@@ -32,7 +32,7 @@ public class UserManageController {
 	 * 查询用户数据
 	 * @return
 	 */
-	@RequestMapping("/manage_user")
+	@RequestMapping(value="/manage_user", method=RequestMethod.GET)
 	public String getUser(Model model){
 		//service查出用户的所有数据
 		List<User> userlist = userManageService.getAll();
