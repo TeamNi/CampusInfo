@@ -49,7 +49,7 @@
 	<!-- BEGIN LOGIN -->
 	<div class="content">
 		<!-- BEGIN LOGIN FORM -->
-		<form class="login-form" action="login" method="POST">
+		<form class="login-form" action="login" method="post">
 			<h3 class="form-title">Login to your account</h3>
 			<div class="alert alert-danger display-hide">
 				<button class="close" data-close="alert"></button>

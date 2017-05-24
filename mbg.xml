@@ -49,9 +49,11 @@
 		<table tableName="t_used_attention" domainObjectName="UsedAttention"></table>
 		<table tableName="t_used_reply" domainObjectName="UsedReply"></table>
 		<table tableName="t_user" domainObjectName="User"></table>
-		<table tableName="t_user_attention" domainObjectName="UserAttention"></table> -->
+		<table tableName="t_user_attention" domainObjectName="UserAttention"></table>
 		<table tableName="t_blog_pic" domainObjectName="BlogPic"></table>
-		<table tableName="t_used_pic" domainObjectName="UsedPic"></table>
+		<table tableName="t_used_pic" domainObjectName="UsedPic"></table> -->
+		<table tableName="t_notification" domainObjectName="Notification"></table>
+		<table tableName="t_advertisement" domainObjectName="Advertisement"></table>
 
 	</context>
 </generatorConfiguration>

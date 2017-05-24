@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.njl.dao.AdvertisementMapper">
+  <resultMap id="BaseResultMap" type="com.njl.bean.Advertisement">
+    <id column="adid" jdbcType="INTEGER" property="adid" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="pictureurl" jdbcType="VARCHAR" property="pictureurl" />
+    <result column="condition" jdbcType="INTEGER" property="condition" />
+    <result column="priority" jdbcType="INTEGER" property="priority" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <resultMap id="WithUserResultMap" type="com.njl.bean.Advertisement">
+    <id column="adid" jdbcType="INTEGER" property="adid" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="pictureurl" jdbcType="VARCHAR" property="pictureurl" />
+    <result column="condition" jdbcType="INTEGER" property="condition" />
+    <result column="priority" jdbcType="INTEGER" property="priority" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <!-- 使用association 指定联合查询出的字段的封装 -->
+    <association property="user" javaType="com.njl.bean.User">
+    	<id column="userid" property="userid"/>
+    	<result column="username" property="username"/>
+    	<result column="nickname" property="nickname"/>
+    	<result column="studentid" property="studentid"/>
+    	<result column="sex" property="sex"/>
+    	<result column="headurl" property="headurl"/>
+    </association>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    adid, userid, title, content, pictureurl, condition, priority, createtime
+  </sql>
+  <sql id="WithUser_Column_List">
+    a.adid, a.userid, a.title, a.content, a.pictureurl, a.condition, a.priority, a.createtime, u.userid, u.username, u.nickname, u.studentid, u.sex, u.headurl
+  </sql>
+  
+  
+    <!--  List<Advertisement> selectByExampleWithUser(AdvertisementExample example);
+    	Advertisement selectByPrimaryKeyWithUser(Integer adid);
+   -->
+  <select id="selectByExampleWithUser" resultMap="WithUserResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="WithUser_Column_List" />
+    FROM t_advertisement a
+	LEFT JOIN t_user u ON a.userid = u.userid 
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKeyWithUser" resultMap="WithUserResultMap">
+    select 
+    <include refid="WithUser_Column_List" />
+    FROM t_advertisement a
+	LEFT JOIN t_user u ON a.userid = u.userid 
+    where adid = #{adid,jdbcType=INTEGER}
+  </select>
+   
+   <!-- 原生的 -->
+  <select id="selectByExample" parameterType="com.njl.bean.AdvertisementExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_advertisement
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_advertisement
+    where adid = #{adid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_advertisement
+    where adid = #{adid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.njl.bean.AdvertisementExample">
+    delete from t_advertisement
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.njl.bean.Advertisement">
+    insert into t_advertisement (adid, userid, title, 
+      content, pictureurl, condition, 
+      priority, createtime)
+    values (#{adid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{pictureurl,jdbcType=VARCHAR}, #{condition,jdbcType=INTEGER}, 
+      #{priority,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.njl.bean.Advertisement">
+    insert into t_advertisement
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="adid != null">
+        adid,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="pictureurl != null">
+        pictureurl,
+      </if>
+      <if test="condition != null">
+        condition,
+      </if>
+      <if test="priority != null">
+        priority,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="adid != null">
+        #{adid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureurl != null">
+        #{pictureurl,jdbcType=VARCHAR},
+      </if>
+      <if test="condition != null">
+        #{condition,jdbcType=INTEGER},
+      </if>
+      <if test="priority != null">
+        #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.njl.bean.AdvertisementExample" resultType="java.lang.Long">
+    select count(*) from t_advertisement
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_advertisement
+    <set>
+      <if test="record.adid != null">
+        adid = #{record.adid,jdbcType=INTEGER},
+      </if>
+      <if test="record.userid != null">
+        userid = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pictureurl != null">
+        pictureurl = #{record.pictureurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.condition != null">
+        condition = #{record.condition,jdbcType=INTEGER},
+      </if>
+      <if test="record.priority != null">
+        priority = #{record.priority,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null">
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_advertisement
+    set adid = #{record.adid,jdbcType=INTEGER},
+      userid = #{record.userid,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
+      pictureurl = #{record.pictureurl,jdbcType=VARCHAR},
+      condition = #{record.condition,jdbcType=INTEGER},
+      priority = #{record.priority,jdbcType=INTEGER},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.njl.bean.Advertisement">
+    update t_advertisement
+    <set>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureurl != null">
+        pictureurl = #{pictureurl,jdbcType=VARCHAR},
+      </if>
+      <if test="condition != null">
+        condition = #{condition,jdbcType=INTEGER},
+      </if>
+      <if test="priority != null">
+        priority = #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where adid = #{adid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.njl.bean.Advertisement">
+    update t_advertisement
+    set userid = #{userid,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      pictureurl = #{pictureurl,jdbcType=VARCHAR},
+      condition = #{condition,jdbcType=INTEGER},
+      priority = #{priority,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP}
+    where adid = #{adid,jdbcType=INTEGER}
+  </update>
+</mapper>

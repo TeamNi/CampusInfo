@@ -8,7 +8,7 @@
 <!-- BEGIN HEAD -->
 <head>
 	<meta charset="utf-8" />
-	<title>Dynamic Issue</title>
+	<title>Notification Issue</title>
 	<%
 		pageContext.setAttribute("BASE_PATH",request.getContextPath());
 	%>
@@ -54,13 +54,13 @@
 					<li>
 						<a href="index">首页</a>
 					</li>
-					<li class="active">
+					<li>
 						<a href="blog">校园动态</a>                       
 					</li>
 					<li>
 						<a href="used">校园闲置</a>
 					</li>
-					<li>
+					<li class="active">
 						<a href="notification">通知与广告</a>                      
 					</li>
 					<c:if test="${myself.permission == 1 }">
@@ -111,7 +111,7 @@
 				<div class="col-md-12">
 					<!-- BEGIN PAGE TITLE & BREADCRUMB-->
 					<h3 class="page-title">
-						Dynamic Issue <small>Issue your own dynamic</small>
+						Notification Issue <small>Issue notification</small>
 					</h3>
 					<ul class="page-breadcrumb breadcrumb">
 						<li>
@@ -120,10 +120,10 @@
 							<i class="fa fa-angle-right"></i>
 						</li>
 						<li>
-							<a href="blog">Dynamic</a>
+							<a href="notification">Notification</a>
 							<i class="fa fa-angle-right"></i>
 						</li>
-						<li><a href="blog_issue">Blog Issue</a></li>
+						<li><a href="notification_issue">Notification Issue</a></li>
 					</ul>
 					<!-- END PAGE TITLE & BREADCRUMB-->
 				</div>
@@ -133,7 +133,16 @@
 			<div class="row">
 				<div class="col-md-8">
 					<div id="tab_3-3" class="tab-pane">
-						<form id="from_issue_blog" method="post">
+						<form id="from_issue_notification" method="post">
+						<div class="form-group">
+								<label class="control-label">Type:</label><br>
+								<label class="radio-inline">
+								  <input type="radio" name="type" id="notification" value="notification" checked="checked"> notification
+								</label>
+								<label class="radio-inline">
+								  <input type="radio" name="type" id="advertisement" value="advertisement"> advertisement
+								</label>
+							</div>
 							<div class="form-group">
 								<label class="control-label">Title:</label>
 								<input type="text" maxlength="25" class="form-control" id="issue_title" name="title" value="" />
@@ -142,10 +151,10 @@
 								<label class="control-label">Content:</label>
 								<textarea rows="6" cols="135" class="form-control" maxlength="800" id="issue_content" name="content"></textarea>
 							</div>
-							<label class="control-label">Picture:</label>
+							<label class="control-label" id="label_pic">Picture:</label>
 							<div class="form-group dropzone" id="my-dropzone"></div>
 							<div class="margin-top-10">
-								<a href="#" id="btn_issue_blog" class="btn green">发布</a>
+								<a href="#" id="btn_issue_notification" class="btn green">发布</a>
 								<input type="reset" id="btn_issue_cancel" class="btn default" value="取消">
 							</div>
 						</form>
@@ -194,8 +203,21 @@
 		jQuery(document).ready(function() {
 		   // initiate layout and plugins
 		   App.init();
-		         FormDropzone.init();
+		   FormDropzone.init();
+		   $("#label_pic").hide();
+		   $("#my-dropzone").hide();
 		});
+		
+		//如果为notification隐藏上传区域
+		$("#notification").on("click",function(){
+			$("#label_pic").hide();
+			$("#my-dropzone").hide();
+		})
+		//如果为advertisement显示上传区域
+		$("#advertisement").on("click",function(){
+			$("#label_pic").show();
+			$("#my-dropzone").show();
+		})
 		
 		//issue blog
 		$("#btn_issue_blog").live("click",function(){
@@ -206,7 +228,7 @@
 				return false;
 			}
 			$.ajax({
-				url : "${BASE_PATH}/issue_blog",
+				url : "${BASE_PATH}/issue_notification",
 				async : false,
 				type : "POST",
 				data : {
@@ -236,16 +258,16 @@
 		//upload file
  		Dropzone.autoDiscover = false;
 		var myDropzone = new Dropzone("#my-dropzone", {
-			url: "${BASE_PATH}/uploadblogpicture",
+			url: "${BASE_PATH}/uploadadvertisementpicture",
 			addRemoveLinks: true,
 			method: 'post',
-			maxFiles:3,//一次性上传的文件数量上限
+			maxFiles:1,//一次性上传的文件数量上限
 			filesizeBase: 1024,
 			parallelUploads: 100,
 	        acceptedFiles: ".jpg,.gif,.png",
 			autoProcessQueue: false,
 			init:function(){
-	        	var submitButton = document.querySelector("#btn_issue_blog")
+	        	var submitButton = document.querySelector("#btn_issue_notification")
 	            myDropzone = this; // closure
 
 		        submitButton.addEventListener("click", function() {
@@ -271,36 +293,7 @@
 				formData.append("filesize", file.size);
 			}
 		}); 
-		
-/* 		var myDropzone = new Dropzone("#my-dropzone", {
-			url: "${BASE_PATH}/uploadblogpicture", //必须填写
-	        method:"post",  //也可用put
-	        paramName:"pictureurl", //默认为file
-	        maxFiles:10,//一次性上传的文件数量上限
-	        maxFilesize: 20, //MB
-	        acceptedFiles: ".jpg,.gif,.png", //上传的类型
-	        previewsContainer:"#adds", //显示的容器
-	        parallelUploads: 3,
-	        dictMaxFilesExceeded: "您最多只能上传10个文件！",
-	        dictResponseError: '文件上传失败!',
-	        dictInvalidFileType: "你不能上传该类型文件,文件类型只能是*.jpg,*.gif,*.png。",
-	        dictFallbackMessage:"浏览器不受支持",
-	        dictFileTooBig:"文件过大上传文件最大支持.",
-	        previewTemplate: document.querySelector('#preview-template').innerHTML,//设置显示模板
-	        init:function(){
-	            this.on("addedfile", function(file) { 
-	            //上传文件时触发的事件
-	            });
-	            this.on("queuecomplete",function(file) {
-	            	alert("SUCCESS!");
-	                //上传完成后触发的方法
-	            });
-	            this.on("removedfile",function(file){
-	            	alert("REMOVE!");
-	                //删除文件时触发的方法
-	            });
-	        }
-	    }); */
+
 	</script>
 	<!-- END PAGE LEVEL SCRIPTS -->
 </body>

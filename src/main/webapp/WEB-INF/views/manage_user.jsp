@@ -56,13 +56,13 @@
 						<a href="manage_user">用户管理</a>
 					</li>
 					<li>
-						<a href="manage_blog">论坛管理</a>                       
+						<a href="manage_blog">动态管理</a>                       
 					</li>
 					<li>
 						<a href="manage_used">闲置管理</a>
 					</li>
 					<li>
-						<a href="manage_comment_blog">论坛评论管理</a>                      
+						<a href="manage_comment_blog">动态评论管理</a>                      
 					</li>
 					<li>
 						<a href="manage_comment_used">闲置评论管理</a>                      
@@ -141,8 +141,9 @@
 										<th>密码</th>
 										<th>安全问题</th>
 										<th>安全答案</th>
-										<th>头像</th>
 										<th>联系方式</th>
+										<th>权限</th>
+										<th>头像</th>
 										<th>注册时间</th>
 										<th>Edit</th>
 										<th>Delete</th>
@@ -158,8 +159,9 @@
 										<td>${user.password }</td>
 										<td>${user.safequestion }</td>
 										<td>${user.safeanswer }</td>
-										<td>${user.headurl }</td>
 										<td>${user.contact }</td>
+										<td>${user.permission }</td>
+										<td>${user.headurl }</td>
 										<td>${user.createtime }</td>
 										<td><a edit-id="${user.userid }" class="edit" href="">Edit</a></td>
 										<!-- 为删除添加一个自定义的属性表示当前删除的用户id -->
@@ -181,7 +183,7 @@
 	<!-- BEGIN FOOTER -->
 	<div class="footer">
 		<div class="footer-inner">
-			2013 &copy; Metronic by keenthemes.
+			2017 &copy; 版权归倪吉龙所有.
 		</div>
 		<div class="footer-tools">
 			<span class="go-top">
@@ -260,9 +262,10 @@
 		       var password = $("#update4").val();
 		       var safequestion = $("#update5").val();
 		       var safeanswer = $("#update6").val();
-		       var headurl = $("#update7").val();
-		       var contact = $("#update8").val();
-		       var createtime = $("#update9").val();
+		       var contact = $("#update7").val();
+		       var permission = $("#update8").val();
+		       var headurl = $("#update9").val();
+		       var createtime = $("#update10").val();
 			   $.ajax({
 				   url : "${BASE_PATH}/user/"+userid,
 				   async : false,
@@ -275,8 +278,9 @@
             		   "password" : password,
             		   "safequestion" : safequestion,
             		   "safeanswer" : safeanswer,
-            		   "headurl" : headurl,
-            		   "contact" : contact
+            		   "contact" : contact,
+            		   "permission" : permission,
+            		   "headurl" : headurl
             	   },
             	   dataType : "json",
             	   success : function(result){
@@ -323,9 +327,10 @@
 		       var password = $("#save4").val();
 		       var safequestion = $("#save5").val();
 		       var safeanswer = $("#save6").val();
-		       var headurl = $("#save7").val();
-		       var contact = $("#save8").val();
-		       var createtime = $("#save9").val();
+		       var contact = $("#save7").val();
+		       var permission = $("#save8").val();
+		       var headurl = $("#save9").val();
+		       var createtime = $("#save10").val();
                $.ajax({
             	   url : "${BASE_PATH}/user",
             	   async : false,
@@ -338,8 +343,9 @@
             		   "password" : password,
             		   "safequestion" : safequestion,
             		   "safeanswer" : safeanswer,
-            		   "headurl" : headurl,
-            		   "contact" : contact
+            		   "contact" : contact,
+            		   "permission" : permission,
+            		   "headurl" : headurl
             	   },
             	   dataType : "json",
             	   success : function(result){

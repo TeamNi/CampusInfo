@@ -8,7 +8,7 @@
 <!-- BEGIN HEAD -->
 <head>
 	<meta charset="utf-8" />
-	<title>Blog Details</title>
+	<title>Dynamic Details</title>
 	<%
 		pageContext.setAttribute("BASE_PATH",request.getContextPath());
 	%>
@@ -53,27 +53,19 @@
 						<a href="index">首页</a>
 					</li>
 					<li class="active">
-						<a href="blog">校园论坛</a>                       
+						<a href="blog">校园动态</a>                       
 					</li>
 					<li>
 						<a href="used">校园闲置</a>
 					</li>
 					<li>
-						<a href="#">教材征订</a>                      
+						<a href="notification">通知与广告</a>                      
 					</li>
+					<c:if test="${myself.permission == 1 }">
 					<li>
-						<span class="hor-menu-search-form-toggler">&nbsp;</span>
-						<div class="search-form">
-							<form class="form-search" action="search" method="get">
-								<div class="input-group">
-									<input type="text" placeholder="Search..." class="form-control">
-									<div class="input-group-btn">
-										<button type="button" class="btn"></button>
-									</div>
-								</div>
-							</form>
-						</div>
+						<a href="notification_check">审核</a>                      
 					</li>
+					</c:if>
 				</ul>
 			</div>
 			<!-- END HORIZANTAL MENU -->
@@ -93,8 +85,9 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li><a href="my_info"><i class="fa fa-user"></i> My Profile</a></li>
-						<li><a href="my_blog"><i class="fa fa-envelope"></i> My Blog <span class="badge badge-danger">3</span></a></li>
-						<li><a href="my_used"><i class="fa fa-tasks"></i> My Used <span class="badge badge-success">7</span></a></li>
+						<li><a href="my_blog"><i class="fa fa-envelope"></i> My Dynamic </a></li>
+						<li><a href="my_used"><i class="fa fa-tasks"></i> My Used </a></li>
+						<li><a href="my_notification"><i class="glyphicon glyphicon-bullhorn"></i> My Notification </a></li>
 						<li class="divider"></li>
 						<li><a href="logout"><i class="fa fa-key"></i> Log Out</a></li>
 					</ul>
@@ -116,7 +109,7 @@
 				<div class="col-md-12">
 					<!-- BEGIN PAGE TITLE & BREADCRUMB-->
 					<h3 class="page-title">
-						Blog Details <small>blog details samples</small>
+						Dynamic Details <small>dynamic details samples</small>
 					</h3>
 					<ul class="page-breadcrumb breadcrumb">
 						<li>
@@ -125,7 +118,7 @@
 							<i class="fa fa-angle-right"></i>
 						</li>
 						<li>
-							<a href="blog">Blog</a>
+							<a href="blog">Dynamic</a>
 							<i class="fa fa-angle-right"></i>
 						</li>
 						<li><a href="blog_details?blogid=${blogdetails.blogid }">Blog Details</a></li>
@@ -194,138 +187,32 @@
 							</div>
 						</div>
 						<!--end col-md-9-->
-						<div class="col-md-3 blog-sidebar">
-							<h3>Flickr</h3>
-							<ul class="list-inline blog-images">
-								<li>
-									<a  class="fancybox-button" data-rel="fancybox-button" title="390 x 220 - keenthemes.com" href="assets/img/blog/1.jpg">
-									<img alt="" src="assets/img/blog/1.jpg">
-									</a>
-								</li>
-								<li><a href="#"><img alt="" src="assets/img/blog/2.jpg"></a></li>
-								<li><a href="#"><img alt="" src="assets/img/blog/3.jpg"></a></li>
-								<li><a href="#"><img alt="" src="assets/img/blog/4.jpg"></a></li>
-								<li><a href="#"><img alt="" src="assets/img/blog/5.jpg"></a></li>
-								<li><a href="#"><img alt="" src="assets/img/blog/6.jpg"></a></li>
-								<li><a href="#"><img alt="" src="assets/img/blog/8.jpg"></a></li>
-								<li><a href="#"><img alt="" src="assets/img/blog/10.jpg"></a></li>
-								<li><a href="#"><img alt="" src="assets/img/blog/11.jpg"></a></li>
-								<li><a href="#"><img alt="" src="assets/img/blog/1.jpg"></a></li>
-								<li><a href="#"><img alt="" src="assets/img/blog/2.jpg"></a></li>
-								<li><a href="#"><img alt="" src="assets/img/blog/7.jpg"></a></li>
-							</ul>
-							<div class="space20"></div>
-							<h3>Top Entiries</h3>
+						<div class="col-md-3 col-sm-4 blog-sidebar">
 							<div class="top-news">
 								<a href="#" class="btn red">
-								<span>Metronic News</span>
-								<em>Posted on: April 16, 2013</em>
-								<em>
-								<i class="fa fa-tags"></i>
-								Money, Business, Google
-								</em>
-								<i class="fa fa-briefcase top-news-icon"></i>
+								<span>Notification</span>
+								<i class="glyphicon glyphicon-flag top-news-icon"></i>
 								</a>
+							</div>
+							<div class="news-blocks">
+								<h3>Odio dignissimos ducimus</h3>
+								<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+								<div class="news-block-tags">
+									<em>2 hours ago</em>
+								</div>
+							</div>
+							<div class="space20"></div>
+							<div class="top-news">
 								<a href="#" class="btn green">
-								<span>Top Week</span>
-								<em>Posted on: April 15, 2013</em>
-								<em>
-								<i class="fa fa-tags"></i>
-								Internet, Music, People
-								</em>
-								<i class="fa fa-music top-news-icon"></i>                             
-								</a>
-								<a href="#" class="btn blue">
-								<span>Gold Price Falls</span>
-								<em>Posted on: April 14, 2013</em>
-								<em>
-								<i class="fa fa-tags"></i>
-								USA, Business, Apple
-								</em>
-								<i class="fa fa-globe top-news-icon"></i>                             
-								</a>
-								<a href="#" class="btn yellow">
-								<span>Study Abroad</span>
-								<em>Posted on: April 13, 2013</em>
-								<em>
-								<i class="fa fa-tags"></i>
-								Education, Students, Canada
-								</em>
-								<i class="fa fa-book top-news-icon"></i>                              
-								</a>
-								<a href="#" class="btn purple">
-								<span>Top Destinations</span>
-								<em>Posted on: April 12, 2013</em>
-								<em>
-								<i class="fa fa-tags"></i>
-								Places, Internet, Google Map
-								</em>
-								<i class="fa fa-bolt top-news-icon"></i>                              
+								<span>Advertisement</span>
+								<i class="glyphicon glyphicon-bullhorn top-news-icon"></i>                             
 								</a>
 							</div>
-							<div class="space20"></div>
-							<h3>Blog Tags</h3>
-							<ul class="list-inline sidebar-tags">
-								<li><a href="#"><i class="fa fa-tags"></i> Business</a></li>
-								<li><a href="#"><i class="fa fa-tags"></i> Music</a></li>
-								<li><a href="#"><i class="fa fa-tags"></i> Internet</a></li>
-								<li><a href="#"><i class="fa fa-tags"></i> Money</a></li>
-								<li><a href="#"><i class="fa fa-tags"></i> Google</a></li>
-								<li><a href="#"><i class="fa fa-tags"></i> TV Shows</a></li>
-								<li><a href="#"><i class="fa fa-tags"></i> Education</a></li>
-								<li><a href="#"><i class="fa fa-tags"></i> People</a></li>
-								<li><a href="#"><i class="fa fa-tags"></i> People</a></li>
-								<li><a href="#"><i class="fa fa-tags"></i> Math</a></li>
-								<li><a href="#"><i class="fa fa-tags"></i> Photos</a></li>
-								<li><a href="#"><i class="fa fa-tags"></i> Electronics</a></li>
-								<li><a href="#"><i class="fa fa-tags"></i> Apple</a></li>
-								<li><a href="#"><i class="fa fa-tags"></i> Canada</a></li>
-							</ul>
-							<div class="space20"></div>
-							<h3>Tabs</h3>
-							<div class="tabbable tabbable-custom">
-								<ul class="nav nav-tabs">
-									<li class="active"><a data-toggle="tab" href="#tab_1_1">Section 1</a></li>
-									<li ><a data-toggle="tab" href="#tab_1_2">Section 2</a></li>
-								</ul>
-								<div class="tab-content">
-									<div id="tab_1_1" class="tab-pane active">
-										<p>I'm in Section 1.</p>
-										<p>
-											Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat.
-										</p>
-									</div>
-									<div id="tab_1_2" class="tab-pane">
-										<p>Howdy, I'm in Section 2.</p>
-										<p>
-											Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat. Ut wisi enim ad minim veniam, quis nostrud exerci tation.
-										</p>
-									</div>
-								</div>
-							</div>
-							<div class="space20"></div>
-							<h3>Recent Twitts</h3>
-							<div class="blog-twitter">
-								<div class="blog-twitter-block">
-									<a href="">@keenthemes</a> 
-									<p>At vero eos et accusamus et iusto odio.</p>
-									<a href="#"><em>http://t.co/sBav7dm</em></a> 
-									<span>5 hours ago</span>
-									<i class="fa fa-twitter blog-twiiter-icon"></i>
-								</div>
-								<div class="blog-twitter-block">
-									<a href="">@keenthemes</a> 
-									<p>At vero eos et accusamus et iusto odio.</p>
-									<a href="#"><em>http://t.co/sBav7dm</em></a> 
-									<span>7 hours ago</span>
-									<i class="fa fa-twitter blog-twiiter-icon"></i>
-								</div>
-								<div class="blog-twitter-block">
-									<a href="">@keenthemes</a> 
-									<p>At vero eos et accusamus et iusto odio.</p>
-									<a href="#"><em>http://t.co/sBav7dm</em></a> 
-									<span>8 hours ago</span>
-									<i class="fa fa-twitter blog-twiiter-icon"></i>
+							<div class="news-blocks">
+								<h3>Odio dignissimos ducimus</h3>
+								<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+								<div class="news-block-tags">
+									<em>2 hours ago</em>
 								</div>
 							</div>
 						</div>
@@ -341,7 +228,7 @@
 	<!-- BEGIN FOOTER -->
 	<div class="footer">
 		<div class="footer-inner">
-			2013 &copy; Metronic by keenthemes.
+			2017 &copy; 版权归倪吉龙所有.
 		</div>
 		<div class="footer-tools">
 			<span class="go-top">

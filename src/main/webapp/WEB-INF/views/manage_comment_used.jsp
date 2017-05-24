@@ -61,13 +61,13 @@
 						<a href="manage_user">用户管理</a>
 					</li>
 					<li>
-						<a href="manage_blog">论坛管理</a>                       
+						<a href="manage_blog">动态管理</a>                       
 					</li>
 					<li>
 						<a href="manage_used">闲置管理</a>
 					</li>
 					<li>
-						<a href="manage_comment_blog">论坛评论管理</a>                      
+						<a href="manage_comment_blog">动态评论管理</a>                      
 					</li>
 					<li class="active">
 						<a href="manage_comment_used">闲置评论管理</a>                      
@@ -173,7 +173,7 @@
 	<!-- BEGIN FOOTER -->
 	<div class="footer">
 		<div class="footer-inner">
-			2013 &copy; Metronic by keenthemes.
+			2017 &copy; 版权归倪吉龙所有.
 		</div>
 		<div class="footer-tools">
 			<span class="go-top">
