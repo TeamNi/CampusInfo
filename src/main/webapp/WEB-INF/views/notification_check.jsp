@@ -130,6 +130,7 @@
 			<!-- END PAGE HEADER-->
 			<!-- BEGIN PAGE CONTENT-->
 			<div class="row">
+				<!-- notification -->
 				<div class="col-md-6">
 					<!-- BEGIN INLINE NOTIFICATIONS PORTLET-->
 					<div class="portlet box blue">
@@ -146,7 +147,7 @@
 								<span>发布人：${notifications.user.username }</span><br>
 								<br><span>当前状态：未审核</span>
 								<p>
-									<a class="btn green" href="check_notification?conditionck=1&noid=${notifications.noid }&pn=${pageInfo.pageNum }">审核通过</a> <a class="btn dark" href="check_notification?conditionck=2&noid=${notifications.noid }&pn=${pageInfo.pageNum }">审核不通过</a>
+									<a class="btn green" href="check_notification?conditionck=1&noid=${notifications.noid }&pn=${pageInfo.pageNum }&pna=${pageInfoAd.pageNum}">审核通过</a> <a class="btn dark" href="check_notification?conditionck=2&noid=${notifications.noid }&pn=${pageInfo.pageNum }&pna=${pageInfoAd.pageNum}">审核不通过</a>
 								</p>
 							</div>
 							</c:if>
@@ -159,7 +160,7 @@
 								<br><span>当前状态：审核通过</span>
 								<br><span>审核人ID：${notifications.checkuser }</span>
 								<p>
-									<a class="btn green" href="check_notification?conditionck=2&noid=${notifications.noid }&pn=${pageInfo.pageNum }">取消审核通过</a>
+									<a class="btn green" href="check_notification?conditionck=2&noid=${notifications.noid }&pn=${pageInfo.pageNum }&pna=${pageInfoAd.pageNum}">取消审核通过</a>
 								</p>
 							</div>
 							</c:if>
@@ -172,7 +173,7 @@
 								<br><span>当前状态：审核未通过</span>
 								<br><span>审核人ID：${notifications.checkuser }</span>
 								<p>
-									<a class="btn green" href="check_notification?conditionck=1&noid=${notifications.noid }&pn=${pageInfo.pageNum }">审核通过</a>
+									<a class="btn green" href="check_notification?conditionck=1&noid=${notifications.noid }&pn=${pageInfo.pageNum }&pna=${pageInfoAd.pageNum}">审核通过</a>
 								</p>
 							</div>
 							</c:if>
@@ -186,10 +187,10 @@
 								<div class="row">
 									<nav aria-label="Page navigation">
 									  <ul class="pagination">
-									  	<li><a href="${BASE_PATH }/notification_check?pn=1">首页</a></li>
+									  	<li><a href="${BASE_PATH }/notification_check?pn=1&pna=${pageInfoAd.pageNum}">首页</a></li>
 									  	<c:if test="${pageInfo.hasPreviousPage }">
 										    <li>
-										      <a href="${BASE_PATH }/notification_check?pn=${pageInfo.pageNum-1 }" aria-label="Previous">
+										      <a href="${BASE_PATH }/notification_check?pn=${pageInfo.pageNum-1 }&pna=${pageInfoAd.pageNum}" aria-label="Previous">
 										        <span aria-hidden="true">&laquo;</span>
 										      </a>
 										    </li>
@@ -199,17 +200,17 @@
 										    	<li class="active"><a href="#">${page_num }</a></li>
 									    	</c:if>
 									    	<c:if test="${page_num != pageInfo.pageNum }">
-										    	<li><a href="${BASE_PATH }/notification_check?pn=${page_num }">${page_num }</a></li>
+										    	<li><a href="${BASE_PATH }/notification_check?pn=${page_num }&pna=${pageInfoAd.pageNum}">${page_num }</a></li>
 									    	</c:if>
 									    </c:forEach>
 									    <c:if test="${pageInfo.hasNextPage }">
 										    <li>
-										      <a href="${BASE_PATH }/notification_check?pn=${pageInfo.pageNum+1 }" aria-label="Next">
+										      <a href="${BASE_PATH }/notification_check?pn=${pageInfo.pageNum+1 }&pna=${pageInfoAd.pageNum}" aria-label="Next">
 										        <span aria-hidden="true">&raquo;</span>
 										      </a>
 										    </li>
 									    </c:if>
-									    <li><a href="${BASE_PATH }/notification_check?pn=${pageInfo.pages }">末页</a></li>
+									    <li><a href="${BASE_PATH }/notification_check?pn=${pageInfo.pages }&pna=${pageInfoAd.pageNum}">末页</a></li>
 									  </ul>
 									</nav>
 								</div>
@@ -218,6 +219,7 @@
 					</div>
 					<!-- END INLINE NOTIFICATIONS PORTLET-->
 				</div>
+				<!-- advertisement -->
 				<div class="col-md-6">
 					<!-- BEGIN ALERTS PORTLET-->
 					<div class="portlet green box">
@@ -225,45 +227,109 @@
 							<div class="caption"><i class="glyphicon glyphicon-bullhorn"></i>advertisement</div>
 						</div>
 						<div class="portlet-body">
-							<div class="note note-info">
-								<div class="row margin-bottom-20">
-									<div class="col-md-12 margin-bottom-20">
-										<h2>Metronic Viverra</h2>
-										<p>Lunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita sit amet, consectetur adipiscing elit.</p>
+						<c:forEach items="${pageInfoAd.list }" var="advertisements">
+							<c:if test="${advertisements.conditionck == 0 }">
+								<div class="note note-danger">
+									<div class="row margin-bottom-20">
+										<div class="col-md-12 margin-bottom-20">
+											<h2>${advertisements.title }</h2>
+											<p>${advertisements.content }</p>
+										</div>
 									</div>
-								</div>
-								<div class="row margin-bottom-20">
-									<div class="col-md-12 margin-bottom-20">
-										<img src="assets/img/pages/img3.png" alt="" class="img-responsive">
+									<div class="row margin-bottom-20">
+										<div class="col-md-12 margin-bottom-20">
+											<img src="${advertisements.pictureurl }" alt="" class="img-responsive">
+										</div>
 									</div>
+									<span>发布时间：<fmt:formatDate value="${advertisements.createtime }" pattern="yyyy/MM/dd HH:mm"/></span><br>
+									<span>发布人：${advertisements.user.username }</span><br>
+									<br><span>当前状态：未审核</span>
+									<p>
+										<a class="btn green" href="check_advertisement?conditionck=1&adid=${advertisements.adid }&pn=${pageInfo.pageNum }&pna=${pageInfoAd.pageNum}">审核通过</a> <a class="btn dark" href="check_advertisement?conditionck=2&adid=${advertisements.adid }&pn=${pageInfo.pageNum }&pna=${pageInfoAd.pageNum}">审核不通过</a>
+									</p>
 								</div>
-								<p>
-									<a class="btn green" href="#">Do this</a> <a class="btn dark" href="#">Cancel</a>
-								</p>
-							</div>
-							<div class="note note-info">
-								<h4 class="block">Info! Some Header Goes Here</h4>
-								<p>
-									Duis mollis, est non commodo luctus, nisi erat porttitor ligula, mattis consectetur purus sit amet eget 
-									lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.
-								</p>
-								<p>
-									<a class="btn green" href="#">Do this</a> <a class="btn dark" href="#">Cancel</a>
-								</p>
-							</div>
-							<div class="note note-danger">
-								<h4 class="block">Danger! Some Header Goes Here</h4>
-								<p>
-									Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit mattis consectetur purus sit amet.\
-									Cras mattis consectetur purus sit amet fermentum.
-								</p>
-							</div>
+							</c:if>
+							<c:if test="${advertisements.conditionck == 1 }">
+								<div class="note note-success">
+									<div class="row margin-bottom-20">
+										<div class="col-md-12 margin-bottom-20">
+											<h2>${advertisements.title }</h2>
+											<p>${advertisements.content }</p>
+										</div>
+									</div>
+									<div class="row margin-bottom-20">
+										<div class="col-md-12 margin-bottom-20">
+											<img src="${advertisements.pictureurl }" alt="" class="img-responsive">
+										</div>
+									</div>
+									<span>发布时间：<fmt:formatDate value="${advertisements.createtime }" pattern="yyyy/MM/dd HH:mm"/></span><br>
+									<span>发布人：${advertisements.user.username }</span><br>
+									<br><span>当前状态：审核通过</span>
+									<br><span>审核人ID：${advertisements.checkuser }</span>
+									<p>
+										<a class="btn green" href="check_advertisement?conditionck=2&adid=${advertisements.adid }&pn=${pageInfo.pageNum }&pna=${pageInfoAd.pageNum}">取消审核通过</a>
+									</p>
+								</div>
+							</c:if>
+							<c:if test="${advertisements.conditionck == 2 }">
+								<div class="note note-info">
+									<div class="row margin-bottom-20">
+										<div class="col-md-12 margin-bottom-20">
+											<h2>${advertisements.title }</h2>
+											<p>${advertisements.content }</p>
+										</div>
+									</div>
+									<div class="row margin-bottom-20">
+										<div class="col-md-12 margin-bottom-20">
+											<img src="${advertisements.pictureurl }" alt="" class="img-responsive">
+										</div>
+									</div>
+									<span>发布时间：<fmt:formatDate value="${advertisements.createtime }" pattern="yyyy/MM/dd HH:mm"/></span><br>
+									<span>发布人：${advertisements.user.username }</span><br>
+									<br><span>当前状态：审核未通过</span>
+									<br><span>审核人ID：${advertisements.checkuser }</span>
+									<p>
+										<a class="btn green" href="check_advertisement?conditionck=1&adid=${advertisements.adid }&pn=${pageInfo.pageNum }&pna=${pageInfoAd.pageNum}">审核通过</a>
+									</p>
+								</div>
+							</c:if>
+						</c:forEach>
 							<div class="note note-warning">
-								<h4 class="block">Warning! Some Header Goes Here</h4>
-								<p>
-									Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit mattis consectetur purus sit amet. 
-									Cras mattis consectetur purus sit amet fermentum.
-								</p>
+								<!-- 分页文字信息 -->
+								<div class="row">
+									当前第  ${pageInfoAd.pageNum }  页,总  ${pageInfoAd.pages }  页,总  ${pageInfoAd.total }  条记录
+								</div>
+								<!-- 分页条信息 -->
+								<div class="row">
+									<nav aria-label="Page navigation">
+									  <ul class="pagination">
+									  	<li><a href="${BASE_PATH }/notification_check?pn=${pageInfo.pageNum }&pna=1">首页</a></li>
+									  	<c:if test="${pageInfoAd.hasPreviousPage }">
+										    <li>
+										      <a href="${BASE_PATH }/notification_check?pn=${pageInfo.pageNum }&pna=${pageInfoAd.pageNum-1 }" aria-label="Previous">
+										        <span aria-hidden="true">&laquo;</span>
+										      </a>
+										    </li>
+									    </c:if>
+									    <c:forEach items="${pageInfoAd.navigatepageNums }" var="page_num_a">
+									    	<c:if test="${page_num_a == pageInfoAd.pageNum }">
+										    	<li class="active"><a href="#">${page_num_a }</a></li>
+									    	</c:if>
+									    	<c:if test="${page_num_a != pageInfoAd.pageNum }">
+										    	<li><a href="${BASE_PATH }/notification_check?pn=${pageInfo.pageNum }&pna=${page_num_a }">${page_num_a }</a></li>
+									    	</c:if>
+									    </c:forEach>
+									    <c:if test="${pageInfoAd.hasNextPage }">
+										    <li>
+										      <a href="${BASE_PATH }/notification_check?pn=${pageInfo.pageNum }&pna=${pageInfoAd.pageNum+1 }" aria-label="Next">
+										        <span aria-hidden="true">&raquo;</span>
+										      </a>
+										    </li>
+									    </c:if>
+									    <li><a href="${BASE_PATH }/notification_check?pn=${pageInfo.pageNum }&pna=${pageInfoAd.pages }">末页</a></li>
+									  </ul>
+									</nav>
+								</div>
 							</div>
 						</div>
 					</div>

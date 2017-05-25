@@ -219,7 +219,7 @@
 			$("#my-dropzone").show();
 		})
 		
-		//issue notification
+		//issue notification / advertisement
 		$("#btn_issue_notification").live("click",function(){
 			var type = $("input[type='radio']:checked").val();
 			var title = $("#issue_title").val();
