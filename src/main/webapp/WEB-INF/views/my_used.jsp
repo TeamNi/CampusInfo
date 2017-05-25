@@ -133,7 +133,7 @@
 									<div class="col-md-6">
 										<div class="row">
 											<div class="panel panel-default">
-											  <div class="panel-heading">I issued goods</div>
+											  <div class="panel-heading">I have issued goods</div>
 											</div>
 										</div>
 										<div class="row">

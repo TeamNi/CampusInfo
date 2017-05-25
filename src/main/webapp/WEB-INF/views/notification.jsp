@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
@@ -136,37 +137,50 @@
 							<div class="caption"><i class="glyphicon glyphicon-flag"></i>Notifications</div>
 						</div>
 						<div class="portlet-body">
-							<div class="alert alert-block alert-danger fade in">
-								<button type="button" class="close" data-dismiss="alert"></button>
-								<h4 class="alert-heading">Error!</h4>
-								<p>
-									Duis mollis, est non commodo luctus, 
-									nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.
-								</p>
-							</div>
-							<div class="alert alert-block alert-success fade in">
-								<button type="button" class="close" data-dismiss="alert"></button>
-								<h4 class="alert-heading">Success!</h4>
-								<p>
-									Duis mollis, est non commodo luctus, 
-									nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.
-								</p>
-							</div>
-							<div class="alert alert-block alert-info fade in">
-								<button type="button" class="close" data-dismiss="alert"></button>
-								<h4 class="alert-heading">Info!</h4>
-								<p>
-									Duis mollis, est non commodo luctus, 
-									nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.
-								</p>
-							</div>
+							<c:forEach items="${pageInfo.list }" var="notifications">
+								<div class="alert alert-block alert-success fade in">
+								<h4 class="alert-heading">${notifications.title }</h4>
+								<p>${notifications.content }</p>
+								<span>发布时间：<fmt:formatDate value="${notifications.createtime }" pattern="yyyy/MM/dd HH:mm"/></span><br>
+								<span>发布人：${notifications.user.username }</span>
+								</div>
+							</c:forEach>
 							<div class="alert alert-block alert-warning fade in">
-								<button type="button" class="close" data-dismiss="alert"></button>
-								<h4 class="alert-heading">Warning!</h4>
-								<p>
-									Duis mollis, est non commodo luctus, 
-									nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.
-								</p>
+								<!-- 分页文字信息 -->
+								<div class="row">
+									当前第  ${pageInfo.pageNum }  页,总  ${pageInfo.pages }  页,总  ${pageInfo.total }  条记录
+								</div>
+								<!-- 分页条信息 -->
+								<div class="row">
+									<nav aria-label="Page navigation">
+									  <ul class="pagination">
+									  	<li><a href="${BASE_PATH }/notification?pn=1">首页</a></li>
+									  	<c:if test="${pageInfo.hasPreviousPage }">
+										    <li>
+										      <a href="${BASE_PATH }/notification?pn=${pageInfo.pageNum-1 }" aria-label="Previous">
+										        <span aria-hidden="true">&laquo;</span>
+										      </a>
+										    </li>
+									    </c:if>
+									    <c:forEach items="${pageInfo.navigatepageNums }" var="page_num">
+									    	<c:if test="${page_num == pageInfo.pageNum }">
+										    	<li class="active"><a href="#">${page_num }</a></li>
+									    	</c:if>
+									    	<c:if test="${page_num != pageInfo.pageNum }">
+										    	<li><a href="${BASE_PATH }/notification?pn=${page_num }">${page_num }</a></li>
+									    	</c:if>
+									    </c:forEach>
+									    <c:if test="${pageInfo.hasNextPage }">
+										    <li>
+										      <a href="${BASE_PATH }/notification?pn=${pageInfo.pageNum+1 }" aria-label="Next">
+										        <span aria-hidden="true">&raquo;</span>
+										      </a>
+										    </li>
+									    </c:if>
+									    <li><a href="${BASE_PATH }/notification?pn=${pageInfo.pages }">末页</a></li>
+									  </ul>
+									</nav>
+								</div>
 							</div>
 						</div>
 					</div>
