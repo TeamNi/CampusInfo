@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,7 +37,11 @@ public class NotificationController {
 	 * @return
 	 */
 	@RequestMapping("/notification")
-	public String getNotification() {
+	public String getNotification(@RequestParam(value="pn",defaultValue="1") Integer pn, Model model) {
+		PageHelper.startPage(pn, 10);
+		List<Notification> notificationlist = notificationService.getPassNotification();
+		PageInfo<Notification> pageInfo = new PageInfo<Notification>(notificationlist,5);
+		model.addAttribute("pageInfo", pageInfo);
 		return "notification";
 	}
 
@@ -94,14 +97,20 @@ public class NotificationController {
 		return "notification_check";
 	}
 	
+	/**
+	 * check notification
+	 * @param conditionck
+	 * @param noid
+	 * @param pn
+	 * @return
+	 */
 	@RequestMapping("/check_notification")
-	@ResponseBody
-	public Msg checkNotification(@RequestParam("conditionck") Integer conditionck, @RequestParam("noid") Integer noid) {
+	public String checkNotification(@RequestParam("conditionck") Integer conditionck, @RequestParam("noid") Integer noid, @RequestParam("pn")Integer pn, @ModelAttribute("myself")User userinfo) {
 		Notification notification = new Notification();
 		notification.setNoid(noid);
 		notification.setConditionck(conditionck);
-		System.out.println(notification);
+		notification.setCheckuser(userinfo.getUserid());
 		notificationService.updateNotification(notification);
-		return Msg.success();
+		return "redirect:notification_check?pn="+pn;
 	}
 }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
@@ -141,9 +142,11 @@
 								<div class="alert alert-block alert-danger fade in">
 								<h4 class="alert-heading">${notifications.title }</h4>
 								<p>${notifications.content }</p>
+								<span>发布时间：<fmt:formatDate value="${notifications.createtime }" pattern="yyyy/MM/dd HH:mm"/></span><br>
+								<span>发布人：${notifications.user.username }</span><br>
+								<br><span>当前状态：未审核</span>
 								<p>
-									<a class="btn green" href="check_notification?conditionck=1&noid=${notifications.noid }">审核通过</a> <a class="btn dark" href="check_notification?conditionck=2&noid=${notifications.noid }">审核不通过</a>
-									<br><span>当前状态：未审核</span>
+									<a class="btn green" href="check_notification?conditionck=1&noid=${notifications.noid }&pn=${pageInfo.pageNum }">审核通过</a> <a class="btn dark" href="check_notification?conditionck=2&noid=${notifications.noid }&pn=${pageInfo.pageNum }">审核不通过</a>
 								</p>
 							</div>
 							</c:if>
@@ -151,9 +154,12 @@
 								<div class="alert alert-block alert-success fade in">
 								<h4 class="alert-heading">${notifications.title }</h4>
 								<p>${notifications.content }</p>
+								<span>发布时间：<fmt:formatDate value="${notifications.createtime }" pattern="yyyy/MM/dd HH:mm"/></span><br>
+								<span>发布人：${notifications.user.username }</span><br>
+								<br><span>当前状态：审核通过</span>
+								<br><span>审核人ID：${notifications.checkuser }</span>
 								<p>
-									<a class="btn green" href="check_notification?conditionck=2&noid=${notifications.noid }">取消审核通过</a>
-									<br><span>当前状态：审核通过</span>
+									<a class="btn green" href="check_notification?conditionck=2&noid=${notifications.noid }&pn=${pageInfo.pageNum }">取消审核通过</a>
 								</p>
 							</div>
 							</c:if>
@@ -161,9 +167,12 @@
 								<div class="alert alert-block alert-info fade in">
 								<h4 class="alert-heading">${notifications.title }</h4>
 								<p>${notifications.content }</p>
+								<span>发布时间：<fmt:formatDate value="${notifications.createtime }" pattern="yyyy/MM/dd HH:mm"/></span><br>
+								<span>发布人：${notifications.user.username }</span><br>
+								<br><span>当前状态：审核未通过</span>
+								<br><span>审核人ID：${notifications.checkuser }</span>
 								<p>
-									<a class="btn green" href="check_notification?conditionck=1&noid=${notifications.noid }">审核通过</a>
-									<br><span>当前状态：审核未通过</span>
+									<a class="btn green" href="check_notification?conditionck=1&noid=${notifications.noid }&pn=${pageInfo.pageNum }">审核通过</a>
 								</p>
 							</div>
 							</c:if>

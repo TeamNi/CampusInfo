@@ -153,7 +153,7 @@
 									<fmt:formatDate value="${bloglist.createtime }" type="date" pattern="yyyy/MM/dd"/>
 									</span>
 									<span class="time">
-									<fmt:formatDate value="${bloglist.createtime }" type="time" pattern="hh:mm"/>
+									<fmt:formatDate value="${bloglist.createtime }" type="time" pattern="HH:mm"/>
 									</span>
 								</div>
 								<div class="timeline-icon"><i class="fa fa-rss"></i></div>

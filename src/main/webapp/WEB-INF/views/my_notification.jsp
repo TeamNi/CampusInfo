@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
@@ -129,66 +130,124 @@
 					<div class="tabbable tabbable-custom tabbable-full-width">
 						<div class="tab-content">
 							<div id="tab_2_2" class="tab-pane active">
-								<div class="row booking-results">
+								<div class="row">
 									<div class="col-md-6">
-										<div class="row">
-											<div class="panel panel-default">
-											  <div class="panel-heading">I issued notification</div>
+										<!-- BEGIN INLINE NOTIFICATIONS PORTLET-->
+										<div class="portlet box blue">
+											<div class="portlet-title">
+												<div class="caption"><i class="glyphicon glyphicon-flag"></i>Notifications</div>
 											</div>
-										</div>
-										<div class="row">
-											<c:forEach items="${usedlist }" var="usedlist">
-												<div class="booking-result">
-													<div class="booking-img">
-														<img src="${usedlist.pictureurl }" alt="">
-														<ul class="list-unstyled price-location">
-															<li ><a href="#" id="remove_used" usedid="${usedlist.usedid }"><i class="glyphicon glyphicon-remove"></i> Remove</a></li>
-														</ul>
-													</div>
-													<div class="booking-info">
-														<h2><a href="used_details?usedid=${usedlist.usedid }">${usedlist.title }</a></h2>
-														<ul class="stars list-inline">
-															<li><i class="fa fa-star"></i></li>
-															<li><i class="fa fa-star"></i></li>
-															<li><i class="fa fa-star"></i></li>
-															<li><i class="fa fa-star"></i></li>
-															<li><i class="fa fa-star-empty"></i></li>
-														</ul>
-														<p>${usedlist.content }<a href="used_details?usedid=${usedlist.usedid }">read more...</a></p>
-													</div>
+											<div class="portlet-body">
+											<c:forEach items="${pageInfo.list }" var="notifications">
+													<div class="alert alert-block alert-success fade in">
+													<h4 class="alert-heading">${notifications.title }</h4>
+													<p>${notifications.content }</p>
+													<span>发布时间：<fmt:formatDate value="${notifications.createtime }" pattern="yyyy/MM/dd HH:mm"/></span><br>
+													<p>
+														<c:if test="${notifications.conditionck == 0 }">
+															<br><span>当前状态：未审核</span><br>
+														</c:if>
+														<c:if test="${notifications.conditionck == 1 }">
+															<br><span>当前状态：审核通过</span><br>
+														</c:if>
+														<c:if test="${notifications.conditionck == 2 }">
+															<br><span>当前状态：审核未通过</span><br>
+														</c:if>
+														<a class="btn red" id="remove_notification" noid="${notifications.noid }" href="">删除</a>
+													</p>
 												</div>
 											</c:forEach>
+												<div class="alert alert-block alert-warning fade in">
+													<!-- 分页文字信息 -->
+													<div class="row">
+														当前第  ${pageInfo.pageNum }  页,总  ${pageInfo.pages }  页,总  ${pageInfo.total }  条记录
+													</div>
+													<!-- 分页条信息 -->
+													<div class="row">
+														<nav aria-label="Page navigation">
+														  <ul class="pagination">
+														  	<li><a href="${BASE_PATH }/notification_check?pn=1">首页</a></li>
+														  	<c:if test="${pageInfo.hasPreviousPage }">
+															    <li>
+															      <a href="${BASE_PATH }/notification_check?pn=${pageInfo.pageNum-1 }" aria-label="Previous">
+															        <span aria-hidden="true">&laquo;</span>
+															      </a>
+															    </li>
+														    </c:if>
+														    <c:forEach items="${pageInfo.navigatepageNums }" var="page_num">
+														    	<c:if test="${page_num == pageInfo.pageNum }">
+															    	<li class="active"><a href="#">${page_num }</a></li>
+														    	</c:if>
+														    	<c:if test="${page_num != pageInfo.pageNum }">
+															    	<li><a href="${BASE_PATH }/notification_check?pn=${page_num }">${page_num }</a></li>
+														    	</c:if>
+														    </c:forEach>
+														    <c:if test="${pageInfo.hasNextPage }">
+															    <li>
+															      <a href="${BASE_PATH }/notification_check?pn=${pageInfo.pageNum+1 }" aria-label="Next">
+															        <span aria-hidden="true">&raquo;</span>
+															      </a>
+															    </li>
+														    </c:if>
+														    <li><a href="${BASE_PATH }/notification_check?pn=${pageInfo.pages }">末页</a></li>
+														  </ul>
+														</nav>
+													</div>
+												</div>
+											</div>
 										</div>
+										<!-- END INLINE NOTIFICATIONS PORTLET-->
 									</div>
 									<div class="col-md-6">
-										<div class="row">
-											<div class="panel panel-default">
-											  <div class="panel-heading">I issued advertisement</div>
+										<!-- BEGIN ALERTS PORTLET-->
+										<div class="portlet green box">
+											<div class="portlet-title">
+												<div class="caption"><i class="glyphicon glyphicon-bullhorn"></i>advertisement</div>
+											</div>
+											<div class="portlet-body">
+												<div class="note note-info">
+													<div class="row margin-bottom-20">
+														<div class="col-md-12 margin-bottom-20">
+															<h2>Metronic Viverra</h2>
+															<p>Lunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita sit amet, consectetur adipiscing elit.</p>
+														</div>
+													</div>
+													<div class="row margin-bottom-20">
+														<div class="col-md-12 margin-bottom-20">
+															<img src="assets/img/pages/img3.png" alt="" class="img-responsive">
+														</div>
+													</div>
+													<p>
+														<a class="btn green" href="#">Do this</a> <a class="btn dark" href="#">Cancel</a>
+													</p>
+												</div>
+												<div class="note note-info">
+													<h4 class="block">Info! Some Header Goes Here</h4>
+													<p>
+														Duis mollis, est non commodo luctus, nisi erat porttitor ligula, mattis consectetur purus sit amet eget 
+														lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.
+													</p>
+													<p>
+														<a class="btn green" href="#">Do this</a> <a class="btn dark" href="#">Cancel</a>
+													</p>
+												</div>
+												<div class="note note-danger">
+													<h4 class="block">Danger! Some Header Goes Here</h4>
+													<p>
+														Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit mattis consectetur purus sit amet.\
+														Cras mattis consectetur purus sit amet fermentum.
+													</p>
+												</div>
+												<div class="note note-warning">
+													<h4 class="block">Warning! Some Header Goes Here</h4>
+													<p>
+														Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit mattis consectetur purus sit amet. 
+														Cras mattis consectetur purus sit amet fermentum.
+													</p>
+												</div>
 											</div>
 										</div>
-										<div class="row">
-											<c:forEach items="${attentionUsed }" var="attentionUsed">
-												<div class="booking-result">
-													<div class="booking-img">
-														<img src="${attentionUsed.pictureurl }" alt="">
-														<ul class="list-unstyled price-location">
-						 									<li ><a href="#" id="remove_attention_used" usedid="${attentionUsed.usedid }"><i class="glyphicon glyphicon-remove"></i> Remove</a></li>
-														</ul>
-													</div>
-													<div class="booking-info">
-														<h2><a href="used_details?usedid=${attentionUsed.usedid }">${attentionUsed.title }</a></h2>
-														<ul class="stars list-inline">
-															<li><i class="fa fa-star"></i></li>
-															<li><i class="fa fa-star"></i></li>
-															<li><i class="fa fa-star"></i></li>
-															<li><i class="fa fa-star"></i></li>
-															<li><i class="fa fa-star-empty"></i></li>
-														</ul>
-														<p>${attentionUsed.content }<a href="used_details?usedid=${attentionUsed.usedid }">read more...</a></p>
-													</div>
-												</div>
-											</c:forEach>
-										</div>
+										<!-- END ALERTS PORTLET-->
 									</div>
 								</div>
 							</div>
@@ -238,14 +297,14 @@
 		   Search.init();
 		});
 		
-		//remove myself used
-		$("#remove_used").live("click",function(){
-			var usedid = $(this).attr("usedid");
-			if(confirm("删除帖子时，帖子中的回复将一起删除。确定删除?") == false){
+		//remove notification
+		$("#remove_notification").on("click",function(){
+			var noid = $(this).attr("noid");
+			if(confirm("确定删除?") == false){
 				return;
 			}
 			$.ajax({
-				url : "${BASE_PATH}/removemyselfused/" + usedid,
+				url : "${BASE_PATH}/remove_notification/" + noid,
 				async : false,
 				type : "DELETE",
 				success : function(result){
@@ -268,7 +327,7 @@
 			location.reload();
 		});
 		
-		//remove my attention used
+		//remove advertisement
 		$("#remove_attention_used").live("click",function(){
 			var usedid = $(this).attr("usedid");
 			if(confirm("将此物品从我的关注中移除?") == false){
