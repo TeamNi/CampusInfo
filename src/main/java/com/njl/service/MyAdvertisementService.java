@@ -45,4 +45,15 @@ public class MyAdvertisementService {
 		advertisementMapper.deleteByPrimaryKey(adid);
 	}
 
+	/**
+	 * get advertisement with adid
+	 * @param adid
+	 * @return
+	 */
+	public Advertisement queryAdvertisementWithAdid(Integer adid) {
+		// TODO Auto-generated method stub
+		Advertisement advertisement = advertisementMapper.selectByPrimaryKey(adid);
+		return advertisement;
+	}
+
 }

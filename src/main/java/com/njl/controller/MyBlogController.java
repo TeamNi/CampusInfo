@@ -15,13 +15,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.njl.bean.Advertisement;
 import com.njl.bean.Blog;
 import com.njl.bean.BlogPic;
 import com.njl.bean.Msg;
+import com.njl.bean.Notification;
 import com.njl.bean.User;
+import com.njl.service.AdvertisementService;
 import com.njl.service.BlogPicService;
 import com.njl.service.BlogReplyService;
 import com.njl.service.MyBlogService;
+import com.njl.service.NotificationService;
 
 /**
  * my blog
@@ -38,6 +42,10 @@ public class MyBlogController {
 	private BlogReplyService blogReplyservice;
 	@Autowired
 	private BlogPicService blogPicService;
+	@Autowired
+	private NotificationService notificationService;
+	@Autowired
+	private AdvertisementService advertisementService;
 
 	/**
 	 * to my_blog page
@@ -50,6 +58,12 @@ public class MyBlogController {
 		//根据userid获取 blog
 		List<Blog> bloglist = myblogService.getMyblog(userinfo.getUserid());
 		model.addAttribute("bloglist", bloglist);
+		//get sidebar notification
+		List<Notification> notificationlist = notificationService.getSidNotification();
+		model.addAttribute("notificationlist", notificationlist);
+		//get sidebar advertisement
+		List<Advertisement> advertisementlist = advertisementService.getSidAdvertisement();
+		model.addAttribute("advertisementlist", advertisementlist);
 		return "my_blog";
 	}
 	

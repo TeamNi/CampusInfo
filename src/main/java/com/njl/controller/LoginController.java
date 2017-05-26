@@ -15,8 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.njl.bean.Advertisement;
+import com.njl.bean.Notification;
 import com.njl.bean.User;
 import com.njl.service.AdminService;
+import com.njl.service.AdvertisementService;
+import com.njl.service.NotificationService;
 import com.njl.service.UserManageService;
 import com.njl.service.UserService;
 
@@ -36,6 +40,10 @@ public class LoginController {
 	AdminService adminService;
 	@Autowired
 	UserManageService userManageService;
+	@Autowired
+	private AdvertisementService advertisementService;
+	@Autowired
+	private NotificationService notificationService;
 
 	/**
 	 * login
@@ -55,10 +63,10 @@ public class LoginController {
 
 		// 管理员 admin
 		if ("admin".equals(role)) {
-			model.addAttribute("username", username);
 			long count = adminService.queryAdmin(username, password);
 			// count > 0 账号存在
 			if (count > 0) {
+				model.addAttribute("username", username);
 				List<User> userlist = userManageService.getAll();
 				model.addAttribute("userlist", userlist);
 				return "manage_user";
@@ -81,6 +89,12 @@ public class LoginController {
 				//根据userid获取用户信息,放入session中
 				User mySelf = userService.queryUserWithUserid(userid);
 				model.addAttribute("myself", mySelf);
+				//get advertisement
+				List<Advertisement> advertisementlist = advertisementService.queryIndex();
+				model.addAttribute("advertisementlist", advertisementlist);
+				//get notification
+				List<Notification> notification = notificationService.queryIndex();
+				model.addAttribute("notification", notification);
 				return "index";
 			} else {
 				request.getSession().setAttribute("failInfo", "账号或密码错误");

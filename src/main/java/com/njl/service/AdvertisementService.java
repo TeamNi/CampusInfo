@@ -66,4 +66,32 @@ public class AdvertisementService {
 		return advertisementlist;
 	}
 
+	/**
+	 * get index advertisement
+	 * @return
+	 */
+	public List<Advertisement> queryIndex() {
+		// TODO Auto-generated method stub
+		AdvertisementExample example = new AdvertisementExample();
+		Criteria criteria = example.createCriteria();
+		//priority : 0 正常显示  1 侧边显示  2 侧边+首页显示
+		criteria.andPriorityGreaterThanOrEqualTo(2).andConditionckEqualTo(1);
+		List<Advertisement> advertisementlist = advertisementMapper.selectByExampleWithUser(example);
+		return advertisementlist;
+	}
+
+	/**
+	 * get sidebar advertisement
+	 * @return
+	 */
+	public List<Advertisement> getSidAdvertisement() {
+		// TODO Auto-generated method stub
+		AdvertisementExample example = new AdvertisementExample();
+		Criteria criteria = example.createCriteria();
+		//priority : 0 正常显示  1 侧边显示  2 侧边+首页显示
+		criteria.andPriorityGreaterThanOrEqualTo(1).andConditionckEqualTo(1);
+		List<Advertisement> advertisementlist = advertisementMapper.selectByExampleWithUser(example);
+		return advertisementlist;
+	}
+
 }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
@@ -114,37 +115,37 @@
 					<div id="promo_carousel" class="carousel slide">
 						<div class="container">
 							<div class="carousel-inner">
+								<c:forEach items="${advertisementlist }" var="advertisementlist">
+								<c:if test="${advertisementlist.priority == 3 }">
 								<div class="active item">
 									<div class="row">
 										<div class="col-md-7 margin-bottom-20 margin-top-20 animated rotateInUpRight">
 											<h3>Welcome to Shenyang University of Chemical Technology</h3>
-											<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique. Pellentesque viverra vehicula sem ut volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat.</p>
-											<p>Lunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero consectetur adipiscing elit magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat.</p>
-											<a href="blog" class="btn red btn-lg m-icon-big">
-											Go surfing <i class="m-icon-big-swapright m-icon-white"></i>                                
-											</a>
+											<h3>${advertisementlist.title }</h3>
+											<p>${advertisementlist.content }</p>
+											<span>发布时间：<fmt:formatDate value="${advertisementlist.createtime }" pattern="yyyy/MM/dd HH:mm"/></span><br>
 										</div>
 										<div class="col-md-5 animated rotateInDownLeft">
-											<a href="blog"><img src="${BASE_PATH}/assets/img/pages/img1.png" alt="" class="img-responsive"></a>
+											<a href="blog"><img src="${advertisementlist.pictureurl }" alt="" class="img-responsive"></a>
 										</div>
 									</div>
 								</div>
+								</c:if>
+								<c:if test="${advertisementlist.priority == 2 }">
 								<div class="item">
 									<div class="row">
 										<div class="col-md-5 animated rotateInUpRight">
-											<a href="index"><img src="${BASE_PATH}/assets/img/pages/img1_2.png" alt="" class="img-responsive"></a>
+											<a href="index"><img src="${advertisementlist.pictureurl }" alt="" class="img-responsive"></a>
 										</div>
 										<div class="col-md-7 margin-bottom-20 animated rotateInDownLeft">
-											<h1>Buy Metronic Today..</h1>
-											<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique. Pellentesque viverra vehicula sem ut volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat.</p>
-											<p>Lunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Ut non libero consectetur adipiscing elit magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat.</p>
-											<a href="blog" class="btn green btn-lg m-icon-big">
-											But it today
-											<i class="m-icon-big-swapright m-icon-white"></i>                                
-											</a>
+											<h3>${advertisementlist.title }</h3>
+											<p>${advertisementlist.content }</p>
+											<span>发布时间：<fmt:formatDate value="${advertisementlist.createtime }" pattern="yyyy/MM/dd HH:mm"/></span><br>
 										</div>
 									</div>
 								</div>
+								</c:if>
+								</c:forEach>
 							</div>
 							<a class="carousel-control left" href="#promo_carousel" data-slide="prev">
 							<i class="m-icon-big-swapleft"></i>
@@ -161,79 +162,26 @@
 					</div>
 				</div>
 				<div class="block-yellow">
+				<font size="6" face="Comic Sans MS" color="green">注意啦：</font>
 					<div class="container">
 						<div class="row">
-							<div class="col-md-5 margin-bottom-20">
-								<a href="index"><img src="${BASE_PATH}/assets/img/pages/img2.png" alt="" class="img-responsive"></a>
+						<c:forEach items="${notification }" var="notification">
+							<div class="col-md-4">
+								<h3>${notification.title }</h3>
+								<p>${notification.content }</p>
+								<span>发布时间：<fmt:formatDate value="${notification.createtime }" pattern="yyyy/MM/dd HH:mm"/></span><br>
+								<span>发布人：${notification.user.username }</span>
 							</div>
-							<div class="col-md-7">
-								<h2>Metronic viverra vehicula sem ut volutpat</h2>
-								<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique. Pellentesque viverra vehicula sem ut volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat.</p>
-								<p>Lunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero consectetur adipiscing elit magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat.</p>
-								<a href="used" class="btn blue btn-lg m-icon-big">
-								Learn more
-								<i class="m-icon-big-swapright m-icon-white"></i>                                
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="block-transparent">
-					<div class="container">
-						<div class="row margin-bottom-20">
-							<div class="col-md-6 margin-bottom-20">
-								<h2>Metronic Viverra</h2>
-								<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos <a href="#">ellentesque la vehi</a> dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique. Pellentesque viverra vehicula sem ut volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat.</p>
-								<p>Lunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita <a href="#">distinctio lorem ipsum dolor</a> sit amet, consectetur adipiscing elit. Ut non libero consectetur adipiscing elit magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat.</p>
-							</div>
-							<div class="col-md-6 margin-bottom-20">
-								<a href="index"><img src="${BASE_PATH}/assets/img/pages/img3.png" alt="" class="img-responsive"></a>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-6">
-								<a href="index"><img src="${BASE_PATH}/assets/img/pages/img4.png" alt="" class="img-responsive"></a>
-							</div>
-							<div class="col-md-6 margin-bottom-20">
-								<h2>Vero eos iusto odio..</h2>
-								<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et <a href="#">quas molestias excepturi sint</a> occaecati cupiditate non provident, similique. Pellentesque viverra vehicula sem ut volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat.</p>
-								<p>Lunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero consectetur adipiscing elit magna. Sed et <a href="#">quam lacus eusce condimentum </a> eleifend enim a feugiat.</p>
-							</div>
+						</c:forEach>
 						</div>
 					</div>
 				</div>
 				<div class="block-footer">
 					<div class="container">
 						<div class="row">
-							<div class="col-md-6">
-								<h3>Photo Stream</h3>
-								<ul class="list-unstyled blog-images">
-									<li><a href="#"><img src="${BASE_PATH}/assets/img/blog/1.jpg" alt=""></a></li>
-									<li><a href="#"><img src="${BASE_PATH}/assets/img/blog/2.jpg" alt=""></a></li>
-									<li><a href="#"><img src="${BASE_PATH}/assets/img/blog/3.jpg" alt=""></a></li>
-									<li><a href="#"><img src="${BASE_PATH}/assets/img/blog/4.jpg" alt=""></a></li>
-									<li><a href="#"><img src="${BASE_PATH}/assets/img/blog/5.jpg" alt=""></a></li>
-									<li><a href="#"><img src="${BASE_PATH}/assets/img/blog/6.jpg" alt=""></a></li>
-									<li><a href="#"><img src="${BASE_PATH}/assets/img/blog/8.jpg" alt=""></a></li>
-									<li><a href="#"><img src="${BASE_PATH}/assets/img/blog/10.jpg" alt=""></a></li>
-									<li><a href="#"><img src="${BASE_PATH}/assets/img/blog/11.jpg" alt=""></a></li>
-									<li><a href="#"><img src="${BASE_PATH}/assets/img/blog/9.jpg" alt=""></a></li>
-									<li><a href="#"><img src="${BASE_PATH}/assets/img/blog/12.jpg" alt=""></a></li>
-									<li><a href="#"><img src="${BASE_PATH}/assets/img/blog/13.jpg" alt=""></a></li>
-								</ul>
-							</div>
-							<div class="col-md-6">
-								<h3>Subscribe</h3>
-								<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, justo sit amet risus etiam.</p>
-								<form class="form-inline" action="#">
-									<div class="input-group">
-										<input type="email" class="form-control" placeholder="Email Address">
-										<span class="input-group-btn">
-										<button class="btn blue" type="button">GO!</button>
-										</span>      
-									</div>
-									<!-- /input-group -->
-								</form>
+							<div class="col-md-9">
+								<h3>About me</h3>
+								<p>If you want to know me or any cooperation!</p><p> Please contact with E-mail : 1009409510@qq.com</p>
 							</div>
 						</div>
 					</div>

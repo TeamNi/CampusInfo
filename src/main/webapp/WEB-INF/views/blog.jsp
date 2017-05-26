@@ -164,13 +164,17 @@
 								<i class="glyphicon glyphicon-flag top-news-icon"></i>
 								</a>
 							</div>
+							<c:forEach items="${notificationlist }" var="notificationlist">
 							<div class="news-blocks">
-								<h3>Odio dignissimos ducimus</h3>
-								<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+								<h3>${notificationlist.title }</h3>
+								<p>${notificationlist.content }</p>
 								<div class="news-block-tags">
-									<em>2 hours ago</em>
+									<em>发布时间：${notificationlist.createtime }</em>
+									<em>发布人：${notificationlist.user.username }</em>
 								</div>
 							</div>
+							<hr>
+							</c:forEach>
 							<div class="space20"></div>
 							<div class="top-news">
 								<a href="#" class="btn green">
@@ -178,13 +182,16 @@
 								<i class="glyphicon glyphicon-bullhorn top-news-icon"></i>                             
 								</a>
 							</div>
+							<c:forEach items="${advertisementlist }" var="advertisementlist">
 							<div class="news-blocks">
-								<h3>Odio dignissimos ducimus</h3>
-								<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+								<h3>${advertisementlist.title }</h3>
+								<p>${advertisementlist.content }</p>
 								<div class="news-block-tags">
-									<em>2 hours ago</em>
+									<em>${advertisementlist.createtime }</em>
 								</div>
 							</div>
+							<hr>
+							</c:forEach>
 						</div>
 						<!--end col-md-3-->
 					</div>
