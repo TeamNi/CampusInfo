@@ -1,7 +1,10 @@
 package com.njl.controller;
 
+import java.io.File;
 import java.sql.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.njl.bean.Blog;
+import com.njl.bean.BlogPic;
 import com.njl.bean.Msg;
 import com.njl.service.BlogManageService;
+import com.njl.service.BlogPicService;
+import com.njl.service.BlogReplyService;
 
 /**
  * 对论坛管理的CRUD
@@ -25,6 +31,10 @@ public class BlogManageController {
 	
 	@Autowired
 	BlogManageService blogManageService;
+	@Autowired
+	private BlogPicService blogPicService;
+	@Autowired
+	private BlogReplyService blogReplyservice;
 	/**
 	 * 查询论坛数据
 	 * @return
@@ -42,11 +52,29 @@ public class BlogManageController {
 	 */
 	@RequestMapping(value="/blog/{id}",method = RequestMethod.DELETE)
 	@ResponseBody
-	public Msg deleteBlog(@PathVariable("id") Integer id){
+	public Msg deleteBlog(@PathVariable("id") Integer id, HttpServletRequest request){
+		//删除blog 时  将服务器上的图片一并删除
+		List<BlogPic> picslist = blogPicService.queryPic(id);
+		for (BlogPic blogPic : picslist) {
+			File picFile = new File(request.getSession().getServletContext().getRealPath("/") + blogPic.getPictureurl());
+			if(picFile.exists() && (!"image/blog/1495195501805noimage.png".equals(blogPic.getPictureurl()))){
+				picFile.delete();
+			}
+		}
+		//delete blogPic database data
+		blogPicService.deletePicWithBlogid(id);
+		//删除blog时，将blog reply一并删除
+		blogReplyservice.deleteReplyWithBlogid(id);
+		//删除blog
 		blogManageService.deleteBlog(id);
 		return Msg.success();
 	}
 	
+	/**
+	 * update blog
+	 * @param blog
+	 * @return
+	 */
 	@RequestMapping(value="/blog/{blogid}",method = RequestMethod.PUT)
 	@ResponseBody
 	public Msg updateBlog(Blog blog){

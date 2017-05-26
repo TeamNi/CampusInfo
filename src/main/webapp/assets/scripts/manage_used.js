@@ -124,7 +124,7 @@ var TableEditable = function () {
                 var usedid = $(this).attr("del-id");
                 var title = $(this).parents("tr").find("td:eq(0)").text();
 
-                if (confirm("确认删除【"+title+"】 ?") == false) {
+                if (confirm("删除帖子时，帖子中的回复将一起删除。确认删除【"+title+"】 ?") == false) {
                 	return ;
                 }
 

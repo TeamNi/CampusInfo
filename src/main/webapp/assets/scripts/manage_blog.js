@@ -116,7 +116,7 @@ var TableEditable = function () {
                 var blogid = $(this).attr("del-id");
                 var title = $(this).parents("tr").find("td:eq(0)").text();
                 
-                if (confirm("确认删除【"+title+"】吗 ?") == false) {
+                if (confirm("删除帖子时，帖子中的回复将一起删除。确认删除【"+title+"】吗 ?") == false) {
                     return;
                 }
                 

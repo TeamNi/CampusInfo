@@ -65,5 +65,33 @@ public class NotificationService {
 		// TODO Auto-generated method stub
 		notificationMapper.updateByPrimaryKeySelective(notification);
 	}
+	
+	/**
+	 * get index notification
+	 * @return
+	 */
+	public List<Notification> queryIndex() {
+		// TODO Auto-generated method stub
+		NotificationExample example = new NotificationExample();
+		Criteria criteria = example.createCriteria();
+		//priority : 0 正常显示  1 侧边显示  2 侧边+首页显示
+		criteria.andPriorityGreaterThanOrEqualTo(2).andConditionckEqualTo(1);
+		List<Notification> notificationlist = notificationMapper.selectByExampleWithUser(example);
+		return notificationlist;
+	}
+
+	/**
+	 * get sidebar notification
+	 * @return
+	 */
+	public List<Notification> getSidNotification() {
+		// TODO Auto-generated method stub
+		NotificationExample example = new NotificationExample();
+		Criteria criteria = example.createCriteria();
+		//priority : 0 正常显示  1 侧边显示  2 侧边+首页显示
+		criteria.andPriorityGreaterThanOrEqualTo(1).andConditionckEqualTo(1);
+		List<Notification> notificationlist = notificationMapper.selectByExampleWithUser(example);
+		return notificationlist;
+	}
 
 }

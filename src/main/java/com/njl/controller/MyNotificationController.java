@@ -1,6 +1,9 @@
 package com.njl.controller;
 
+import java.io.File;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -74,7 +77,14 @@ public class MyNotificationController {
 	 */
 	@RequestMapping(value="/remove_advertisement/{adid}",method=RequestMethod.DELETE)
 	@ResponseBody
-	public Msg removeMyAdvertisement(@PathVariable("adid")Integer adid){
+	public Msg removeMyAdvertisement(@PathVariable("adid")Integer adid, HttpServletRequest request){
+		//先删除图片
+		Advertisement advertisement = myAdvertisementService.queryAdvertisementWithAdid(adid);
+		File imgFile = new File(request.getSession().getServletContext().getRealPath("/") + advertisement.getPictureurl());
+		if(imgFile.exists() && (!"image/ad/1495682284991img3.jpg".equals(advertisement.getPictureurl()))){
+			imgFile.delete();
+		}
+		//删除ad
 		myAdvertisementService.deleteAdvertisementWithId(adid);
 		return Msg.success();
 	}

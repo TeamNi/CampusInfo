@@ -145,6 +145,7 @@
 										<th>权限</th>
 										<th>头像</th>
 										<th>注册时间</th>
+										<th>用户ID</th>
 										<th>Edit</th>
 										<th>Delete</th>
 									</tr>
@@ -161,8 +162,9 @@
 										<td>${user.safeanswer }</td>
 										<td>${user.contact }</td>
 										<td>${user.permission }</td>
-										<td>${user.headurl }</td>
+										<td><img alt="" src="${user.headurl }" width="29px" height="29px"/></td>
 										<td>${user.createtime }</td>
+										<td>${user.userid }</td>
 										<td><a edit-id="${user.userid }" class="edit" href="">Edit</a></td>
 										<!-- 为删除添加一个自定义的属性表示当前删除的用户id -->
 										<td><a del-id="${user.userid }" class="delete" href="">Delete</a></td>
@@ -263,8 +265,6 @@
 		       var safeanswer = $("#update6").val();
 		       var contact = $("#update7").val();
 		       var permission = $("#update8").val();
-		       var headurl = $("#update9").val();
-		       var createtime = $("#update10").val();
 			   $.ajax({
 				   url : "${BASE_PATH}/user/"+userid,
 				   async : false,
@@ -278,8 +278,7 @@
             		   "safequestion" : safequestion,
             		   "safeanswer" : safeanswer,
             		   "contact" : contact,
-            		   "permission" : permission,
-            		   "headurl" : headurl
+            		   "permission" : permission
             	   },
             	   dataType : "json",
             	   success : function(result){
@@ -325,8 +324,6 @@
 		       var safeanswer = $("#save6").val();
 		       var contact = $("#save7").val();
 		       var permission = $("#save8").val();
-		       var headurl = $("#save9").val();
-		       var createtime = $("#save10").val();
                $.ajax({
             	   url : "${BASE_PATH}/user",
             	   async : false,
@@ -340,8 +337,7 @@
             		   "safequestion" : safequestion,
             		   "safeanswer" : safeanswer,
             		   "contact" : contact,
-            		   "permission" : permission,
-            		   "headurl" : headurl
+            		   "permission" : permission
             	   },
             	   dataType : "json",
             	   success : function(result){

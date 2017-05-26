@@ -22,14 +22,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.njl.bean.Advertisement;
 import com.njl.bean.Blog;
 import com.njl.bean.BlogPic;
 import com.njl.bean.BlogReply;
 import com.njl.bean.Msg;
+import com.njl.bean.Notification;
 import com.njl.bean.User;
+import com.njl.service.AdvertisementService;
 import com.njl.service.BlogPicService;
 import com.njl.service.BlogReplyService;
 import com.njl.service.BlogService;
+import com.njl.service.NotificationService;
 
 /**
  * 前台  blog 
@@ -48,6 +52,10 @@ public class BlogController {
 	private BlogReplyService blogReplyService;
 	@Autowired
 	private BlogPicService blogPicService;
+	@Autowired
+	private NotificationService notificationService;
+	@Autowired
+	private AdvertisementService advertisementService;
 	
 	/**
 	 * blog 首页
@@ -66,6 +74,12 @@ public class BlogController {
 		//它封装了详细的分页数据，包括我们查询出来的数据。传入连续显示的页数
 		PageInfo<Blog> pageInfo = new PageInfo<Blog>(bloglist,5);
 		model.addAttribute("pageInfo", pageInfo);
+		//get sidebar notification
+		List<Notification> notificationlist = notificationService.getSidNotification();
+		model.addAttribute("notificationlist", notificationlist);
+		//get sidebar advertisement
+		List<Advertisement> advertisementlist = advertisementService.getSidAdvertisement();
+		model.addAttribute("advertisementlist", advertisementlist);
 		return "blog";
 	}
 	
@@ -83,6 +97,12 @@ public class BlogController {
 		//blog reply
 		List<BlogReply> replylist = blogReplyService.getBlogReply(blogid);
 		model.addAttribute("replylist", replylist);
+		//get sidebar notification
+		List<Notification> notificationlist = notificationService.getSidNotification();
+		model.addAttribute("notificationlist", notificationlist);
+		//get sidebar advertisement
+		List<Advertisement> advertisementlist = advertisementService.getSidAdvertisement();
+		model.addAttribute("advertisementlist", advertisementlist);
 		return "blog_details";
 	}
 	
