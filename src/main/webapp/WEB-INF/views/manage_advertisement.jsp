@@ -61,10 +61,10 @@
 					<li>
 						<a href="manage_used">闲置管理</a>
 					</li>
-					<li class="active">
+					<li>
 						<a href="manage_notification">通知管理</a>
 					</li>
-					<li>
+					<li class="active">
 						<a href="manage_advertisement">广告管理</a>
 					</li>
 				</ul>
@@ -105,7 +105,7 @@
 				<div class="col-md-12">
 					<!-- BEGIN PAGE TITLE & BREADCRUMB-->
 					<h3 class="page-title">
-						Notification Management <small>Management Campus notification</small>
+						Advertisement Management <small>Management Campus advertisement</small>
 					</h3>
 					<!-- END PAGE TITLE & BREADCRUMB-->
 				</div>
@@ -117,27 +117,28 @@
 			<!-- 按钮 -->
 			<div class="row">
 				<div class="col-md-4 col-md-offset-10">
-					<button class="btn btn-primary" id="notification_add_model_btn">新增</button>
-					<button class="btn btn-danger" id="notification_delete_all_btn">删除</button>
+					<button class="btn btn-primary" id="advertisement_add_model_btn">新增</button>
+					<button class="btn btn-danger" id="advertisement_delete_all_btn">删除</button>
 				</div>
 			</div>
 			<!-- 显示数据 -->
 			<div class="row">
 				<div class="col-md-12">
-					<table class="table table-hover" id="notification_table">
+					<table class="table table-hover" id="advertisement_table">
 						<thead>
 							<tr>
 								<th width="4%">
 									<input type="checkbox" id="check_all"/>
 								</th>
-								<th width="6%">通知ID</th>
-								<th width="9%">发布人ID</th>
-								<th width="15%">标题</th>
+								<th width="5%">通知ID</th>
+								<th width="8%">发布人ID</th>
+								<th width="13%">标题</th>
 								<th width="18%">内容</th>
+								<th width="6%">图片</th>
 								<th width="8%">审核状态</th>
 								<th width="8%">优先级</th>
 								<th width="10%">创建时间</th>
-								<th width="8%">审核人ID</th>
+								<th width="7%">审核人ID</th>
 								<th width="14%">操作</th>
 							</tr>
 						</thead>
@@ -175,13 +176,13 @@
 		</div>
 	</div>
 	
-<!-- add notification model -->
-<div class="modal fade" id="notificationAddModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!-- add advertisement model -->
+<div class="modal fade" id="advertisementAddModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Add Notification</h4>
+        <h4 class="modal-title" id="myModalLabel">Add Advertisement</h4>
       </div>
       <div class="modal-body">
       	<form class="form-horizontal">
@@ -224,18 +225,18 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary" id="notification_save_btn">保存</button>
+        <button type="button" class="btn btn-primary" id="advertisement_save_btn">保存</button>
       </div>
     </div>
   </div>
 </div>
-<!-- update notification model -->
-<div class="modal fade" id="notificationUpdateModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!-- update advertisement model -->
+<div class="modal fade" id="advertisementUpdateModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Update Notification</h4>
+        <h4 class="modal-title">Update Advertisement</h4>
       </div>
       <div class="modal-body">
       	<form class="form-horizontal">
@@ -278,7 +279,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary" id="notification_update_btn">更新</button>
+        <button type="button" class="btn btn-primary" id="advertisement_update_btn">更新</button>
       </div>
     </div>
   </div>
@@ -313,16 +314,16 @@
 			to_page(1);
 		});
 		
-		//get all notification data
+		//get all advertisement data
 		function to_page(pn){
 			$.ajax({
-				url:"${BASE_PATH}/getallnotification",
+				url:"${BASE_PATH}/getalladvertisement",
 				data:"pn=" +pn,
 				type:"GET",
 				success:function(result){
 					//console.log(result);
-					//1、解析并显示notification数据
-					build_notification_table(result);
+					//1、解析并显示advertisement数据
+					build_advertisement_table(result);
 					//2、解析并显示分页信息
 					build_page_info(result);
 					//3、解析显示分页条数据
@@ -331,16 +332,17 @@
 			});
 		}
 		
-		//1、解析并显示notification数据
-		function build_notification_table(result){
-			$("#notification_table tbody").empty();
-			var notification = result.extend.pageInfo.list;
-			$.each(notification,function(index,item){
+		//1、解析并显示advertisement数据
+		function build_advertisement_table(result){
+			$("#advertisement_table tbody").empty();
+			var advertisement = result.extend.pageInfo.list;
+			$.each(advertisement,function(index,item){
 				var checkBoxTd = $("<td><input type='checkbox' class='check_item'/></td>");
-				var noid = $("<td></td>").append(item.noid);
+				var adid = $("<td></td>").append(item.adid);
 				var userid = $("<td></td>").append(item.userid);
 				var title = $("<td></td>").append(item.title);
 				var content = $("<td></td>").append(item.content);
+				var picture = $("<td></td>").append($("<img></img>").attr("src",item.pictureurl).attr("width","25px").attr("height","25px"));
 				var conditionck = $("<td></td>").append(item.conditionck);
 				var priority = $("<td></td>").append(item.priority);
 				var date = new Date(item.createtime);
@@ -348,25 +350,26 @@
 				var checkuser = $("<td></td>").append(item.checkuser);
 				var editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit_btn")
 					.append($("<span></span>").addClass("glyphicon glyphicon-pencil")).append("编辑");
-				//为编辑按钮添加一个自定义的属性，来表示当前notification id
-				editBtn.attr("edit-id",item.noid);
+				//为编辑按钮添加一个自定义的属性，来表示当前advertisement id
+				editBtn.attr("edit-id",item.adid);
 				var delBtn =  $("<button></button>").addClass("btn btn-danger btn-sm delete_btn")
 								.append($("<span></span>").addClass("glyphicon glyphicon-trash")).append("删除");
-				//为删除按钮添加一个自定义的属性来表示当前删除的notification id
-				delBtn.attr("del-id",item.noid);
+				//为删除按钮添加一个自定义的属性来表示当前删除的advertisement id
+				delBtn.attr("del-id",item.adid);
 				var btnTd = $("<td></td>").append(editBtn).append(" ").append(delBtn);
 				//append方法执行完成以后还是返回原来的元素
 				$("<tr></tr>").append(checkBoxTd)
-				  .append(noid)
+				  .append(adid)
 				  .append(userid)
 				  .append(title)
 				  .append(content)
+				  .append(picture)
 				  .append(conditionck)
 				  .append(priority)
 				  .append(createtime)
 				  .append(checkuser)
 				  .append(btnTd)
-				  .appendTo("#notification_table tbody");
+				  .appendTo("#advertisement_table tbody");
 			})
 		}
 		
@@ -446,29 +449,29 @@
 		} 
 		
 		//点击新增按钮弹出模态框。
-		$("#notification_add_model_btn").click(function(){
+		$("#advertisement_add_model_btn").click(function(){
 			//清除表单数据（表单完整重置（表单的数据，表单的样式））
-			reset_form("#notificationAddModel form");
+			reset_form("#advertisementAddModel form");
 			//弹出模态框
-			$("#notificationAddModel").modal({
+			$("#advertisementAddModel").modal({
 				backdrop:"static"
 			});
 		});
 		
 		//保存
-		$("#notification_save_btn").click(function(){
+		$("#advertisement_save_btn").click(function(){
 			if(validate_data("#title_add_input","#content_add_input") == false){
 				return false;
 			}
 			$.ajax({
-				url : "${BASE_PATH}/manageraddnotification",
+				url : "${BASE_PATH}/manageraddadvertisement",
 				type : "POST",
-				data : $("#notificationAddModel form").serialize(),
+				data : $("#advertisementAddModel form").serialize(),
 				success : function(result){
 					if(result.code == 1){
 						//员工保存成功；
 						//1、关闭模态框
-						$("#notificationAddModel").modal('hide');
+						$("#advertisementAddModel").modal('hide');
 						//2、来到最后一页，显示刚才保存的数据
 						//发送ajax请求显示最后一页数据即可
 						to_page(totalRecord);
@@ -514,50 +517,50 @@
 			}
 		}
 		
-		//uppdate notification
+		//uppdate advertisement
 		//1、我们是按钮创建之前就绑定了click，所以绑定不上。
 		//1）、可以在创建按钮的时候绑定。    2）、绑定点击.live()
 		//jquery新版没有live，使用on进行替代
 		$(document).on("click",".edit_btn",function(){
-			//1、查出notification信息
-			getNotification($(this).attr("edit-id"));
+			//1、查出advertisement信息
+			getAdvertisement($(this).attr("edit-id"));
 			
-			$("#notificationUpdateModel").modal({
+			$("#advertisementUpdateModel").modal({
 				backdrop:"static"
 			});
-			//2、把notification的id传递给模态框的更新按钮
-			$("#notification_update_btn").attr("edit-id",$(this).attr("edit-id"));
+			//2、把advertisement的id传递给模态框的更新按钮
+			$("#advertisement_update_btn").attr("edit-id",$(this).attr("edit-id"));
 		});
 		
-		//get notification
-		function getNotification(noid){
+		//get advertisement
+		function getAdvertisement(adid){
 			$.ajax({
-				url : "${BASE_PATH}/onenotification/"+noid,
+				url : "${BASE_PATH}/oneadvertisement/"+adid,
 				type : "get",
 				success : function(result){
-					var notificationData = result.extend.notification;
-					$("#title_update_input").val(notificationData.title);
-					$("#content_update_input").val(notificationData.content);
-					$("#conditionck_update_input").val([notificationData.conditionck]);
-					$("#priority_update_input").val([notificationData.priority]);
+					var advertisementData = result.extend.advertisement;
+					$("#title_update_input").val(advertisementData.title);
+					$("#content_update_input").val(advertisementData.content);
+					$("#conditionck_update_input").val([advertisementData.conditionck]);
+					$("#priority_update_input").val([advertisementData.priority]);
 				}
 			});
 		}
 		
-		//update notification
-		$("#notification_update_btn").click(function(){
+		//update advertisement
+		$("#advertisement_update_btn").click(function(){
 			if(validate_data("#title_update_input","#content_update_input") == false){
 				return false;
 			}
 			$.ajax({
-				url : "${BASE_PATH}/managerupdatenotification/" + $(this).attr("edit-id"),
+				url : "${BASE_PATH}/managerupdateadvertisement/" + $(this).attr("edit-id"),
 				type : "PUT",
-				data : $("#notificationUpdateModel form").serialize(),
+				data : $("#advertisementUpdateModel form").serialize(),
 				success : function(result){
 					if(result.code == 1){
 						//员工保存成功；
 						//1、关闭模态框
-						$("#notificationUpdateModel").modal('hide');
+						$("#advertisementUpdateModel").modal('hide');
 						//2、来到最后一页，显示刚才保存的数据
 						//发送ajax请求显示最后一页数据即可
 						to_page(currentPage);
@@ -570,11 +573,11 @@
 		$(document).on("click",".delete_btn",function(){
 			//1、弹出是否确认删除对话框
 			var title = $(this).parents("tr").find("td:eq(3)").text();
-			var noids = $(this).attr("del-id");
+			var adids = $(this).attr("del-id");
 			if(confirm("确认删除【"+title+"】吗？")){
 				//确认，发送ajax请求删除即可
 				$.ajax({
-					url:"${BASE_PATH}/managerdeletenotification/"+noids,
+					url:"${BASE_PATH}/managerdeleteadvertisement/"+adids,
 					type:"DELETE",
 					success:function(result){
 						alert(result.msg);
@@ -600,19 +603,19 @@
 		})
 		
 		//批量删除
-		$("#notification_delete_all_btn").click(function(){
+		$("#advertisement_delete_all_btn").click(function(){
 			var titles = "";
-			var noids = "";
+			var adids = "";
 			$.each($(".check_item:checked"),function(){
 				titles += $(this).parents("tr").find("td:eq(3)").text() + ",";
-				noids += $(this).parents("tr").find("td:eq(1)").text() + "-";
+				adids += $(this).parents("tr").find("td:eq(1)").text() + "-";
 			})
 			titles = titles.substring(0, titles.length-1 );
-			noids = noids.substring(0, noids.length-1 );
+			adids = adids.substring(0, adids.length-1 );
 			if(confirm("确认删除【"+titles+"】吗")){
 				//确认，发送ajax请求删除即可
 				$.ajax({
-					url:"${BASE_PATH}/managerdeletenotification/"+noids,
+					url:"${BASE_PATH}/managerdeleteadvertisement/"+adids,
 					type:"DELETE",
 					success:function(result){
 						alert(result.msg);

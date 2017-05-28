@@ -91,6 +91,11 @@ public class NotificationManageController {
 	@RequestMapping(value="/managerupdatenotification/{noid}", method=RequestMethod.PUT)
 	@ResponseBody
 	public Msg updateNotification(Notification notification){
+		Notification no = notificationManageService.getOneNotification(notification.getNoid());
+		if(no.getConditionck() != notification.getConditionck()){
+			//若为管理员审核，则审核人为用户 id=1
+			notification.setCheckuser(1);
+		}
 		notificationManageService.updateNotification(notification);
 		return Msg.success();
 	}
