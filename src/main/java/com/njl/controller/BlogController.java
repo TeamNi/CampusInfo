@@ -171,8 +171,10 @@ public class BlogController {
 	public Msg issueBlog(Blog blog,@ModelAttribute("myself") User userinfo){
 		//获取一张图片 插入blog表
 		String truePathOne = null;
-		for (String string : blogPath) {
-			truePathOne = string;
+		if(blogPath.size()>0 || blogPath != null){
+			for (String string : blogPath) {
+				truePathOne = string;
+			}
 		}
 		//获取当前时间
 		long time = System.currentTimeMillis();
@@ -180,14 +182,18 @@ public class BlogController {
 		//issue blog
 		blog.setUserid(userinfo.getUserid());
 		blog.setCreatetime(date);
-		blog.setPictureurl(truePathOne);
+		if(blogPath.size()>0 || blogPath != null){
+			blog.setPictureurl(truePathOne);
+		}
 		blogService.issueBlog(blog);
 		//add picture in database
-		BlogPic blogPic = new BlogPic();
-		blogPic.setBlogid(blog.getBlogid());
-		for (String string : blogPath) {
-			blogPic.setPictureurl(string);
-			blogPicService.addBlogPic(blogPic);
+		if(blogPath.size()>0 || blogPath != null){
+			BlogPic blogPic = new BlogPic();
+			blogPic.setBlogid(blog.getBlogid());
+			for (String string : blogPath) {
+				blogPic.setPictureurl(string);
+				blogPicService.addBlogPic(blogPic);
+			}
 		}
 		blogPath.clear();
 		return Msg.success(); 

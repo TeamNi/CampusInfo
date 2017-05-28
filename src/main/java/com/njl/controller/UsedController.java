@@ -147,8 +147,10 @@ public class UsedController {
 	@ResponseBody
 	public Msg issueUsed(Used used,@ModelAttribute("myself")User userinfo){
 		String truePathOne = null;
-		for (String string : usedPath) {
-			truePathOne = string;
+		if(usedPath.size() > 0 || usedPath != null){
+			for (String string : usedPath) {
+				truePathOne = string;
+			}
 		}
 		//获取当前时间
 		long time = System.currentTimeMillis();
@@ -156,14 +158,18 @@ public class UsedController {
 		//add used
 		used.setUserid(userinfo.getUserid());
 		used.setCreatetime(date);
-		used.setPictureurl(truePathOne);
+		if(usedPath.size() > 0 || usedPath != null){
+			used.setPictureurl(truePathOne);
+		}
 		usedService.addUsed(used);
 		//add pictures to database
-		UsedPic usedPic = new UsedPic();
-		usedPic.setUsedid(used.getUsedid());
-		for (String string : usedPath) {
-			usedPic.setPictureurl(string);
-			usedPicService.addUsedPic(usedPic);
+		if(usedPath.size() > 0 || usedPath != null){
+			UsedPic usedPic = new UsedPic();
+			usedPic.setUsedid(used.getUsedid());
+			for (String string : usedPath) {
+				usedPic.setPictureurl(string);
+				usedPicService.addUsedPic(usedPic);
+			}
 		}
 		usedPath.clear();
 		return Msg.success();
