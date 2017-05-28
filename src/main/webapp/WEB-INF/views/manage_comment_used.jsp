@@ -63,14 +63,14 @@
 					<li>
 						<a href="manage_blog">动态管理</a>                       
 					</li>
-					<li>
+					<li class="active">
 						<a href="manage_used">闲置管理</a>
 					</li>
 					<li>
-						<a href="manage_comment_blog">动态评论管理</a>                      
+						<a href="manage_notification">通知管理</a>
 					</li>
-					<li class="active">
-						<a href="manage_comment_used">闲置评论管理</a>                      
+					<li>
+						<a href="manage_advertisement">广告管理</a>
 					</li>
 				</ul>
 			</div>

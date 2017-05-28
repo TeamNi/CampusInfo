@@ -67,10 +67,10 @@
 						<a href="manage_used">闲置管理</a>
 					</li>
 					<li>
-						<a href="manage_comment_blog">动态评论管理</a>                      
+						<a href="manage_notification">通知管理</a>
 					</li>
 					<li>
-						<a href="manage_comment_used">闲置评论管理</a>                      
+						<a href="manage_advertisement">广告管理</a>
 					</li>
 				</ul>
 			</div>
@@ -112,6 +112,7 @@
 					<h3 class="page-title">
 						Dynamic Management <small>Management Campus dynamic</small>
 					</h3>
+					<em>If you want to comment on dynamic management, please click : </em> <a href="manage_comment_blog">here</a>
 					<!-- END PAGE TITLE & BREADCRUMB-->
 				</div>
 			</div>
