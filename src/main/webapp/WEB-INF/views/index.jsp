@@ -114,13 +114,12 @@
 				<div class="block-carousel">
 					<div id="promo_carousel" class="carousel slide">
 						<div class="container">
+						<h3>Welcome to Shenyang University of Chemical Technology</h3>
 							<div class="carousel-inner">
 								<c:forEach items="${advertisementlist }" var="advertisementlist">
-								<c:if test="${advertisementlist.priority == 3 }">
 								<div class="active item">
 									<div class="row">
 										<div class="col-md-7 margin-bottom-20 margin-top-20 animated rotateInUpRight">
-											<h3>Welcome to Shenyang University of Chemical Technology</h3>
 											<h3>${advertisementlist.title }</h3>
 											<p>${advertisementlist.content }</p>
 											<span>发布时间：<fmt:formatDate value="${advertisementlist.createtime }" pattern="yyyy/MM/dd HH:mm"/></span><br>
@@ -130,34 +129,8 @@
 										</div>
 									</div>
 								</div>
-								</c:if>
-								<c:if test="${advertisementlist.priority == 2 }">
-								<div class="item">
-									<div class="row">
-										<div class="col-md-5 animated rotateInUpRight">
-											<a href="index"><img src="${advertisementlist.pictureurl }" alt="" class="img-responsive"></a>
-										</div>
-										<div class="col-md-7 margin-bottom-20 animated rotateInDownLeft">
-											<h3>${advertisementlist.title }</h3>
-											<p>${advertisementlist.content }</p>
-											<span>发布时间：<fmt:formatDate value="${advertisementlist.createtime }" pattern="yyyy/MM/dd HH:mm"/></span><br>
-										</div>
-									</div>
-								</div>
-								</c:if>
 								</c:forEach>
 							</div>
-							<a class="carousel-control left" href="#promo_carousel" data-slide="prev">
-							<i class="m-icon-big-swapleft"></i>
-							</a>
-							<a class="carousel-control right" href="#promo_carousel" data-slide="next">
-							<i class="m-icon-big-swapright"></i>
-							</a>
-							<!-- Indicators -->
-							<ol class="carousel-indicators">
-								<li data-target="#promo_carousel" data-slide-to="0" class="active"></li>
-								<li data-target="#promo_carousel" data-slide-to="1"></li>
-							</ol>
 						</div>
 					</div>
 				</div>

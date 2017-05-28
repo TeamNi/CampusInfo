@@ -203,7 +203,7 @@
 		  </div>
 		  <div class="form-group">
 		    <label for="conditionck_add_input" class="col-sm-2 control-label">审核状态 :</label>
-		    <div class="col-sm-4">
+		    <div class="col-sm-6">
 		      <select class="form-control" id="conditionck_add_input" name="conditionck">
 				  <option value="0" selected="selected">未审核</option>
 				  <option value="1">审核通过</option>
@@ -213,12 +213,15 @@
 		  </div>
 		  <div class="form-group">
 		    <label for="priority_add_input" class="col-sm-2 control-label">优先级 :</label>
-		    <div class="col-sm-4">
+		    <div class="col-sm-6">
 		      <select class="form-control" id="priority_add_input" name="priority">
 				  <option value="0" selected="selected">低</option>
 				  <option value="1">中</option>
 				  <option value="2">高</option>
 				</select>
+			  <font color="red">*</font>
+			  <font>优先级为【高】的广告只能有1条</font>
+			  <font color="red">*</font>
 		    </div>
 		  </div>
 		</form>
@@ -257,7 +260,7 @@
 		  </div>
 		  <div class="form-group">
 		    <label for="conditionck_update_input" class="col-sm-2 control-label">审核状态 :</label>
-		    <div class="col-sm-4">
+		    <div class="col-sm-5">
 		      <select class="form-control" id="conditionck_update_input" name="conditionck">
 				  <option value="0" selected="selected">未审核</option>
 				  <option value="1">审核通过</option>
@@ -267,12 +270,15 @@
 		  </div>
 		  <div class="form-group">
 		    <label for="priority_update_input" class="col-sm-2 control-label">优先级 :</label>
-		    <div class="col-sm-4">
+		    <div class="col-sm-5">
 		      <select class="form-control" id="priority_update_input" name="priority">
 				  <option value="0" selected="selected">低</option>
 				  <option value="1">中</option>
 				  <option value="2">高</option>
 				</select>
+			  <font color="red">*</font>
+			  <font>优先级为【高】的广告只能有1条</font>
+			  <font color="red">*</font>
 		    </div>
 		  </div>
 		</form>
