@@ -35,6 +35,7 @@ public class BlogManageController {
 	private BlogPicService blogPicService;
 	@Autowired
 	private BlogReplyService blogReplyservice;
+	
 	/**
 	 * 查询论坛数据
 	 * @return
