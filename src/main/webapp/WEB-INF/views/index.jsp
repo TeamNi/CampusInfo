@@ -114,7 +114,7 @@
 				<div class="block-carousel">
 					<div id="promo_carousel" class="carousel slide">
 						<div class="container">
-						<h3>Welcome to Shenyang University of Chemical Technology</h3>
+						 <h3><font face="Comic Sans MS">Welcome to Shenyang University of Chemical Technology</font></h3>
 							<div class="carousel-inner">
 								<c:forEach items="${advertisementlist }" var="advertisementlist">
 								<div class="active item">
